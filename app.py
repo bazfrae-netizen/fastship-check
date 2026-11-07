@@ -65,20 +65,17 @@ extra_countries = [
 all_countries = sorted(list(set(extra_countries + db_countries)))
 countries = ["- กรุณาเลือกประเทศ -"] + all_countries
 
-# ดึงรายการสินค้าทั้งหมดจาก CSV (ทั้ง Example Items และ Product Category) แบบไม่ให้ตกหล่น
+# ดึงรายการสินค้าทั้งหมดจาก CSV (ทั้ง Example Items และ Product Category)
 raw_items = []
 if not df.empty:
     for col in ['Example Items', 'Product Category']:
         if col in df.columns:
-            raw_items.extend(df[col].dropna().astype(str).str.strip().unique().tolist())
+            for val in df[col].dropna().astype(str):
+                v = val.strip()
+                if v and v not in ['-', 'nan', '0', 'None', 'Example Items', 'Product Category', '\\']:
+                    raw_items.append(v)
 
-clean_items = []
-for x in raw_items:
-    val_str = str(x).strip()
-    if val_str not in ['-', 'nan', '0', '', 'None', 'Example Items', 'Product Category', '\\']:
-        clean_items.append(val_str)
-
-items_list = ["- กรุณาเลือกสินค้า -"] + sorted(list(set(clean_items)))
+items_list = ["- กรุณาเลือกสินค้า -"] + sorted(list(set(raw_items)))
 
 agents = ["ทั้งหมด", "UPS", "FedEx", "Aramex", "EMS World / Epacket 2kg", "All In"]
 
@@ -87,27 +84,27 @@ agents = ["ทั้งหมด", "UPS", "FedEx", "Aramex", "EMS World / Epacke
 # ==========================================
 col_mode1, col_mode2 = st.columns(2)
 with col_mode1:
-    target_country = st.selectbox("🌍 เลือกประเทศปลายทาง", options=countries)
+    target_country = st.selectbox("🌍 เลือกประเทศปลายทาง", options=countries, key="country_select")
 with col_mode2:
-    selected_agent = st.selectbox("🚚 เลือกเอเย่นต์ (Agent)", options=agents)
+    selected_agent = st.selectbox("🚚 เลือกเอเย่นต์ (Agent)", options=agents, key="agent_select")
 
 st.markdown("---")
-check_mode = st.radio("🛠️ เลือกวิธีการตรวจสอบสินค้า:", ["🔍 ค้นหาจากรายชื่อสินค้า", "📸 ถ่ายรูปจากกล้อง / อัปโหลดรูปภาพ (ให้ AI วิเคราะห์อัตโนมัติ)"])
+check_mode = st.radio("🛠️ เลือกวิธีการตรวจสอบสินค้า:", ["🔍 ค้นหาจากรายชื่อสินค้า", "📸 ถ่ายรูปจากกล้อง / อัปโหลดรูปภาพ (ให้ AI วิเคราะห์อัตโนมัติ)"], key="check_mode_radio")
 
 selected_item = ""
 
 if check_mode == "🔍 ค้นหาจากรายชื่อสินค้า":
-    selected_item = st.selectbox("📦 รายชื่อสินค้า (คลิกเลือกหรือพิมพ์ค้นหาได้ทุกรายการ)", options=items_list)
+    selected_item = st.selectbox("📦 รายชื่อสินค้า (คลิกเลือกหรือพิมพ์ค้นหาได้ทุกรายการ)", options=items_list, key="item_select")
 else:
     st.info("💡 **ระบบกล้องและ AI วิเคราะห์:** ถ่ายรูปสินค้าหรืออัปโหลดรูปภาพ ระบบจะตรวจจับประเภทสินค้าให้ พร้อมตรวจสอบเงื่อนไขการส่งออกทันทีครับ")
     
     col_cam1, col_cam2 = st.columns(2)
     with col_cam1:
         st.markdown("##### 📸 ถ่ายรูปสดผ่านกล้อง")
-        camera_image = st.camera_input("กดปุ่มถ่ายรูปด้านล่าง")
+        camera_image = st.camera_input("กดปุ่มถ่ายรูปด้านล่าง", key="cam_input")
     with col_cam2:
         st.markdown("##### 📂 หรืออัปโหลดรูปภาพจากเครื่อง")
-        uploaded_file = st.file_uploader("เลือกไฟล์รูปภาพ (JPG, PNG)", type=["jpg", "jpeg", "png"])
+        uploaded_file = st.file_uploader("เลือกไฟล์รูปภาพ (JPG, PNG)", type=["jpg", "jpeg", "png"], key="file_up")
     
     active_image = camera_image if camera_image is not None else uploaded_file
     
@@ -116,7 +113,7 @@ else:
         st.image(image, caption="📷 ภาพสินค้าที่นำมาตรวจสอบ", width=300)
         
         default_guess = "น้ำมันเครื่อง" if camera_image is not None or (uploaded_file and "honda" in str(uploaded_file.name).lower()) else "น้ำมันเครื่อง"
-        detected_tag = st.text_input("🤖 AI ตรวจจับประเภทสินค้า (แก้ไขชื่อได้หากไม่ตรง):", default_guess)
+        detected_tag = st.text_input("🤖 AI ตรวจจับประเภทสินค้า (แก้ไขชื่อได้หากไม่ตรง):", default_guess, key="ai_tag")
         selected_item = detected_tag
     else:
         selected_item = "- กรุณาเลือกสินค้า -"
@@ -181,15 +178,21 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
             elif is_oil_or_liquid and col in ["UPS", "FedEx"]:
                 working_df[col] = 'Check MSDS'
 
+    if selected_agent != "ทั้งหมด" and selected_agent in working_df.columns:
+        if not (selected_agent == 'All In'):
+            working_df = working_df[~working_df[selected_agent].astype(str).str.upper().isin(['-', 'X', 'NAN', ''])]
+
     st.markdown("---")
     st.markdown("### 📊 ผลการตรวจสอบและวิเคราะห์จาก AI")
 
-    if is_fake_brand:
-        st.error("❌ สินค้าละเมิดลิขสิทธิ์ / สินค้าก๊อปแบรนด์ ไม่อนุญาตให้จัดส่งผ่านเอเย่นต์ขนส่งปกติเด็ดขาด!")
-    elif is_japan_secondhand_rule:
-        st.error("❌ ประเทศญี่ปุ่นไม่อนุญาตให้นำเข้า 'เสื้อผ้ามือสอง' ผ่านเอเย่นต์ขนส่งปกติเด็ดขาด (อนุญาตเฉพาะมือหนึ่งเท่านั้น)")
-    else:
-        st.success(f"✅ สามารถส่ง **{selected_item}** ไปยัง **{target_country}** ได้!")
+    if len(working_df) > 0:
+        if is_fake_brand:
+            st.error("❌ สินค้าละเมิดลิขสิทธิ์ / สินค้าก๊อปแบรนด์ ไม่อนุญาตให้จัดส่งผ่านเอเย่นต์ขนส่งปกติเด็ดขาด!")
+        elif is_japan_secondhand_rule:
+            st.error("❌ ประเทศญี่ปุ่นไม่อนุญาตให้นำเข้า 'เสื้อผ้ามือสอง' ผ่านเอเย่นต์ขนส่งปกติเด็ดขาด (อนุญาตเฉพาะมือหนึ่งเท่านั้น)")
+        else:
+            st.success(f"✅ สามารถส่ง **{selected_item}** ไปยัง **{target_country}** ได้!")
+            
         st.info(status_msg)
         
         if is_oil_or_liquid:
@@ -197,9 +200,12 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
         elif is_battery_item:
             st.warning("⚡ **กฎเหล็กสินค้ามีแบตเตอรี่/ถ่าน (ผ่าน UPS):** อนุญาตให้จัดส่งได้ **ไม่เกิน 2 ชิ้นต่อ 1 ชิปเมนต์ (กล่อง)**")
 
-    st.markdown("---")
-    st.write("**ตารางอ้างอิงข้อมูล (Reference):**")
-    st.dataframe(working_df, use_container_width=True)
+        st.markdown("---")
+        st.write("**ตารางอ้างอิงข้อมูล (Reference):**")
+        st.dataframe(working_df, use_container_width=True)
+    else:
+        st.error(f"❌ ไม่อนุญาตให้ส่ง '{selected_item}' ผ่านเอเย่นต์ '{selected_agent}'")
+        st.warning("สาเหตุ: เอเย่นต์ที่เลือกปฏิเสธการรับส่งสินค้านี้ตามเงื่อนไข")
     
 elif target_country == "- กรุณาเลือกประเทศ -" or selected_item == "- กรุณาเลือกสินค้า -":
     st.info("👆 กรุณาเลือก 'ประเทศปลายทาง' และเลือก/ถ่ายรูปสินค้าให้ครบถ้วนเพื่อเริ่มตรวจสอบ")

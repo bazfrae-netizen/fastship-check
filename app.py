@@ -74,7 +74,7 @@ if not df.empty:
                 if v and v not in ['-', 'nan', '0', 'None', 'Example Items', 'Product Category', '\\']:
                     raw_items.append(v)
 
-items_list = ["- กรุณาเลือกสินค้า -"] + sorted(list(set(raw_items)))
+items_list = sorted(list(set(raw_items)))
 agents = ["ทั้งหมด", "UPS", "FedEx", "Aramex", "EMS World / Epacket 2kg", "All In"]
 
 # ==========================================
@@ -89,11 +89,22 @@ with col2:
 st.markdown("---")
 check_mode = st.radio("🛠️ เลือกวิธีการตรวจสอบสินค้า:", ["🔍 ค้นหาจากรายชื่อสินค้า", "📸 ถ่ายรูปจากกล้อง / อัปโหลดรูปภาพ (ให้ AI วิเคราะห์อัตโนมัติ)"], key="check_mode_radio_main")
 
-# ตัวแปรเก็บชื่อสินค้า
 selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาจากรายชื่อสินค้า":
-    selected_item = st.selectbox("📦 รายชื่อสินค้า (คลิกเลือกหรือพิมพ์ค้นหาได้ทุกรายการ)", options=items_list, key="search_item_selectbox")
+    # ใช้ช่องค้นหาแบบพิมพ์กรองคำภาษาไทยได้สมบูรณ์ 100% ไม่มี No results กวนใจ
+    search_keyword = st.text_input("🔍 พิมพ์ค้นหาชื่อสินค้า (เช่น ยา, อาหาร, เสื้อผ้า):", placeholder="พิมพ์คำค้นหาที่นี่...")
+    
+    if search_keyword.strip() != "":
+        filtered_options = [item for item in items_list if search_keyword.lower() in item.lower()]
+        if filtered_options:
+            selected_item = st.selectbox("📦 เลือกรายการสินค้าที่พบ:", options=filtered_options, key="filtered_item_selectbox")
+        else:
+            st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}' ในระบบ")
+            selected_item = "- กรุณาเลือกสินค้า -"
+    else:
+        st.info("💡 พิมพ์คำค้นหาในช่องด้านบนเพื่อกรองรายการสินค้า หรือเลือกจากรายการทั้งหมดด้านล่างครับ")
+        selected_item = st.selectbox("📦 รายชื่อสินค้าทั้งหมดในระบบ:", options=["- กรุณาเลือกสินค้า -"] + items_list, key="all_item_selectbox")
 else:
     st.info("💡 **ระบบกล้องและ AI วิเคราะห์:** ถ่ายรูปสินค้าหรืออัปโหลดรูปภาพ ระบบจะตรวจจับประเภทสินค้าให้ พร้อมตรวจสอบเงื่อนไขการส่งออกทันทีครับ")
     
@@ -205,4 +216,4 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
         st.warning("สาเหตุ: เอเย่นต์ที่เลือกปฏิเสธการรับส่งสินค้านี้ตามเงื่อนไข")
     
 elif target_country == "- กรุณาเลือกประเทศ -" or selected_item == "- กรุณาเลือกสินค้า -":
-    st.info("👆 กรุณาเลือก 'ประเทศปลายทาง' และเลือก/ถ่ายรูปสินค้าให้ครบถ้วนเพื่อเริ่มตรวจสอบ")
+    st.info("👆 กรุณาเลือก 'ประเทศปลายทาง' และเลือก/พิมพ์ค้นหาสินค้าให้ครบถ้วนเพื่อเริ่มตรวจสอบ")

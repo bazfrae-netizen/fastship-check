@@ -65,12 +65,12 @@ extra_countries = [
 all_countries = sorted(list(set(extra_countries + db_countries)))
 countries = ["- กรุณาเลือกประเทศ -"] + all_countries
 
-# ดึงรายการสินค้าทั้งหมดจาก CSV (ทั้ง Example Items และ Product Category)
+# ดึงรายการสินค้าทั้งหมดจาก CSV (ทั้ง Example Items และ Product Category) แบบไม่ให้ตกหล่น
 raw_items = []
 if not df.empty:
     for col in ['Example Items', 'Product Category']:
         if col in df.columns:
-            raw_items.extend(df[col].dropna().unique().tolist())
+            raw_items.extend(df[col].dropna().astype(str).str.strip().unique().tolist())
 
 clean_items = []
 for x in raw_items:

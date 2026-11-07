@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 from PIL import Image
 
 st.set_page_config(page_title="FastShip Check", layout="wide")
@@ -27,17 +28,28 @@ st.subheader("ระบบตรวจสอบเงื่อนไขการ
 
 @st.cache_data
 def load_data():
+    file_path = "master_database.csv"
+    if not os.path.exists(file_path):
+        return pd.DataFrame(), f"❌ ไม่พบไฟล์ฐานข้อมูล: ไม่พบไฟล์ชื่อ '{file_path}' ในโฟลเดอร์เดียวกับโปรแกรม กรุณาตรวจสอบชื่อไฟล์"
+        
     try:
-        # โหลดไฟล์ Master Database ตัวเต็ม (5000+ รายการ)
-        df = pd.read_csv("master_database.csv")
-        return df.fillna("-")
+        df = pd.read_csv(file_path)
+        if df.empty:
+            return pd.DataFrame(), "❌ ไฟล์ฐานข้อมูลว่างเปล่า ไม่มีข้อมูลในไฟล์"
+        return df.fillna("-"), "OK"
     except Exception as e:
-        return pd.DataFrame()
+        return pd.DataFrame(), f"❌ เกิดข้อผิดพลาดในการโหลดไฟล์ CSV: {e}"
 
-df = load_data()
+# โหลดข้อมูล
+df, load_status = load_data()
+
+# ตรวจสอบสถานะการโหลดไฟล์
+if load_status != "OK":
+    st.error(load_status)
+    st.info("💡 **วิธีแก้:** โปรดตรวจสอบว่าคุณได้อัปโหลดไฟล์ `master_database.csv` ลงในโฟลเดอร์เดียวกับ `app.py` แล้ว (ห้ามมีวงเล็บตัวเลขต่อท้ายชื่อไฟล์)")
 
 # ==========================================
-# 1. จัดเตรียมข้อมูลจาก CSV (โครงสร้างเต็มรูปแบบ)
+# 1. จัดเตรียมข้อมูลจาก CSV 
 # ==========================================
 db_countries = []
 if not df.empty and 'Country' in df.columns:
@@ -86,11 +98,13 @@ if check_mode == "🔍 ค้นหาจากรายชื่อสินค
         else:
             filtered_options = []
 
-    if filtered_options:
-        selected_item = st.selectbox("เลือกสินค้าที่ต้องการ:", options=["- กรุณาเลือกสินค้า -"] + filtered_options)
-    else:
-        st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}'")
-        selected_item = "- กรุณาเลือกสินค้า -"
+    # ป้องกันบัคกล่องหายเมื่อฐานข้อมูลโหลดไม่ขึ้น
+    if not df.empty:
+        if filtered_options:
+            selected_item = st.selectbox("เลือกสินค้าที่ต้องการ:", options=["- กรุณาเลือกสินค้า -"] + filtered_options)
+        else:
+            st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}'")
+            selected_item = "- กรุณาเลือกสินค้า -"
 else:
     st.info("💡 ถ่ายรูปหรืออัปโหลดรูปภาพเพื่อให้ระบบวิเคราะห์ประเภทสินค้าอัตโนมัติ")
     col_cam1, col_cam2 = st.columns(2)
@@ -148,7 +162,7 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     item_lower = selected_item.lower()
     country_upper = target_country.upper()
     
-    # 📌 กฎพิเศษ (อ้างอิงจากรูป DHL และมาตรฐานทั่วไป)
+    # 📌 กฎพิเศษ 
     is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'มิลเลอร์', 'เลียนแบบ', 'เกรด a'])
     is_second_hand = any(kw in item_lower for kw in ['มือสอง', 'มือ 2', 'secondhand', 'used'])
     is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง'])
@@ -160,7 +174,6 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
         'ยา', 'เสพติด', 'เงินสด', 'อาวุธ', 'กระดูก', 'น้ำหอม', 'โคโลญจน์', 'เครื่องสำอาง', 'สกินแคร์', 'อาหารเสริม', 'วิตามิน'
     ])
 
-    # 📌 ประมวลผลสถานะเอเย่นต์
     for col in ["UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg"]:
         if col in working_df.columns:
             if is_fake_brand or is_japan_secondhand:
@@ -172,12 +185,10 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
             if col == 'DHL' and (is_dhl_prohibited or is_battery):
                 working_df['DHL'] = 'Unacceptable'
 
-    # กรองเฉพาะเอเย่นต์ที่เลือก
     if selected_agent != "ทั้งหมด" and selected_agent in working_df.columns:
         if selected_agent != 'All In':
             working_df = working_df[~working_df[selected_agent].astype(str).str.upper().isin(['-', 'X', 'NAN', ''])]
 
-    # 📌 แสดงผล
     if len(working_df) > 0:
         if is_fake_brand:
             st.error("❌ สินค้าละเมิดลิขสิทธิ์ / สินค้าก๊อปแบรนด์ ไม่อนุญาตให้จัดส่งผ่านเอเย่นต์ขนส่งปกติเด็ดขาด! (รองรับเฉพาะ All In)")

@@ -1,16 +1,15 @@
-Keyword,Aliases,Category,Restriction_Level,Country,Note
-second hand clothing,เสื้อผ้ามือสอง;เสื้อมือสอง;used clothing;secondhand clothing;second hand clothes,Japan Rules,Warning,Japan,Used clothing imported to Japan requires clean condition and proper commercial invoice.
-brand fake,ก๊อป;ปลอม;replica;fake;counterfeit;mirror;เกรดเอ;มิลเลอร์;เลียนแบบ,Prohibited,Danger,All,Counterfeit and replica branded items are strictly prohibited and illegal to ship.
-liquid,ของเหลว;เจล;สเปรย์;gel;spray,Dangerous Goods,Warning,All,Liquids and oils require MSDS (Material Safety Data Sheet) and special airline approval.
-oil,น้ำมัน;น้ำมันเครื่อง;petroleum,Dangerous Goods,Warning,All,Petroleum and oil products are classified as hazardous materials and need MSDS verification.
-เสื้อผ้า,clothing;clothes;apparel;shirt,General Apparel,Allowed,All,General clothing items can be shipped normally with standard commercial description.
-รองเท้า,shoes;footwear;sneaker;รองเท้าผ้าใบ,Footwear,Allowed,All,"Footwear items accepted, ensure no counterfeit logos if shipping branded shoes."
-กระเป๋า,bag;handbag;luggage,Accessories,Allowed,All,"Handbags and luggage accepted, check material restrictions for leather items."
-เครื่องสำอาง,cosmetics;skincare;makeup;ครีม,Cosmetics,Warning,All,Cosmetics and skincare products require ingredient list and MSDS for liquid/cream items.
-อาหารเสริม,supplement;supplements,Supplements,Warning,All,Dietary supplements require original sealed packaging and clear ingredient labeling.
-แบตเตอรี่ / พาวเวอร์แบงค์,battery;power bank;powerbank;lithium;แบตสำรอง;แบต;ถ่าน,Dangerous Goods,Danger,All,Lithium batteries and power banks are strictly regulated or restricted by airlines.
-น้ำหอม,perfume;fragrance,Perfumery,Danger,All,"Perfumes contain alcohol and high volatility, classified as dangerous goods requiring special clearance."
-อาหารแห้ง,dry food;ขนม,Food Items,Warning,All,"Dry food products allowed, meat-based or dairy ingredients may be restricted by destination customs."
-เครื่องใช้ไฟฟ้า,electronics;electronic;พัดลม,Electronics,Warning,All,Electronics with built-in batteries need careful packaging and documentation.
-วิตามิน,vitamin;vitamins,Supplements,Allowed,All,Vitamins and health products for personal use are generally acceptable with clear labels.
-หนังสือ / เอกสาร,book;books;document;documents,Documents,Allowed,All,Printed books and documents pass easily through standard custom clearance.
+Keyword	Aliases	Category	Restriction_Level	Country	Note
+2	second hand clothing	เสื้อผ้ามือสอง;เสื้อมือสอง;used clothing;secondhand clothing;second hand clothes	Japan Rules	Warning	Japan	Used clothing imported to Japan requires cleaning certificate. Recommended to use All In service.
+3	brand fake	ก๊อป;ปลอม;replica;fake;counterfeit;mirror;เกรดเอ;มิลเลอร์;เลียนแบบ	Prohibited	Danger	All	Counterfeit and replica branded items are strictly prohibited by standard couriers. Only allowed via special All In channel.
+4	liquid	ของเหลว;เจล;สเปรย์;gel;spray	Dangerous Goods	Warning	All	Liquids and oils require MSDS (Material Safety Data Sheet) for review before shipping.
+5	oil	น้ำมัน;น้ำมันเครื่อง;petroleum	Dangerous Goods	Warning	All	Petroleum and oil products are classified as hazardous. MSDS required. UPS/FedEx review needed.
+6	เสื้อผ้า	clothing;clothes;apparel;shirt	General Apparel	Allowed	All	General clothing items can be shipped normally.
+7	รองเท้า	shoes;footwear;sneaker;รองเท้าผ้าใบ	Footwear	Allowed	All	Footwear items accepted, ensure no counterfeit branding.
+8	กระเป๋า	bag;handbag;luggage	Accessories	Allowed	All	Handbags and luggage accepted, check material for exotic leathers.
+9	เครื่องสำอาง	cosmetics;skincare;makeup;ครีม	Cosmetics	Warning	All	Cosmetics and skincare products require ingredients list. May need MSDS if liquid/gel.
+10	อาหารเสริม	supplement;supplements	Supplements	Warning	All	Dietary supplements require original sealed packaging and ingredients list. FDA rules may apply in destination.
+11	แบตเตอรี่ / พาวเวอร์แบงค์	battery;power bank;powerbank;lithium;แบตสำรอง;แบต;ถ่าน	Dangerous Goods	Danger	All	Lithium batteries and power banks are strictly regulated. UPS allows max 2 pieces per shipment. No loose batteries.
+12	น้ำหอม	perfume;fragrance	Perfumery	Danger	All	Perfumes contain alcohol and high volatility, classified as dangerous goods. Special handling required.
+13	อาหารแห้ง	dry food;ขนม	Food Items	Warning	All	Dry food products allowed, meat-based or dairy-based may have restrictions depending on country.
+14	เครื่องใช้ไฟฟ้า	electronics;electronic;พัดลม	Electronics	Warning	All	Electronics with built-in batteries need careful packing. Max 2 items per shipment via UPS.
+15	วิตามิน	vitamin;vitamins	Supplements	Allowed	All	Vitamins and health products for personal use allowed in limited quantities.

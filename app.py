@@ -63,6 +63,9 @@ if not df.empty and 'Example Items' in df.columns:
     raw_items = df['Example Items'].dropna().astype(str).tolist()
     items_list = sorted(list(set([x.strip() for x in raw_items if x.strip() and x.strip() not in ['-', 'nan', '0', 'None']])))
 
+if not items_list:
+    items_list = ["เสื้อผ้าทั่วไป", "เสื้อผ้ามือสอง", "เครื่องสำอาง และ สกินแคร์", "พาวเวอร์แบงค์ / แบตเตอรี่", "อาหารเสริม และ วิตามิน", "น้ำหอม และ สเปรย์", "กระเป๋า และ รองเท้า", "กุนเชียง หมู/ปลา/ไก่"]
+
 agents = ["ทั้งหมด", "UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg", "All In"]
 
 # ==========================================
@@ -81,12 +84,11 @@ selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาและเลือกรายชื่อสินค้า (จัดเต็ม)":
     st.markdown("##### 📦 ค้นหาหรือเลื่อนเลือกรายการสินค้าจากฐานข้อมูลจริง")
-    search_keyword = st.text_input("🔍 กรองชื่อสินค้า (พิมพ์คำค้นหา เช่น เสื้อผ้า, อาหาร, ครีม, แบตเตอรี่):", placeholder="พิมพ์คำค้นหา...")
+    search_keyword = st.text_input("🔍 กรองชื่อสินค้า (พิมพ์เพื่อค้นหา หรือเว้นว่างเพื่อดูทั้งหมด):", placeholder="พิมพ์คำค้นหา เช่น เสื้อผ้า, อาหาร, ครีม...")
     
     filtered_items = items_list
     if search_keyword.strip() != "":
         kw = search_keyword.strip().lower()
-        # Smart mapping สำหรับคำค้นหายอดฮิตที่ไม่มีในชื่อตรงๆ
         synonyms = {
             "เสื้อผ้า": ["เสื้อ", "ผ้า", "แบรนด์เนม", "มือ 2", "ลิขสิทธิ์"],
             "ครีม": ["cosmetic", "โลชั่น", "ของเหลว", "skin"],
@@ -99,19 +101,12 @@ if check_mode == "🔍 ค้นหาและเลือกรายชื่
             if k in kw:
                 target_kws.extend(syns)
                 
-        matched = []
-        for item in items_list:
-            item_l = item.lower()
-            if any(t in item_l for t in target_kws):
-                matched.append(item)
-                
-        filtered_items = matched if matched else items_list
-            
-    if filtered_items:
-        selected_item = st.selectbox(f"📋 รายการสินค้า ({len(filtered_items)} รายการ):", options=["- กรุณาเลือกสินค้า -"] + filtered_items)
-    else:
-        st.warning(f"⚠️ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}' (แสดงรายการทั้งหมดแทน)")
-        selected_item = st.selectbox("📋 รายการสินค้าทั้งหมด:", options=["- กรุณาเลือกสินค้า -"] + items_list)
+        matched = [item for item in items_list if any(t in item.lower() for t in target_kws)]
+        if matched:
+            filtered_items = matched
+
+    # แสดงผลกล่องเลือกสินค้าเพียงกล่องเดียวแบบไม่มีซ้อนทับ
+    selected_item = st.selectbox(f"📋 เลือกรายการสินค้าทั้งหมด ({len(filtered_items)} รายการ):", options=["- กรุณาเลือกสินค้า -"] + filtered_items)
 
 else:
     st.info("💡 ถ่ายรูปหรืออัปโหลดภาพสินค้าเพื่อให้ระบบ AI วิเคราะห์")

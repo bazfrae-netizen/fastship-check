@@ -36,15 +36,16 @@ st.subheader("ระบบวิเคราะห์เงื่อนไขก
 def load_data():
     try:
         df = pd.read_csv("master_database.csv")
-        df = df.fillna("-")
-        return df
+        if df.empty or len(df.columns) == 0:
+            return pd.DataFrame(columns=["Keyword", "Category", "Restriction_Level", "Country", "Note"])
+        return df.fillna("-")
     except Exception as e:
-        return pd.DataFrame()
+        return pd.DataFrame(columns=["Keyword", "Category", "Restriction_Level", "Country", "Note"])
 
 df = load_data()
 
 # ==========================================
-# 1. รายชื่อประเทศและสินค้า
+# 1. รายชื่อประเทศและสินค้า (Safe Extraction)
 # ==========================================
 extra_countries = [
     "Cambodia", "Laos", "Myanmar", "Vietnam", "Malaysia", "Singapore",
@@ -53,13 +54,26 @@ extra_countries = [
     "Canada", "UK", "France", "Germany", "Italy", "Spain", "Netherlands", "Bangladesh"
 ]
 
-country_col = 'Country' if 'Country' in df.columns else (df.columns[3] if len(df.columns) > 3 else None)
-db_countries = [str(x) for x in df[country_col].unique() if str(x) not in ['-', 'nan', '0', '']] if country_col and country_col in df.columns else []
+db_countries = []
+if not df.empty:
+    for col in df.columns:
+        if 'country' in str(col).lower():
+            db_countries = [str(x) for x in df[col].unique() if str(x) not in ['-', 'nan', '0', '']]
+            break
+
 all_countries = sorted(list(set(extra_countries + db_countries)))
 countries = ["- กรุณาเลือกประเทศ -"] + all_countries
 
-item_column = 'Example Items' if 'Example Items' in df.columns else ('Keyword' if 'Keyword' in df.columns else df.columns[0])
-raw_items = df[item_column].dropna().unique() if item_column in df.columns else []
+# ค้นหาคอลัมน์ชื่อสินค้าอย่างปลอดภัย
+item_column = None
+for col in df.columns:
+    if any(k in str(col).lower() for k in ['item', 'keyword', 'product', 'goods', 'ชื่อ']):
+        item_column = col
+        break
+if item_column is None and not df.empty:
+    item_column = df.columns[0]
+
+raw_items = df[item_column].dropna().unique() if (item_column and not df.empty) else []
 
 clean_items = []
 for x in raw_items:
@@ -128,19 +142,17 @@ else:
 # ==========================================
 if target_country != "- กรุณาเลือกประเทศ -" and selected_item != "- กรุณาเลือกสินค้า -":
     
-    item_df = df[df[item_column].astype(str).str.contains(selected_item, case=False, na=False)] if not df.empty else pd.DataFrame()
+    if item_column and not df.empty:
+        item_df = df[df[item_column].astype(str).str.contains(selected_item, case=False, na=False)]
+    else:
+        item_df = pd.DataFrame()
     
     if len(item_df) > 0:
-        country_specific = item_df[item_df['Country'].astype(str).str.upper() == target_country.upper()] if 'Country' in item_df.columns else pd.DataFrame()
-        if len(country_specific) > 0:
-            working_df = country_specific.copy()
-            status_msg = f"📌 วิเคราะห์ตามเงื่อนไขเฉพาะของประเทศ **{target_country}**"
-        else:
-            working_df = item_df.head(1).copy() 
-            status_msg = f"🌍 วิเคราะห์ตามมาตรฐานเอเย่นต์ (ไม่มีข้อห้ามเฉพาะจากประเทศ {target_country})"
+        working_df = item_df.copy()
+        status_msg = f"📌 วิเคราะห์ตามเงื่อนไขในระบบสำหรับ **{selected_item}**"
     else:
         working_df = pd.DataFrame([{
-            item_column: selected_item,
+            'Keyword': selected_item,
             'Country': target_country,
             'UPS': 'Acceptable',
             'FedEx': 'Acceptable',
@@ -155,7 +167,7 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     item_lower = selected_item.lower()
     country_upper = target_country.upper()
     
-    is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'มิลเลอร์', 'เลียนแบบ', 'brand name ปลอม', 'เกรด a'])
+    is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'มิลเลอร์', 'เลียนแบบ', 'เกรด a'])
     is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง'])
     is_second_hand = any(kw in item_lower for kw in ['มือสอง', 'มือ 2', 'มือ ๒', 'secondhand', 'used'])
     is_japan_secondhand_rule = (country_upper == 'JAPAN' and is_clothing and is_second_hand)

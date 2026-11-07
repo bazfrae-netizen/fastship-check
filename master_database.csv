@@ -1,16 +1,16 @@
-Keyword,Category,Restriction_Level,Country,Note
-second hand clothing,Japan Rules,Warning,Japan,Used clothing imported to Japan requires clean condition and proper commercial invoice.
-brand fake,Prohibited,Danger,All,Counterfeit and replica branded items are strictly prohibited and illegal to ship.
-liquid,Dangerous Goods,Warning,All,Liquids and oils require MSDS (Material Safety Data Sheet) and special airline approval.
-oil,Dangerous Goods,Warning,All,Petroleum and oil products are classified as hazardous materials and need MSDS verification.
-เสื้อผ้า,General Apparel,Allowed,All,General clothing items can be shipped normally with standard commercial description.
-รองเท้า,Footwear,Allowed,All,Footwear items accepted, ensure no counterfeit logos if shipping branded shoes.
-กระเป๋า,Accessories,Allowed,All,Handbags and luggage accepted, check material restrictions for leather items.
-เครื่องสำอาง,Cosmetics,Warning,All,Cosmetics and skincare products require ingredient list and MSDS for liquid/cream items.
-อาหารเสริม,Supplements,Warning,All,Dietary supplements require original sealed packaging and clear ingredient labeling.
-แบตเตอรี่ / พาวเวอร์แบงค์,Dangerous Goods,Danger,All,Lithium batteries and power banks are strictly regulated or restricted by airlines.
-น้ำหอม,Perfumery,Danger,All,Perfumes contain alcohol and high volatility, classified as dangerous goods requiring special clearance.
-อาหารแห้ง,Food Items,Warning,All,Dry food products allowed, meat-based or dairy ingredients may be restricted by destination customs.
-เครื่องใช้ไฟฟ้า,Electronics,Warning,All,Electronics with built-in batteries need careful packaging and documentation.
-วิตามิน,Supplements,Allowed,All,Vitamins and health products for personal use are generally acceptable with clear labels.
-หนังสือ / เอกสาร,Documents,Allowed,All,Printed books and documents pass easily through standard custom clearance.
+Keyword,Aliases,Category,Restriction_Level,Country,Note
+second hand clothing,เสื้อผ้ามือสอง;เสื้อมือสอง;used clothing;secondhand clothing;second hand clothes,Japan Rules,Warning,Japan,Used clothing imported to Japan requires clean condition and proper commercial invoice.
+brand fake,ก๊อป;ปลอม;replica;fake;counterfeit;mirror;เกรดเอ;มิลเลอร์;เลียนแบบ,Prohibited,Danger,All,Counterfeit and replica branded items are strictly prohibited and illegal to ship.
+liquid,ของเหลว;เจล;สเปรย์;gel;spray,Dangerous Goods,Warning,All,Liquids and oils require MSDS (Material Safety Data Sheet) and special airline approval.
+oil,น้ำมัน;น้ำมันเครื่อง;petroleum,Dangerous Goods,Warning,All,Petroleum and oil products are classified as hazardous materials and need MSDS verification.
+เสื้อผ้า,clothing;clothes;apparel;shirt,General Apparel,Allowed,All,General clothing items can be shipped normally with standard commercial description.
+รองเท้า,shoes;footwear;sneaker;รองเท้าผ้าใบ,Footwear,Allowed,All,"Footwear items accepted, ensure no counterfeit logos if shipping branded shoes."
+กระเป๋า,bag;handbag;luggage,Accessories,Allowed,All,"Handbags and luggage accepted, check material restrictions for leather items."
+เครื่องสำอาง,cosmetics;skincare;makeup;ครีม,Cosmetics,Warning,All,Cosmetics and skincare products require ingredient list and MSDS for liquid/cream items.
+อาหารเสริม,supplement;supplements,Supplements,Warning,All,Dietary supplements require original sealed packaging and clear ingredient labeling.
+แบตเตอรี่ / พาวเวอร์แบงค์,battery;power bank;powerbank;lithium;แบตสำรอง;แบต;ถ่าน,Dangerous Goods,Danger,All,Lithium batteries and power banks are strictly regulated or restricted by airlines.
+น้ำหอม,perfume;fragrance,Perfumery,Danger,All,"Perfumes contain alcohol and high volatility, classified as dangerous goods requiring special clearance."
+อาหารแห้ง,dry food;ขนม,Food Items,Warning,All,"Dry food products allowed, meat-based or dairy ingredients may be restricted by destination customs."
+เครื่องใช้ไฟฟ้า,electronics;electronic;พัดลม,Electronics,Warning,All,Electronics with built-in batteries need careful packaging and documentation.
+วิตามิน,vitamin;vitamins,Supplements,Allowed,All,Vitamins and health products for personal use are generally acceptable with clear labels.
+หนังสือ / เอกสาร,book;books;document;documents,Documents,Allowed,All,Printed books and documents pass easily through standard custom clearance.

@@ -50,7 +50,7 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     item_column = 'Example Items' if 'Example Items' in df.columns else 'Product Category'
     
     # ค้นหาแบบยืดหยุ่น (Partial match ในฐานข้อมูล)
-    item_df = df[df[item_column].astype(str).str.contains(selected_item, case=False, na=False)]
+    item_df = df[df['Keyword'].astype(str).str.contains(selected_item, case=False, na=False)]
     
     # ถ้าในตารางหลักไม่เจอ ให้สร้างแถวจำลองสำหรับวิเคราะห์ตามกฎเกณฑ์สากลทันที
     if len(item_df) == 0:

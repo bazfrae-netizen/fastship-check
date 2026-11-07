@@ -82,28 +82,28 @@ agents = ["ทั้งหมด", "UPS", "FedEx", "Aramex", "EMS World / Epacke
 # ==========================================
 col1, col2 = st.columns(2)
 with col1:
-    target_country = st.selectbox("🌍 เลือกประเทศปลายทาง", options=countries)
+    target_country = st.selectbox("🌍 เลือกประเทศปลายทาง", options=countries, key="target_country_box")
 with col2:
-    selected_agent = st.selectbox("🚚 เลือกเอเย่นต์ (Agent)", options=agents)
+    selected_agent = st.selectbox("🚚 เลือกเอเย่นต์ (Agent)", options=agents, key="selected_agent_box")
 
 st.markdown("---")
-check_mode = st.radio("🛠️ เลือกวิธีการตรวจสอบสินค้า:", ["🔍 ค้นหาจากรายชื่อสินค้า", "📸 ถ่ายรูปจากกล้อง / อัปโหลดรูปภาพ (ให้ AI วิเคราะห์อัตโนมัติ)"])
+check_mode = st.radio("🛠️ เลือกวิธีการตรวจสอบสินค้า:", ["🔍 ค้นหาจากรายชื่อสินค้า", "📸 ถ่ายรูปจากกล้อง / อัปโหลดรูปภาพ (ให้ AI วิเคราะห์อัตโนมัติ)"], key="check_mode_radio_main")
 
-# กำหนดค่าเริ่มต้นของสินค้า
+# แยกตัวแปรชัดเจนตามโหมด ไม่ให้เกิดการทับซ้อนของ Widget
 selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาจากรายชื่อสินค้า":
-    selected_item = st.selectbox("📦 รายชื่อสินค้า (คลิกเลือกหรือพิมพ์ค้นหาได้ทุกรายการ)", options=items_list)
+    selected_item = st.selectbox("📦 รายชื่อสินค้า (คลิกเลือกหรือพิมพ์ค้นหาได้ทุกรายการ)", options=items_list, key="search_item_selectbox")
 else:
     st.info("💡 **ระบบกล้องและ AI วิเคราะห์:** ถ่ายรูปสินค้าหรืออัปโหลดรูปภาพ ระบบจะตรวจจับประเภทสินค้าให้ พร้อมตรวจสอบเงื่อนไขการส่งออกทันทีครับ")
     
     col_cam1, col_cam2 = st.columns(2)
     with col_cam1:
         st.markdown("##### 📸 ถ่ายรูปสดผ่านกล้อง")
-        camera_image = st.camera_input("กดปุ่มถ่ายรูปด้านล่าง")
+        camera_image = st.camera_input("กดปุ่มถ่ายรูปด้านล่าง", key="camera_input_widget")
     with col_cam2:
         st.markdown("##### 📂 หรืออัปโหลดรูปภาพจากเครื่อง")
-        uploaded_file = st.file_uploader("เลือกไฟล์รูปภาพ (JPG, PNG)", type=["jpg", "jpeg", "png"])
+        uploaded_file = st.file_uploader("เลือกไฟล์รูปภาพ (JPG, PNG)", type=["jpg", "jpeg", "png"], key="file_uploader_widget")
     
     active_image = camera_image if camera_image is not None else uploaded_file
     
@@ -112,7 +112,7 @@ else:
         st.image(image, caption="📷 ภาพสินค้าที่นำมาตรวจสอบ", width=300)
         
         default_guess = "น้ำมันเครื่อง" if camera_image is not None or (uploaded_file and "honda" in str(uploaded_file.name).lower()) else "น้ำมันเครื่อง"
-        detected_tag = st.text_input("🤖 AI ตรวจจับประเภทสินค้า (แก้ไขชื่อได้หากไม่ตรง):", default_guess)
+        detected_tag = st.text_input("🤖 AI ตรวจจับประเภทสินค้า (แก้ไขชื่อได้หากไม่ตรง):", default_guess, key="ai_detected_tag_input")
         selected_item = detected_tag
 
 # ==========================================

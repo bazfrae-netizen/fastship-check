@@ -37,16 +37,20 @@ def load_data():
     try:
         df = pd.read_csv("master_database.csv")
         if df is None or df.empty or len(df.columns) == 0:
-            return pd.DataFrame(columns=["Country", "Product Category", "Example Items", "Condition", "UPS", "FedEx", "Aramex", "EMS World / Epacket 2kg"])
+            return pd.DataFrame()
         return df.fillna("-")
     except Exception as e:
-        return pd.DataFrame(columns=["Country", "Product Category", "Example Items", "Condition", "UPS", "FedEx", "Aramex", "EMS World / Epacket 2kg"])
+        return pd.DataFrame()
 
 df = load_data()
 
 # ==========================================
-# 1. รายชื่อประเทศและสินค้า (Safe Extraction)
+# 1. รายชื่อประเทศและสินค้าจาก CSV แบบครบถ้วน
 # ==========================================
+db_countries = []
+if not df.empty and 'Country' in df.columns:
+    db_countries = [str(x) for x in df['Country'].unique() if str(x) not in ['-', 'nan', '0', '']]
+
 extra_countries = [
     "Australia", "Austria", "Bangladesh", "Belgium", "Canada", "Chile", "China", 
     "Croatia", "Czech Republic", "Denmark", "Egypt", "Finland", "France", "Germany", 
@@ -58,33 +62,20 @@ extra_countries = [
     "United Arab Emirates", "United Kingdom", "Vietnam"
 ]
 
-db_countries = []
-if not df.empty:
-    for col in df.columns:
-        if 'country' in str(col).lower():
-            db_countries = [str(x) for x in df[col].unique() if str(x) not in ['-', 'nan', '0', '', 'nan']]
-            break
-
 all_countries = sorted(list(set(extra_countries + db_countries)))
 countries = ["- กรุณาเลือกประเทศ -"] + all_countries
 
-# ค้นหาคอลัมน์ชื่อสินค้าอย่างปลอดภัย
-item_column = None
-for col in df.columns:
-    col_lower = str(col).lower()
-    if any(k in col_lower for k in ['example', 'item', 'keyword', 'product', 'goods', 'ชื่อ']):
-        item_column = col
-        break
-
-if item_column is None and not df.empty:
-    item_column = df.columns[min(2, len(df.columns) - 1)]
-
-raw_items = df[item_column].dropna().unique() if (item_column and not df.empty and item_column in df.columns) else []
+# ดึงรายการสินค้าทั้งจาก Example Items และ Product Category มารวมกันให้อัตโนมัติและจัดเต็ม
+raw_items = []
+if not df.empty:
+    for col in ['Example Items', 'Product Category']:
+        if col in df.columns:
+            raw_items.extend(df[col].dropna().unique().tolist())
 
 clean_items = []
 for x in raw_items:
     val_str = str(x).strip()
-    if val_str not in ['-', 'nan', '0', '', 'None', 'Example Items', 'Product Category']:
+    if val_str not in ['-', 'nan', '0', '', 'None', 'Example Items', 'Product Category', '\\']:
         clean_items.append(val_str)
 
 default_test_items = [
@@ -141,8 +132,13 @@ else:
 # ==========================================
 if target_country != "- กรุณาเลือกประเทศ -" and selected_item != "- กรุณาเลือกสินค้า -":
     
-    if not df.empty and item_column and item_column in df.columns:
-        item_df = df[df[item_column].astype(str).str.contains(selected_item, case=False, na=False)]
+    if not df.empty:
+        # ค้นหาในทุกคอลัมน์ที่เกี่ยวข้อง
+        mask = False
+        for col in ['Example Items', 'Product Category']:
+            if col in df.columns:
+                mask = mask | df[col].astype(str).str.contains(selected_item, case=False, na=False)
+        item_df = df[mask] if isinstance(mask, pd.Series) else pd.DataFrame()
     else:
         item_df = pd.DataFrame()
     

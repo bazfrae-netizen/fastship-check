@@ -30,15 +30,27 @@ st.subheader("ระบบตรวจสอบเงื่อนไขการ
 def load_data():
     file_path = "master_database.csv"
     if not os.path.exists(file_path):
-        return pd.DataFrame(), f"❌ ไม่พบไฟล์ฐานข้อมูล: ไม่พบไฟล์ชื่อ '{file_path}' ในโฟลเดอร์เดียวกับโปรแกรม กรุณาตรวจสอบชื่อไฟล์"
+        return pd.DataFrame(), f"❌ ไม่พบไฟล์ฐานข้อมูล: '{file_path}'"
         
     try:
-        df = pd.read_csv(file_path)
+        # พยายามอ่านแบบปกติก่อน (คั่นด้วย ,) ถ้ามีบรรทัดพังให้ข้ามไปเลย (on_bad_lines='skip')
+        df = pd.read_csv(file_path, on_bad_lines='skip', engine='python')
+        
+        # ถ้าอ่านแล้วได้มาแค่คอลัมน์เดียว แปลว่าไฟล์น่าจะถูก Excel แปลงเป็นเซมิโคลอน (;)
+        if len(df.columns) == 1:
+            df = pd.read_csv(file_path, sep=';', on_bad_lines='skip', engine='python')
+            
         if df.empty:
-            return pd.DataFrame(), "❌ ไฟล์ฐานข้อมูลว่างเปล่า ไม่มีข้อมูลในไฟล์"
+            return pd.DataFrame(), "❌ ไฟล์ฐานข้อมูลว่างเปล่า"
+            
         return df.fillna("-"), "OK"
     except Exception as e:
-        return pd.DataFrame(), f"❌ เกิดข้อผิดพลาดในการโหลดไฟล์ CSV: {e}"
+        # ไม้ตายสุดท้าย บังคับอ่านทุกรูปแบบ
+        try:
+            df = pd.read_csv(file_path, sep=None, engine='python', on_bad_lines='skip')
+            return df.fillna("-"), "OK"
+        except Exception as e2:
+            return pd.DataFrame(), f"❌ ไฟล์ CSV มีปัญหาโครงสร้างอย่างรุนแรง: {e2}"
 
 # โหลดข้อมูล
 df, load_status = load_data()
@@ -46,7 +58,6 @@ df, load_status = load_data()
 # ตรวจสอบสถานะการโหลดไฟล์
 if load_status != "OK":
     st.error(load_status)
-    st.info("💡 **วิธีแก้:** โปรดตรวจสอบว่าคุณได้อัปโหลดไฟล์ `master_database.csv` ลงในโฟลเดอร์เดียวกับ `app.py` แล้ว (ห้ามมีวงเล็บตัวเลขต่อท้ายชื่อไฟล์)")
 
 # ==========================================
 # 1. จัดเตรียมข้อมูลจาก CSV 
@@ -87,7 +98,6 @@ if check_mode == "🔍 ค้นหาจากรายชื่อสินค
     
     filtered_options = items_list
     if search_keyword.strip() != "" and not df.empty:
-        # ค้นหาจากชื่อสินค้าและหมวดหมู่
         mask = df['Example Items'].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
         if 'Product Category' in df.columns:
             mask = mask | df['Product Category'].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
@@ -98,7 +108,6 @@ if check_mode == "🔍 ค้นหาจากรายชื่อสินค
         else:
             filtered_options = []
 
-    # ป้องกันบัคกล่องหายเมื่อฐานข้อมูลโหลดไม่ขึ้น
     if not df.empty:
         if filtered_options:
             selected_item = st.selectbox("เลือกสินค้าที่ต้องการ:", options=["- กรุณาเลือกสินค้า -"] + filtered_options)
@@ -162,7 +171,6 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     item_lower = selected_item.lower()
     country_upper = target_country.upper()
     
-    # 📌 กฎพิเศษ 
     is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'มิลเลอร์', 'เลียนแบบ', 'เกรด a'])
     is_second_hand = any(kw in item_lower for kw in ['มือสอง', 'มือ 2', 'secondhand', 'used'])
     is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง'])

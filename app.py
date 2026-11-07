@@ -35,24 +35,9 @@ with col1:
     selected_agent = st.selectbox("🚚 เอเยนต์ (Agent)", agents)
 
 with col2:
-    # เพิ่มตัวเลือกสินค้าแบบ Dropdown และช่องพิมพ์อิสระ
-    item_options = ["- เลือกสินค้าจากรายการ -", "เสื้อผ้า", "รองเท้า", "กระเป๋า", "เครื่องสำอาง", "อาหารเสริม", "แบตเตอรี่ / พาวเวอร์แบงค์", "ของเหลว / น้ำมัน", "สินค้าแบรนด์เนม / ละเมิดลิขสิทธิ์"]
-    selected_item_dropdown = st.selectbox("📦 เลือกสินค้าแนะนำ", item_options)
+    # ดึงรายการสินค้าจากคอลัมน์ Keyword ใน CSV มาแสดงแบบจัดเต็มอัตโนมัติ
+    db_items = [str(x) for x in df['Keyword'].unique() if str(x) not in ['-', 'nan', '0', ' ']] if 'Keyword' in df.columns else []
+    item_options = ["- เลือกสินค้าจากรายการ -"] + sorted(db_items)
     
-    custom_item = st.text_input("✍️ หรือพิมพ์ชื่อสินค้าที่ต้องการตรวจสอบ", placeholder="เช่น เสื้อผ้า, พัดลม, แบต, กระเป๋า")
-    
-    selected_item = custom_item if custom_item.strip() != "" else (selected_item_dropdown if selected_item_dropdown != "- เลือกสินค้าจากรายการ -" else "")
-
-# ส่วนถ่ายรูป / อัปโหลดรูปภาพสินค้า
-st.markdown("---")
-st.subheader("📸 ตรวจสอบสินค้าผ่านรูปภาพ / กล้อง")
-uploaded_file = st.file_uploader("อัปโหลดรูปภาพสินค้า", type=["jpg", "jpeg", "png"])
-camera_image = st.camera_input("หรือถ่ายภาพสินค้าด้วยกล้อง")
-
-# แสดงผลการวิเคราะห์เบื้องต้น
-st.markdown("---")
-st.subheader("📌 สรุปผลการจัดส่ง:")
-if target_country != "- กรุณาเลือกประเทศ -" and selected_item:
-    st.success(f"✅ สามารถส่ง {selected_item} ไปยัง {target_country} ได้!")
-else:
-    st.info("💡 กรุณาเลือกประเทศปลายทางและระบุชื่อสินค้าเพื่อเริ่มตรวจสอบเงื่อนไข")
+    selected_item_dropdown = st.selectbox("📦 เลือกสินค้าจากฐานข้อมูล", item_options)
+    custom_item = st.text_input("✍️ หรือพิมพ์ชื่อสินค้าที่ต้องการตรวจสอบ", placeholder="เช่น เสื้อผ้า, พัดลม, แบต

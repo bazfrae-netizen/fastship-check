@@ -24,7 +24,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("📦 FastShip Check")
-st.subheader("ระบบตรวจสอบเงื่อนไขการส่งออกระหว่างประเทศ (ฐานข้อมูลเต็ม 4,000+ รายการ + DHL)")
+st.subheader("ระบบตรวจสอบเงื่อนไขการส่งออกระหว่างประเทศ (ฐานข้อมูล 4,000+ รายการ + DHL)")
 st.markdown("---")
 
 @st.cache_data
@@ -42,7 +42,7 @@ def load_data():
 df = load_data()
 
 # ==========================================
-# 1. จัดเตรียมรายชื่อประเทศและสินค้า (ดึงข้อมูลจริงจาก CSV)
+# 1. จัดเตรียมรายชื่อประเทศและสินค้า
 # ==========================================
 extra_countries = [
     "Australia", "Austria", "Bangladesh", "Belgium", "Canada", "Chile", "China", 
@@ -66,7 +66,7 @@ if not df.empty and 'Example Items' in df.columns:
 agents = ["ทั้งหมด", "UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg", "All In"]
 
 # ==========================================
-# 2. ส่วนควบคุมหลัก (Layout จัดระเบียบใหม่)
+# 2. ส่วนควบคุมหลัก
 # ==========================================
 col_c1, col_c2 = st.columns(2)
 with col_c1:
@@ -81,17 +81,37 @@ selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาและเลือกรายชื่อสินค้า (จัดเต็ม)":
     st.markdown("##### 📦 ค้นหาหรือเลื่อนเลือกรายการสินค้าจากฐานข้อมูลจริง")
-    search_keyword = st.text_input("🔍 กรองชื่อสินค้า (พิมพ์เพื่อค้นหา หรือเว้นว่างเพื่อเลื่อนดูทั้งหมด):", placeholder="พิมพ์คำค้นหา เช่น เสื้อผ้า, อาหาร, เครื่องสำอาง...")
+    search_keyword = st.text_input("🔍 กรองชื่อสินค้า (พิมพ์คำค้นหา เช่น เสื้อผ้า, อาหาร, ครีม, แบตเตอรี่):", placeholder="พิมพ์คำค้นหา...")
     
     filtered_items = items_list
     if search_keyword.strip() != "":
-        filtered_items = [x for x in items_list if search_keyword.strip().lower() in x.lower()]
+        kw = search_keyword.strip().lower()
+        # Smart mapping สำหรับคำค้นหายอดฮิตที่ไม่มีในชื่อตรงๆ
+        synonyms = {
+            "เสื้อผ้า": ["เสื้อ", "ผ้า", "แบรนด์เนม", "มือ 2", "ลิขสิทธิ์"],
+            "ครีม": ["cosmetic", "โลชั่น", "ของเหลว", "skin"],
+            "แบต": ["battery", "power bank", "ถ่าน", "พาวเวอร์แบงค์"],
+            "อาหาร": ["food", "กุนเชียง", "น้ำพริก", "ขนม", "ผลไม้"]
+        }
+        
+        target_kws = [kw]
+        for k, syns in synonyms.items():
+            if k in kw:
+                target_kws.extend(syns)
+                
+        matched = []
+        for item in items_list:
+            item_l = item.lower()
+            if any(t in item_l for t in target_kws):
+                matched.append(item)
+                
+        filtered_items = matched if matched else items_list
             
     if filtered_items:
-        selected_item = st.selectbox(f"📋 รายการสินค้าทั้งหมด ({len(filtered_items)} รายการ):", options=["- กรุณาเลือกสินค้า -"] + filtered_items)
+        selected_item = st.selectbox(f"📋 รายการสินค้า ({len(filtered_items)} รายการ):", options=["- กรุณาเลือกสินค้า -"] + filtered_items)
     else:
-        st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}'")
-        selected_item = "- กรุณาเลือกสินค้า -"
+        st.warning(f"⚠️ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}' (แสดงรายการทั้งหมดแทน)")
+        selected_item = st.selectbox("📋 รายการสินค้าทั้งหมด:", options=["- กรุณาเลือกสินค้า -"] + items_list)
 
 else:
     st.info("💡 ถ่ายรูปหรืออัปโหลดภาพสินค้าเพื่อให้ระบบ AI วิเคราะห์")
@@ -104,7 +124,7 @@ else:
     active_img = camera_image if camera_image else uploaded_file
     if active_img:
         st.image(Image.open(active_img), caption="ภาพสินค้าของคุณ", width=250)
-        detected_tag = st.text_input("🤖 AI วิเคราะห์ประเภทสินค้า:", "เสื้อผ้า")
+        detected_tag = st.text_input("🤖 AI วิเคราะห์ประเภทสินค้า:", "สินค้าทั่วไป")
         selected_item = detected_tag
 
 # ==========================================
@@ -135,9 +155,9 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     country_upper = target_country.upper()
     
     # 📌 กฎพิเศษและข้อห้ามเฉพาะเอเย่นต์
-    is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'เลียนแบบ'])
+    is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'เลียนแบบ', 'ลิขสิทธิ์'])
     is_second_hand = any(kw in item_lower for kw in ['มือสอง', 'มือ 2', 'secondhand', 'used'])
-    is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง'])
+    is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง', 'แบรนด์เนม'])
     is_japan_secondhand = (country_upper == 'JAPAN' and is_clothing and is_second_hand)
     is_oil_liquid = any(kw in item_lower for kw in ['น้ำมัน', 'ของเหลว', 'เจล', 'สเปรย์', 'oil', 'liquid', 'น้ำหอม'])
     is_battery = any(kw in item_lower for kw in ['แบต', 'ถ่าน', 'พัดลม', 'power bank', 'พาวเวอร์แบงค์'])
@@ -163,7 +183,7 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
 
     if not working_df.empty:
         if is_fake_brand:
-            st.error("❌ สินค้าละเมิดลิขสิทธิ์ / สินค้าก๊อปแบรนด์ ไม่อนุญาตให้จัดส่งผ่านขนส่งปกติ (แนะนำช่องทาง All In เท่านั้น)")
+            st.error("❌ สินค้าละเมิดลิขสิทธิ์ / สินค้าแบรนด์เนม ไม่อนุญาตให้จัดส่งผ่านขนส่งปกติ (แนะนำช่องทาง All In เท่านั้น)")
         elif is_japan_secondhand:
             st.error("❌ ประเทศญี่ปุ่นไม่อนุญาตให้นำเข้า 'เสื้อผ้ามือสอง' ผ่านขนส่งปกติ")
         else:

@@ -92,19 +92,20 @@ check_mode = st.radio("🛠️ เลือกวิธีการตรวจ�
 selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาจากรายชื่อสินค้า":
-    # ใช้ช่องค้นหาแบบพิมพ์กรองคำภาษาไทยได้สมบูรณ์ 100% ไม่มี No results กวนใจ
+    st.markdown("##### 📦 ค้นหาและเลือกรายการสินค้า")
     search_keyword = st.text_input("🔍 พิมพ์ค้นหาชื่อสินค้า (เช่น ยา, อาหาร, เสื้อผ้า):", placeholder="พิมพ์คำค้นหาที่นี่...")
     
+    # กรองรายการสินค้าแบบ Real-time ตามคำที่พิมพ์
     if search_keyword.strip() != "":
         filtered_options = [item for item in items_list if search_keyword.lower() in item.lower()]
-        if filtered_options:
-            selected_item = st.selectbox("📦 เลือกรายการสินค้าที่พบ:", options=filtered_options, key="filtered_item_selectbox")
-        else:
-            st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}' ในระบบ")
-            selected_item = "- กรุณาเลือกสินค้า -"
     else:
-        st.info("💡 พิมพ์คำค้นหาในช่องด้านบนเพื่อกรองรายการสินค้า หรือเลือกจากรายการทั้งหมดด้านล่างครับ")
-        selected_item = st.selectbox("📦 รายชื่อสินค้าทั้งหมดในระบบ:", options=["- กรุณาเลือกสินค้า -"] + items_list, key="all_item_selectbox")
+        filtered_options = items_list
+
+    if filtered_options:
+        selected_item = st.selectbox("เลือกสินค้าจากผลการค้นหา:", options=["- กรุณาเลือกสินค้า -"] + filtered_options, key="clean_item_selectbox")
+    else:
+        st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}'")
+        selected_item = "- กรุณาเลือกสินค้า -"
 else:
     st.info("💡 **ระบบกล้องและ AI วิเคราะห์:** ถ่ายรูปสินค้าหรืออัปโหลดรูปภาพ ระบบจะตรวจจับประเภทสินค้าให้ พร้อมตรวจสอบเงื่อนไขการส่งออกทันทีครับ")
     

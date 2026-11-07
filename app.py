@@ -37,61 +37,47 @@ def load_data():
     try:
         df = pd.read_csv("master_database.csv")
         if df.empty or len(df.columns) == 0:
-            return pd.DataFrame(columns=["Keyword", "Category", "Restriction_Level", "Country", "Note"])
+            return pd.DataFrame()
         return df.fillna("-")
     except Exception as e:
-        return pd.DataFrame(columns=["Keyword", "Category", "Restriction_Level", "Country", "Note"])
+        return pd.DataFrame()
 
 df = load_data()
 
 # ==========================================
-# 1. รายชื่อประเทศและสินค้า (Safe Extraction)
+# 1. รายชื่อประเทศและสินค้าจาก CSV แบบจัดเต็ม
 # ==========================================
-extra_countries = [
-    "Cambodia", "Laos", "Myanmar", "Vietnam", "Malaysia", "Singapore",
-    "Indonesia", "Philippines", "Brunei", "Japan", "South Korea", "China", 
-    "Taiwan", "Hong Kong", "India", "Australia", "New Zealand", "USA", 
-    "Canada", "UK", "France", "Germany", "Italy", "Spain", "Netherlands", "Bangladesh"
-]
-
 db_countries = []
-if not df.empty:
-    for col in df.columns:
-        if 'country' in str(col).lower():
-            db_countries = [str(x) for x in df[col].unique() if str(x) not in ['-', 'nan', '0', '']]
-            break
+if not df.empty and 'Country' in df.columns:
+    db_countries = [str(x) for x in df['Country'].unique() if str(x) not in ['-', 'nan', '0', '']]
+
+extra_countries = [
+    "Australia", "Austria", "Bangladesh", "Belgium", "Canada", "Chile", "China", 
+    "Croatia", "Czech Republic", "Denmark", "Egypt", "Finland", "France", "Germany", 
+    "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Ireland", 
+    "Israel", "Italy", "Japan", "Kuwait", "Macao", "Malaysia", "Malta", "Mexico", 
+    "Netherlands", "New Zealand", "Norway", "Oman", "Pakistan", "Philippines", 
+    "Poland", "Puerto Rico", "Qatar", "Saudi Arabia", "Singapore", "South Africa", 
+    "South Korea", "Spain", "Sweden", "Switzerland", "Taiwan", "Turkey", "USA", 
+    "United Arab Emirates", "United Kingdom", "Vietnam"
+]
 
 all_countries = sorted(list(set(extra_countries + db_countries)))
 countries = ["- กรุณาเลือกประเทศ -"] + all_countries
 
-# ค้นหาคอลัมน์ชื่อสินค้าอย่างปลอดภัย
-item_column = None
-for col in df.columns:
-    if any(k in str(col).lower() for k in ['item', 'keyword', 'product', 'goods', 'ชื่อ']):
-        item_column = col
-        break
-if item_column is None and not df.empty:
-    item_column = df.columns[0]
-
-raw_items = df[item_column].dropna().unique() if (item_column and not df.empty) else []
+item_column = 'Example Items' if 'Example Items' in df.columns else ('Keyword' if 'Keyword' in df.columns else (df.columns[2] if len(df.columns) > 2 else df.columns[0]))
+raw_items = df[item_column].dropna().unique() if (not df.empty and item_column in df.columns) else []
 
 clean_items = []
 for x in raw_items:
     val_str = str(x).strip()
-    if val_str not in ['-', 'nan', '0', '', 'None']:
+    if val_str not in ['-', 'nan', '0', '', 'None', 'Example Items']:
         clean_items.append(val_str)
 
 default_test_items = [
-    "เสื้อผ้า", 
-    "เสื้อผ้ามือสอง",
-    "รองเท้าผ้าใบ", 
-    "กระเป๋าแบรนด์เนม", 
-    "กระเป๋า ก๊อปแบรนด์", 
-    "เสื้อผ้า ก๊อปแบรนด์", 
-    "พัดลม มีแบต", 
-    "แบตเตอรี่สำรอง (Power Bank)",
-    "น้ำมันเครื่อง",
-    "ของเหลว / เจล / สเปรย์"
+    "เสื้อผ้า", "เสื้อผ้ามือสอง", "รองเท้าผ้าใบ", "กระเป๋าแบรนด์เนม", 
+    "กระเป๋า ก๊อปแบรนด์", "เสื้อผ้า ก๊อปแบรนด์", "พัดลม มีแบต", 
+    "แบตเตอรี่สำรอง (Power Bank)", "น้ำมันเครื่อง", "ของเหลว / เจล / สเปรย์"
 ]
 combined_items = sorted(list(set(clean_items + default_test_items)))
 items_list = ["- กรุณาเลือกสินค้า -"] + combined_items
@@ -142,17 +128,26 @@ else:
 # ==========================================
 if target_country != "- กรุณาเลือกประเทศ -" and selected_item != "- กรุณาเลือกสินค้า -":
     
-    if item_column and not df.empty:
+    if not df.empty and item_column in df.columns:
         item_df = df[df[item_column].astype(str).str.contains(selected_item, case=False, na=False)]
     else:
         item_df = pd.DataFrame()
     
     if len(item_df) > 0:
-        working_df = item_df.copy()
-        status_msg = f"📌 วิเคราะห์ตามเงื่อนไขในระบบสำหรับ **{selected_item}**"
+        if 'Country' in item_df.columns:
+            country_specific = item_df[item_df['Country'].astype(str).str.upper() == target_country.upper()]
+            if len(country_specific) > 0:
+                working_df = country_specific.copy()
+                status_msg = f"📌 วิเคราะห์ตามเงื่อนไขเฉพาะของประเทศ **{target_country}**"
+            else:
+                working_df = item_df.copy()
+                status_msg = f"🌍 วิเคราะห์ตามมาตรฐานเอเย่นต์ (แสดงผลรวมทุกประเทศสำหรับสินค้านี้)"
+        else:
+            working_df = item_df.copy()
+            status_msg = f"📌 วิเคราะห์ตามเงื่อนไขในระบบ"
     else:
         working_df = pd.DataFrame([{
-            'Keyword': selected_item,
+            item_column: selected_item,
             'Country': target_country,
             'UPS': 'Acceptable',
             'FedEx': 'Acceptable',

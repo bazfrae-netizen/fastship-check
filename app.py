@@ -54,13 +54,12 @@ if load_status != "OK":
 # ==========================================
 # 1. จัดเตรียมข้อมูล & ตรวจจับคอลัมน์อัตโนมัติ
 # ==========================================
-# ตรวจจับคอลัมน์ชื่อสินค้า (รองรับทั้งไฟล์แบบใหม่และแบบเก่า)
 item_col = 'Example Items' if 'Example Items' in df.columns else ('Keyword' if 'Keyword' in df.columns else None)
 country_col = 'Country' if 'Country' in df.columns else None
 cat_col = 'Product Category' if 'Product Category' in df.columns else ('Category' if 'Category' in df.columns else None)
 alias_col = 'Aliases' if 'Aliases' in df.columns else None
 
-# จัดการรายชื่อประเทศ (ดึงจากไฟล์ + สำรองมาตรฐาน 50 ประเทศป้องกันประเทศหาย)
+# รายชื่อประเทศสำรองมาตรฐาน 50+ ประเทศ
 extra_countries = [
     "Australia", "Austria", "Bangladesh", "Belgium", "Canada", "Chile", "China", 
     "Croatia", "Czech Republic", "Denmark", "Egypt", "Finland", "France", "Germany", 
@@ -105,11 +104,11 @@ selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาจากรายชื่อสินค้า":
     st.markdown("##### 📦 ค้นหาและเลือกรายการสินค้า")
-    search_keyword = st.text_input("🔍 พิมพ์ค้นหาชื่อสินค้า (เช่น เสื้อผ้า, ของเหลว):", placeholder="พิมพ์คำค้นหาที่นี่...")
+    search_keyword = st.text_input("🔍 พิมพ์ค้นหาชื่อสินค้า (ถ้าไม่พิมพ์ จะแสดงรายการทั้งหมดให้เลือก):", placeholder="พิมพ์คำค้นหาที่นี่ (หรือเว้นว่างเพื่อดูทั้งหมด)...")
     
+    # กรองรายการสินค้าแบบสมบูรณ์
     filtered_options = items_list
     if search_keyword.strip() != "" and item_col and not df.empty:
-        # ค้นหาจากชื่อสินค้า หมวดหมู่ และคำค้นหาสำรอง
         mask = df[item_col].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
         if cat_col:
             mask = mask | df[cat_col].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
@@ -123,7 +122,7 @@ if check_mode == "🔍 ค้นหาจากรายชื่อสินค
             filtered_options = []
 
     if filtered_options:
-        selected_item = st.selectbox("เลือกสินค้าที่ต้องการ:", options=["- กรุณาเลือกสินค้า -"] + filtered_options)
+        selected_item = st.selectbox("📦 เลือกรายการสินค้า (คลิกเลื่อนดูรายการได้):", options=["- กรุณาเลือกสินค้า -"] + filtered_options)
     else:
         st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}'")
         selected_item = "- กรุณาเลือกสินค้า -"

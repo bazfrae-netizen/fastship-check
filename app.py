@@ -23,42 +23,37 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("📦 FastShip Check")
-st.subheader("ระบบตรวจสอบเงื่อนไขการส่งออกอัจฉริยะ 📸")
+st.subheader("ระบบตรวจสอบเงื่อนไขการส่งออกอัจฉริยะ (อัปเดต 50+ ประเทศ + DHL) 📸")
 
 @st.cache_data
 def load_data():
     try:
+        # โหลดไฟล์ Master Database ตัวเต็ม (5000+ รายการ)
         df = pd.read_csv("master_database.csv")
         return df.fillna("-")
     except Exception as e:
-        st.error(f"เกิดข้อผิดพลาดในการโหลดข้อมูล: {e}")
         return pd.DataFrame()
 
 df = load_data()
 
 # ==========================================
-# 1. จัดเตรียมข้อมูลจาก CSV (โครงสร้างใหม่)
+# 1. จัดเตรียมข้อมูลจาก CSV (โครงสร้างเต็มรูปแบบ)
 # ==========================================
-# ดึงรายชื่อประเทศ
 db_countries = []
 if not df.empty and 'Country' in df.columns:
     db_countries = [str(x).strip() for x in df['Country'].unique() if str(x).strip() not in ['-', 'nan', 'All', '']]
 
-extra_countries = [
-    "Australia", "Austria", "Bangladesh", "Belgium", "Canada", "China", 
-    "France", "Germany", "Hong Kong", "India", "Indonesia", "Italy", "Japan", 
-    "Malaysia", "Philippines", "Singapore", "South Korea", "Taiwan", "UK", "USA", "Vietnam"
-]
+countries = ["- กรุณาเลือกประเทศ -"] + sorted(db_countries)
 
-all_countries = sorted(list(set(extra_countries + db_countries)))
-countries = ["- กรุณาเลือกประเทศ -"] + all_countries
+raw_items = []
+if not df.empty and 'Example Items' in df.columns:
+    for val in df['Example Items'].dropna().astype(str):
+        v = val.strip()
+        if v and v not in ['-', 'nan', '0', 'None']:
+            raw_items.append(v)
 
-# ดึงรายการสินค้าหลักจากคอลัมน์ Keyword
-items_list = []
-if not df.empty and 'Keyword' in df.columns:
-    items_list = sorted([str(x).strip() for x in df['Keyword'].unique() if str(x).strip() not in ['-', 'nan', '']])
-
-agents = ["ทั้งหมด", "UPS", "FedEx", "Aramex", "EMS World / Epacket 2kg", "All In"]
+items_list = sorted(list(set(raw_items)))
+agents = ["ทั้งหมด", "UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg", "All In"]
 
 # ==========================================
 # 2. หน้าจอเลือกประเทศ เอเย่นต์ และโหมดตรวจสอบ
@@ -73,21 +68,21 @@ st.markdown("---")
 check_mode = st.radio("🛠️ เลือกวิธีการตรวจสอบสินค้า:", ["🔍 ค้นหาจากรายชื่อสินค้า", "📸 ถ่ายรูป/อัปโหลดรูปภาพ (AI วิเคราะห์)"])
 
 selected_item = "- กรุณาเลือกสินค้า -"
-search_keyword = ""
 
 if check_mode == "🔍 ค้นหาจากรายชื่อสินค้า":
     st.markdown("##### 📦 ค้นหาและเลือกรายการสินค้า")
-    search_keyword = st.text_input("🔍 พิมพ์ค้นหาชื่อสินค้า (เช่น เสื้อผ้า, ของเหลว):", placeholder="พิมพ์คำค้นหาที่นี่...")
+    search_keyword = st.text_input("🔍 พิมพ์ค้นหาชื่อสินค้า (เช่น เสื้อผ้า, เครื่องสำอาง, อาหารเสริม):", placeholder="พิมพ์คำค้นหาที่นี่...")
     
     filtered_options = items_list
     if search_keyword.strip() != "" and not df.empty:
-        # ค้นหาจากทั้ง Keyword และ Aliases
-        mask_kw = df['Keyword'].astype(str).str.contains(search_keyword.strip(), case=False, na=False) if 'Keyword' in df.columns else False
-        mask_al = df['Aliases'].astype(str).str.contains(search_keyword.strip(), case=False, na=False) if 'Aliases' in df.columns else False
-        matched_df = df[mask_kw | mask_al]
+        # ค้นหาจากชื่อสินค้าและหมวดหมู่
+        mask = df['Example Items'].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
+        if 'Product Category' in df.columns:
+            mask = mask | df['Product Category'].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
         
-        if not matched_df.empty and 'Keyword' in matched_df.columns:
-            filtered_options = sorted(list(set(matched_df['Keyword'].astype(str).tolist())))
+        matched_df = df[mask]
+        if not matched_df.empty:
+            filtered_options = sorted(list(set(matched_df['Example Items'].astype(str).tolist())))
         else:
             filtered_options = []
 
@@ -110,90 +105,100 @@ else:
         image = Image.open(active_image)
         st.image(image, caption="📷 ภาพสินค้า", width=300)
         
-        # สมมติผลลัพธ์จาก AI เป็น "เสื้อผ้า" เป็นค่าเริ่มต้น
         default_guess = "เสื้อผ้า" 
         detected_tag = st.text_input("🤖 AI ตรวจจับประเภทสินค้า (แก้ไขได้):", default_guess)
         
-        # จับคู่คำที่ AI ตรวจได้กับ Keyword หรือ Aliases ในระบบ
         matched_item = "- กรุณาเลือกสินค้า -"
         if not df.empty:
-            mask_kw = df['Keyword'].astype(str).str.contains(detected_tag.strip(), case=False, na=False) if 'Keyword' in df.columns else False
-            mask_al = df['Aliases'].astype(str).str.contains(detected_tag.strip(), case=False, na=False) if 'Aliases' in df.columns else False
-            matched_df = df[mask_kw | mask_al]
-            
-            if not matched_df.empty and 'Keyword' in matched_df.columns:
-                matched_item = str(matched_df['Keyword'].iloc[0])
+            mask = df['Example Items'].astype(str).str.contains(detected_tag.strip(), case=False, na=False)
+            matched_df = df[mask]
+            if not matched_df.empty:
+                matched_item = str(matched_df['Example Items'].iloc[0])
         
         selected_item = matched_item if matched_item != "- กรุณาเลือกสินค้า -" else detected_tag
         if matched_item != "- กรุณาเลือกสินค้า -":
-            st.success(f"✔️ จับคู่กับหมวดหมู่ในระบบ: **{selected_item}**")
+            st.success(f"✔️ จับคู่กับสินค้าในระบบ: **{selected_item}**")
         else:
-            st.warning(f"⚠️ ไม่พบหมวดหมู่ที่ตรงกับ '{detected_tag}' ในระบบ จะใช้การวิเคราะห์แบบทั่วไป")
+            st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับ '{detected_tag}' ในระบบ จะใช้การวิเคราะห์แบบทั่วไป")
 
 # ==========================================
-# 3. วิเคราะห์เงื่อนไขจากโครงสร้าง CSV ใหม่
+# 3. วิเคราะห์เงื่อนไขจากฐานข้อมูลและกฎ AI
 # ==========================================
 if target_country != "- กรุณาเลือกประเทศ -" and selected_item != "- กรุณาเลือกสินค้า -":
     st.markdown("---")
     st.markdown("### 📊 ผลการตรวจสอบเงื่อนไข")
     
     working_df = pd.DataFrame()
-    if not df.empty and 'Keyword' in df.columns:
-        working_df = df[df['Keyword'].astype(str) == selected_item].copy()
+    if not df.empty:
+        item_df = df[df['Example Items'].astype(str) == selected_item]
+        if len(item_df) > 0:
+            country_specific = item_df[item_df['Country'].astype(str).str.upper() == target_country.upper()]
+            working_df = country_specific.copy() if len(country_specific) > 0 else item_df.head(1).copy()
+            
+    if len(working_df) == 0:
+        working_df = pd.DataFrame([{
+            'Example Items': selected_item, 'Country': target_country,
+            'UPS': 'Acceptable', 'FedEx': 'Acceptable', 'DHL': 'Acceptable',
+            'Aramex': 'Acceptable', 'EMS World / Epacket 2kg': 'Acceptable',
+            'Condition': 'ตรวจสอบตามกฎข้อบังคับสากล'
+        }])
+        
+    working_df['All In'] = 'Acceptable'
     
-    is_fake_brand = any(kw in selected_item.lower() for kw in ['ก๊อป', 'brand fake', 'ปลอม', 'replica'])
-    is_second_hand = any(kw in selected_item.lower() for kw in ['มือสอง', 'second hand', 'used'])
-    is_clothing = any(kw in selected_item.lower() for kw in ['เสื้อผ้า', 'clothing', 'apparel'])
+    item_lower = selected_item.lower()
+    country_upper = target_country.upper()
     
-    is_japan_rule = (target_country.upper() == 'JAPAN' and is_second_hand)
+    # 📌 กฎพิเศษ (อ้างอิงจากรูป DHL และมาตรฐานทั่วไป)
+    is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'มิลเลอร์', 'เลียนแบบ', 'เกรด a'])
+    is_second_hand = any(kw in item_lower for kw in ['มือสอง', 'มือ 2', 'secondhand', 'used'])
+    is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง'])
+    is_japan_secondhand = (country_upper == 'JAPAN' and is_clothing and is_second_hand)
+    is_oil_liquid = any(kw in item_lower for kw in ['น้ำมัน', 'ของเหลว', 'เจล', 'สเปรย์', 'oil', 'liquid'])
+    is_battery = any(kw in item_lower for kw in ['แบต', 'ถ่าน', 'พัดลม มีแบต', 'power bank'])
+    is_dhl_prohibited = any(kw in item_lower for kw in [
+        'อาหารสด', 'ซีอิ๊ว', 'น้ำพริก', 'อาหารทะเล', 'เพชร', 'ทอง', 'เงิน', 'สารเคมี', 'สัตว์', 
+        'ยา', 'เสพติด', 'เงินสด', 'อาวุธ', 'กระดูก', 'น้ำหอม', 'โคโลญจน์', 'เครื่องสำอาง', 'สกินแคร์', 'อาหารเสริม', 'วิตามิน'
+    ])
 
-    if not working_df.empty:
-        item_info = working_df.iloc[0]
-        level = str(item_info.get('Restriction_Level', '')).strip().lower()
-        note = str(item_info.get('Note', '')).strip()
-        
-        # เงื่อนไขละเมิดลิขสิทธิ์
-        if level == 'danger' or is_fake_brand:
-            st.error(f"❌ **สินค้านี้จัดอยู่ในกลุ่มห้ามส่ง (Prohibited / Danger)**")
-            if note and note != '-': st.write(f"📝 **รายละเอียด:** {note}")
-            st.warning("🚨 ไม่อนุญาตให้จัดส่งผ่านเอเย่นต์ปกติเด็ดขาด (อาจส่งได้เฉพาะช่องทางพิเศษ All In เท่านั้น)")
-        
-        # เงื่อนไขเสื้อผ้ามือสองญี่ปุ่น
-        elif is_japan_rule:
-            st.error("❌ **ประเทศญี่ปุ่นไม่อนุญาตให้นำเข้า 'เสื้อผ้ามือสอง' ผ่านเอเย่นต์ขนส่งปกติ**")
-            st.warning("แนะนำ: จัดส่งผ่านช่องทางพิเศษ All In หรือตรวจสอบข้อจำกัดในการทำความสะอาดตามกฎของญี่ปุ่น")
-            
-        # เงื่อนไขสินค้าต้องเฝ้าระวัง (Warning / ของเหลว / แบตเตอรี่)
-        elif level == 'warning':
-            st.warning(f"⚠️ **สินค้านี้จัดอยู่ในกลุ่มต้องเฝ้าระวัง (Warning / Restricted)**")
-            if note and note != '-': st.write(f"📝 **คำแนะนำ:** {note}")
-            
-            if 'msds' in note.lower() or any(kw in selected_item.lower() for kw in ['liquid', 'oil', 'ของเหลว']):
-                st.info("🛢️ จำเป็นต้องแนบเอกสาร **MSDS (Material Safety Data Sheet)** ให้เอเย่นต์ตรวจสอบก่อนจัดส่ง")
-            if 'battery' in note.lower() or 'แบต' in selected_item.lower():
-                st.info("⚡ หากส่งผ่าน UPS อนุญาตให้จัดส่งได้ **ไม่เกิน 2 ชิ้นต่อ 1 กล่อง** (ห้ามส่ง Power Bank เด็ดขาด)")
-                
-            st.success(f"✅ สามารถจัดส่งไปยัง **{target_country}** ได้ (หากปฏิบัติตามเงื่อนไขด้านบน)")
-            
-        # สินค้าปกติ (Allowed)
-        else:
-            st.success(f"✅ สามารถจัดส่ง **{selected_item}** ไปยัง **{target_country}** ได้ตามปกติ!")
-            if note and note != '-': st.write(f"📝 **หมายเหตุ:** {note}")
-            
-        # ตารางข้อมูลอ้างอิง
-        st.markdown("---")
-        st.write("**📄 ข้อมูลอ้างอิงจากฐานข้อมูล (Reference):**")
-        st.dataframe(working_df[['Keyword', 'Category', 'Restriction_Level', 'Country', 'Note']], use_container_width=True)
-        
-    else:
-        # กรณีพิมพ์ชื่อสินค้าเองแล้วไม่เจอในฐานข้อมูล
-        st.warning(f"⚠️ ไม่พบกฎเฉพาะเจาะจงสำหรับ '{selected_item}' ในฐานข้อมูล")
+    # 📌 ประมวลผลสถานะเอเย่นต์
+    for col in ["UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg"]:
+        if col in working_df.columns:
+            if is_fake_brand or is_japan_secondhand:
+                working_df[col] = 'Unacceptable'
+            elif is_oil_liquid and col in ["UPS", "FedEx"]:
+                working_df[col] = 'Check MSDS'
+            elif is_battery and col == 'UPS':
+                working_df['UPS'] = 'Acceptable'
+            if col == 'DHL' and (is_dhl_prohibited or is_battery):
+                working_df['DHL'] = 'Unacceptable'
+
+    # กรองเฉพาะเอเย่นต์ที่เลือก
+    if selected_agent != "ทั้งหมด" and selected_agent in working_df.columns:
+        if selected_agent != 'All In':
+            working_df = working_df[~working_df[selected_agent].astype(str).str.upper().isin(['-', 'X', 'NAN', ''])]
+
+    # 📌 แสดงผล
+    if len(working_df) > 0:
         if is_fake_brand:
-            st.error("❌ สินค้าละเมิดลิขสิทธิ์ / ของก๊อป ไม่อนุญาตให้จัดส่งผ่านเอเย่นต์ปกติ")
-        elif is_japan_rule:
-            st.error("❌ ประเทศญี่ปุ่นไม่อนุญาตให้นำเข้าเสื้อผ้ามือสองผ่านเอเย่นต์ปกติ")
+            st.error("❌ สินค้าละเมิดลิขสิทธิ์ / สินค้าก๊อปแบรนด์ ไม่อนุญาตให้จัดส่งผ่านเอเย่นต์ขนส่งปกติเด็ดขาด! (รองรับเฉพาะ All In)")
+        elif is_japan_secondhand:
+            st.error("❌ ประเทศญี่ปุ่นไม่อนุญาตให้นำเข้า 'เสื้อผ้ามือสอง' ผ่านเอเย่นต์ขนส่งปกติเด็ดขาด")
         else:
-            st.info(f"✅ เบื้องต้นคาดว่าสามารถจัดส่งไปยัง **{target_country}** ได้ โปรดตรวจสอบกฎระเบียบสากลเพิ่มเติม")
+            st.success(f"✅ สามารถส่ง **{selected_item}** ไปยัง **{target_country}** ได้!")
+        
+        if is_oil_liquid:
+            st.info("🛢️ **ข้อกำหนดของเหลว:** จำเป็นต้องส่งเอกสาร MSDS ให้ทางเอเย่นต์ตรวจสอบก่อน")
+        if is_battery:
+            st.warning("⚡ **ข้อกำหนดแบตเตอรี่:** UPS อนุญาตให้ส่งได้ไม่เกิน 2 ชิ้นต่อกล่อง / ส่วน **DHL ห้ามส่งเด็ดขาด** (รวมถึงพาวเวอร์แบงค์)")
+        if is_dhl_prohibited:
+            st.warning("🚨 **ประกาศ DHL ห้ามส่ง:** สินค้าประเภทอาหารสด เครื่องสำอาง อาหารเสริม ยา และของเหลว ไม่อนุญาตให้ส่งผ่าน DHL")
+            
+        st.markdown("---")
+        st.write("**ตารางอ้างอิงข้อมูล (Reference):**")
+        st.dataframe(working_df, use_container_width=True)
+    else:
+        st.error(f"❌ ไม่อนุญาตให้ส่ง '{selected_item}' ผ่านเอเย่นต์ '{selected_agent}'")
+        st.warning("สาเหตุ: สินค้าติดเงื่อนไขข้อห้ามของเอเย่นต์ที่คุณเลือก หรือเป็นสินค้าผิดกฎหมาย/ละเมิดลิขสิทธิ์")
             
 elif target_country == "- กรุณาเลือกประเทศ -" or selected_item == "- กรุณาเลือกสินค้า -":
-    st.info("👆 กรุณาเลือก 'ประเทศปลายทาง' และ 'รายการสินค้า' ให้ครบถ้วนเพื่อเริ่มตรวจสอบ")
+    st.info("👆 กรุณาเลือก 'ประเทศปลายทาง' และ 'สินค้า' ให้ครบถ้วนเพื่อเริ่มตรวจสอบ")

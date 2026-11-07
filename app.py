@@ -45,7 +45,7 @@ def load_data():
 df = load_data()
 
 # ==========================================
-# 1. รายชื่อประเทศและสินค้าแบบครบถ้วนทุกรายการจาก CSV
+# 1. รายชื่อประเทศและสินค้าจาก CSV
 # ==========================================
 db_countries = []
 if not df.empty and 'Country' in df.columns:
@@ -65,7 +65,6 @@ extra_countries = [
 all_countries = sorted(list(set(extra_countries + db_countries)))
 countries = ["- กรุณาเลือกประเทศ -"] + all_countries
 
-# ดึงรายการสินค้าทั้งหมดจาก CSV (ทั้ง Example Items และ Product Category)
 raw_items = []
 if not df.empty:
     for col in ['Example Items', 'Product Category']:
@@ -76,35 +75,34 @@ if not df.empty:
                     raw_items.append(v)
 
 items_list = ["- กรุณาเลือกสินค้า -"] + sorted(list(set(raw_items)))
-
 agents = ["ทั้งหมด", "UPS", "FedEx", "Aramex", "EMS World / Epacket 2kg", "All In"]
 
 # ==========================================
-# 2. หน้าจอเลือกประเทศ เอเย่นต์ และโหมดตรวจสอบรูปภาพ
+# 2. หน้าจอเลือกประเทศ เอเย่นต์ และโหมดตรวจสอบ
 # ==========================================
-col_mode1, col_mode2 = st.columns(2)
-with col_mode1:
-    target_country = st.selectbox("🌍 เลือกประเทศปลายทาง", options=countries, key="country_select")
-with col_mode2:
-    selected_agent = st.selectbox("🚚 เลือกเอเย่นต์ (Agent)", options=agents, key="agent_select")
+col1, col2 = st.columns(2)
+with col1:
+    target_country = st.selectbox("🌍 เลือกประเทศปลายทาง", options=countries)
+with col2:
+    selected_agent = st.selectbox("🚚 เลือกเอเย่นต์ (Agent)", options=agents)
 
 st.markdown("---")
-check_mode = st.radio("🛠️ เลือกวิธีการตรวจสอบสินค้า:", ["🔍 ค้นหาจากรายชื่อสินค้า", "📸 ถ่ายรูปจากกล้อง / อัปโหลดรูปภาพ (ให้ AI วิเคราะห์อัตโนมัติ)"], key="check_mode_radio")
+check_mode = st.radio("🛠️ เลือกวิธีการตรวจสอบสินค้า:", ["🔍 ค้นหาจากรายชื่อสินค้า", "📸 ถ่ายรูปจากกล้อง / อัปโหลดรูปภาพ (ให้ AI วิเคราะห์อัตโนมัติ)"])
 
-selected_item = ""
+selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาจากรายชื่อสินค้า":
-    selected_item = st.selectbox("📦 รายชื่อสินค้า (คลิกเลือกหรือพิมพ์ค้นหาได้ทุกรายการ)", options=items_list, key="item_select")
+    selected_item = st.selectbox("📦 รายชื่อสินค้า (คลิกเลือกหรือพิมพ์ค้นหาได้ทุกรายการ)", options=items_list)
 else:
     st.info("💡 **ระบบกล้องและ AI วิเคราะห์:** ถ่ายรูปสินค้าหรืออัปโหลดรูปภาพ ระบบจะตรวจจับประเภทสินค้าให้ พร้อมตรวจสอบเงื่อนไขการส่งออกทันทีครับ")
     
     col_cam1, col_cam2 = st.columns(2)
     with col_cam1:
         st.markdown("##### 📸 ถ่ายรูปสดผ่านกล้อง")
-        camera_image = st.camera_input("กดปุ่มถ่ายรูปด้านล่าง", key="cam_input")
+        camera_image = st.camera_input("กดปุ่มถ่ายรูปด้านล่าง")
     with col_cam2:
         st.markdown("##### 📂 หรืออัปโหลดรูปภาพจากเครื่อง")
-        uploaded_file = st.file_uploader("เลือกไฟล์รูปภาพ (JPG, PNG)", type=["jpg", "jpeg", "png"], key="file_up")
+        uploaded_file = st.file_uploader("เลือกไฟล์รูปภาพ (JPG, PNG)", type=["jpg", "jpeg", "png"])
     
     active_image = camera_image if camera_image is not None else uploaded_file
     
@@ -113,10 +111,8 @@ else:
         st.image(image, caption="📷 ภาพสินค้าที่นำมาตรวจสอบ", width=300)
         
         default_guess = "น้ำมันเครื่อง" if camera_image is not None or (uploaded_file and "honda" in str(uploaded_file.name).lower()) else "น้ำมันเครื่อง"
-        detected_tag = st.text_input("🤖 AI ตรวจจับประเภทสินค้า (แก้ไขชื่อได้หากไม่ตรง):", default_guess, key="ai_tag")
+        detected_tag = st.text_input("🤖 AI ตรวจจับประเภทสินค้า (แก้ไขชื่อได้หากไม่ตรง):", default_guess)
         selected_item = detected_tag
-    else:
-        selected_item = "- กรุณาเลือกสินค้า -"
 
 # ==========================================
 # 3. ระบบ AI วิเคราะห์เงื่อนไขและกฎข้อบังคับ

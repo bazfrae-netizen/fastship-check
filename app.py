@@ -36,7 +36,7 @@ st.subheader("ระบบวิเคราะห์เงื่อนไขก
 def load_data():
     try:
         df = pd.read_csv("master_database.csv")
-        if df is None or df.empty or len(df.columns) == 0:
+        if df is None or df.empty:
             return pd.DataFrame()
         return df.fillna("-")
     except Exception as e:
@@ -45,7 +45,7 @@ def load_data():
 df = load_data()
 
 # ==========================================
-# 1. รายชื่อประเทศและสินค้าจาก CSV แบบครบถ้วน
+# 1. รายชื่อประเทศและสินค้าแบบครบถ้วนทุกรายการจาก CSV
 # ==========================================
 db_countries = []
 if not df.empty and 'Country' in df.columns:
@@ -65,7 +65,7 @@ extra_countries = [
 all_countries = sorted(list(set(extra_countries + db_countries)))
 countries = ["- กรุณาเลือกประเทศ -"] + all_countries
 
-# ดึงรายการสินค้าทั้งจาก Example Items และ Product Category มารวมกันให้อัตโนมัติและจัดเต็ม
+# ดึงรายการสินค้าทั้งหมดจาก CSV (ทั้ง Example Items และ Product Category)
 raw_items = []
 if not df.empty:
     for col in ['Example Items', 'Product Category']:
@@ -78,13 +78,7 @@ for x in raw_items:
     if val_str not in ['-', 'nan', '0', '', 'None', 'Example Items', 'Product Category', '\\']:
         clean_items.append(val_str)
 
-default_test_items = [
-    "เสื้อผ้า", "เสื้อผ้ามือสอง", "รองเท้าผ้าใบ", "กระเป๋าแบรนด์เนม", 
-    "กระเป๋า ก๊อปแบรนด์", "เสื้อผ้า ก๊อปแบรนด์", "พัดลม มีแบต", 
-    "แบตเตอรี่สำรอง (Power Bank)", "น้ำมันเครื่อง", "ของเหลว / เจล / สเปรย์"
-]
-combined_items = sorted(list(set(clean_items + default_test_items)))
-items_list = ["- กรุณาเลือกสินค้า -"] + combined_items
+items_list = ["- กรุณาเลือกสินค้า -"] + sorted(list(set(clean_items)))
 
 agents = ["ทั้งหมด", "UPS", "FedEx", "Aramex", "EMS World / Epacket 2kg", "All In"]
 
@@ -103,7 +97,7 @@ check_mode = st.radio("🛠️ เลือกวิธีการตรวจ�
 selected_item = ""
 
 if check_mode == "🔍 ค้นหาจากรายชื่อสินค้า":
-    selected_item = st.selectbox("📦 รายชื่อสินค้า (คลิกเลือกหรือพิมพ์ค้นหาได้)", options=items_list)
+    selected_item = st.selectbox("📦 รายชื่อสินค้า (คลิกเลือกหรือพิมพ์ค้นหาได้ทุกรายการ)", options=items_list)
 else:
     st.info("💡 **ระบบกล้องและ AI วิเคราะห์:** ถ่ายรูปสินค้าหรืออัปโหลดรูปภาพ ระบบจะตรวจจับประเภทสินค้าให้ พร้อมตรวจสอบเงื่อนไขการส่งออกทันทีครับ")
     
@@ -133,7 +127,6 @@ else:
 if target_country != "- กรุณาเลือกประเทศ -" and selected_item != "- กรุณาเลือกสินค้า -":
     
     if not df.empty:
-        # ค้นหาในทุกคอลัมน์ที่เกี่ยวข้อง
         mask = False
         for col in ['Example Items', 'Product Category']:
             if col in df.columns:

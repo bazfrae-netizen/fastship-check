@@ -32,11 +32,17 @@ def load_data():
     file_path = "master_database.csv"
     if os.path.exists(file_path):
         try:
-            df = pd.read_csv(file_path, on_bad_lines='skip', encoding='utf-8')
-            if not df.empty:
+            # ใช้ engine='python' และ on_bad_lines='skip' เพื่อให้อ่านไฟล์ขนาดใหญ่ได้เสถียรที่สุด
+            df = pd.read_csv(file_path, on_bad_lines='skip', encoding='utf-8', engine='python')
+            if not df.empty and 'Example Items' in df.columns:
                 return df.fillna("-")
         except Exception:
-            pass
+            try:
+                df = pd.read_csv(file_path, sep=None, engine='python', on_bad_lines='skip')
+                if not df.empty and 'Example Items' in df.columns:
+                    return df.fillna("-")
+            except Exception:
+                pass
     return pd.DataFrame()
 
 df = load_data()
@@ -58,13 +64,11 @@ extra_countries = [
 db_countries = df['Country'].dropna().unique().tolist() if not df.empty and 'Country' in df.columns else []
 countries = ["- กรุณาเลือกประเทศ -"] + sorted(list(set(extra_countries + [str(x) for x in db_countries if str(x) not in ['-', 'nan', 'All']])))
 
+# ดึงรายการสินค้าทั้งหมดจากคอลัมน์ Example Items ใน CSV แบบจัดเต็ม
 items_list = []
 if not df.empty and 'Example Items' in df.columns:
     raw_items = df['Example Items'].dropna().astype(str).tolist()
-    items_list = sorted(list(set([x.strip() for x in raw_items if x.strip() and x.strip() not in ['-', 'nan', '0', 'None']])))
-
-if not items_list:
-    items_list = ["เสื้อผ้าทั่วไป", "เสื้อผ้ามือสอง", "เครื่องสำอาง และ สกินแคร์", "พาวเวอร์แบงค์ / แบตเตอรี่", "อาหารเสริม และ วิตามิน", "น้ำหอม และ สเปรย์", "กระเป๋า และ รองเท้า", "กุนเชียง หมู/ปลา/ไก่"]
+    items_list = sorted(list(set([x.strip() for x in raw_items if x.strip() and x.strip() not in ['-', 'nan', '0', 'None', 'Example Items']])))
 
 agents = ["ทั้งหมด", "UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg", "All In"]
 
@@ -84,28 +88,15 @@ selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาและเลือกรายชื่อสินค้า (จัดเต็ม)":
     st.markdown("##### 📦 ค้นหาหรือเลื่อนเลือกรายการสินค้าจากฐานข้อมูลจริง")
-    search_keyword = st.text_input("🔍 กรองชื่อสินค้า (พิมพ์เพื่อค้นหา หรือเว้นว่างเพื่อดูทั้งหมด):", placeholder="พิมพ์คำค้นหา เช่น เสื้อผ้า, อาหาร, ครีม...")
+    search_keyword = st.text_input("🔍 กรองชื่อสินค้า (พิมพ์เพื่อค้นหา หรือเว้นว่างเพื่อดูทั้งหมด):", placeholder="พิมพ์คำค้นหา...")
     
     filtered_items = items_list
     if search_keyword.strip() != "":
         kw = search_keyword.strip().lower()
-        synonyms = {
-            "เสื้อผ้า": ["เสื้อ", "ผ้า", "แบรนด์เนม", "มือ 2", "ลิขสิทธิ์"],
-            "ครีม": ["cosmetic", "โลชั่น", "ของเหลว", "skin"],
-            "แบต": ["battery", "power bank", "ถ่าน", "พาวเวอร์แบงค์"],
-            "อาหาร": ["food", "กุนเชียง", "น้ำพริก", "ขนม", "ผลไม้"]
-        }
-        
-        target_kws = [kw]
-        for k, syns in synonyms.items():
-            if k in kw:
-                target_kws.extend(syns)
-                
-        matched = [item for item in items_list if any(t in item.lower() for t in target_kws)]
+        matched = [item for item in items_list if kw in item.lower()]
         if matched:
             filtered_items = matched
 
-    # แสดงผลกล่องเลือกสินค้าเพียงกล่องเดียวแบบไม่มีซ้อนทับ
     selected_item = st.selectbox(f"📋 เลือกรายการสินค้าทั้งหมด ({len(filtered_items)} รายการ):", options=["- กรุณาเลือกสินค้า -"] + filtered_items)
 
 else:

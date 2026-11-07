@@ -33,44 +33,55 @@ def load_data():
         return pd.DataFrame(), f"❌ ไม่พบไฟล์ฐานข้อมูล: '{file_path}'"
         
     try:
-        # พยายามอ่านแบบปกติก่อน (คั่นด้วย ,) ถ้ามีบรรทัดพังให้ข้ามไปเลย (on_bad_lines='skip')
         df = pd.read_csv(file_path, on_bad_lines='skip', engine='python')
-        
-        # ถ้าอ่านแล้วได้มาแค่คอลัมน์เดียว แปลว่าไฟล์น่าจะถูก Excel แปลงเป็นเซมิโคลอน (;)
         if len(df.columns) == 1:
             df = pd.read_csv(file_path, sep=';', on_bad_lines='skip', engine='python')
-            
         if df.empty:
             return pd.DataFrame(), "❌ ไฟล์ฐานข้อมูลว่างเปล่า"
-            
         return df.fillna("-"), "OK"
-    except Exception as e:
-        # ไม้ตายสุดท้าย บังคับอ่านทุกรูปแบบ
+    except Exception:
         try:
             df = pd.read_csv(file_path, sep=None, engine='python', on_bad_lines='skip')
             return df.fillna("-"), "OK"
         except Exception as e2:
-            return pd.DataFrame(), f"❌ ไฟล์ CSV มีปัญหาโครงสร้างอย่างรุนแรง: {e2}"
+            return pd.DataFrame(), f"❌ โครงสร้างไฟล์ CSV มีปัญหา: {e2}"
 
-# โหลดข้อมูล
 df, load_status = load_data()
 
-# ตรวจสอบสถานะการโหลดไฟล์
 if load_status != "OK":
     st.error(load_status)
 
 # ==========================================
-# 1. จัดเตรียมข้อมูลจาก CSV 
+# 1. จัดเตรียมข้อมูล & ตรวจจับคอลัมน์อัตโนมัติ
 # ==========================================
+# ตรวจจับคอลัมน์ชื่อสินค้า (รองรับทั้งไฟล์แบบใหม่และแบบเก่า)
+item_col = 'Example Items' if 'Example Items' in df.columns else ('Keyword' if 'Keyword' in df.columns else None)
+country_col = 'Country' if 'Country' in df.columns else None
+cat_col = 'Product Category' if 'Product Category' in df.columns else ('Category' if 'Category' in df.columns else None)
+alias_col = 'Aliases' if 'Aliases' in df.columns else None
+
+# จัดการรายชื่อประเทศ (ดึงจากไฟล์ + สำรองมาตรฐาน 50 ประเทศป้องกันประเทศหาย)
+extra_countries = [
+    "Australia", "Austria", "Bangladesh", "Belgium", "Canada", "Chile", "China", 
+    "Croatia", "Czech Republic", "Denmark", "Egypt", "Finland", "France", "Germany", 
+    "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Ireland", 
+    "Israel", "Italy", "Japan", "Kuwait", "Macao", "Malaysia", "Malta", "Mexico", 
+    "Netherlands", "New Zealand", "Norway", "Oman", "Pakistan", "Philippines", 
+    "Poland", "Puerto Rico", "Qatar", "Saudi Arabia", "Singapore", "South Africa", 
+    "South Korea", "Spain", "Sweden", "Switzerland", "Taiwan", "Turkey", "United Kingdom", "USA",
+    "United Arab Emirates", "Vietnam"
+]
+
 db_countries = []
-if not df.empty and 'Country' in df.columns:
-    db_countries = [str(x).strip() for x in df['Country'].unique() if str(x).strip() not in ['-', 'nan', 'All', '']]
+if country_col and not df.empty:
+    db_countries = [str(x).strip() for x in df[country_col].unique() if str(x).strip() not in ['-', 'nan', 'All', '0', '']]
 
-countries = ["- กรุณาเลือกประเทศ -"] + sorted(db_countries)
+countries = ["- กรุณาเลือกประเทศ -"] + sorted(list(set(extra_countries + db_countries)))
 
+# จัดการรายชื่อสินค้า
 raw_items = []
-if not df.empty and 'Example Items' in df.columns:
-    for val in df['Example Items'].dropna().astype(str):
+if item_col and not df.empty:
+    for val in df[item_col].dropna().astype(str):
         v = val.strip()
         if v and v not in ['-', 'nan', '0', 'None']:
             raw_items.append(v)
@@ -79,7 +90,7 @@ items_list = sorted(list(set(raw_items)))
 agents = ["ทั้งหมด", "UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg", "All In"]
 
 # ==========================================
-# 2. หน้าจอเลือกประเทศ เอเย่นต์ และโหมดตรวจสอบ
+# 2. หน้าจอเลือกประเทศ เอเย่นต์ และค้นหาสินค้า
 # ==========================================
 col1, col2 = st.columns(2)
 with col1:
@@ -94,26 +105,28 @@ selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาจากรายชื่อสินค้า":
     st.markdown("##### 📦 ค้นหาและเลือกรายการสินค้า")
-    search_keyword = st.text_input("🔍 พิมพ์ค้นหาชื่อสินค้า (เช่น เสื้อผ้า, เครื่องสำอาง, อาหารเสริม):", placeholder="พิมพ์คำค้นหาที่นี่...")
+    search_keyword = st.text_input("🔍 พิมพ์ค้นหาชื่อสินค้า (เช่น เสื้อผ้า, ของเหลว):", placeholder="พิมพ์คำค้นหาที่นี่...")
     
     filtered_options = items_list
-    if search_keyword.strip() != "" and not df.empty:
-        mask = df['Example Items'].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
-        if 'Product Category' in df.columns:
-            mask = mask | df['Product Category'].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
-        
+    if search_keyword.strip() != "" and item_col and not df.empty:
+        # ค้นหาจากชื่อสินค้า หมวดหมู่ และคำค้นหาสำรอง
+        mask = df[item_col].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
+        if cat_col:
+            mask = mask | df[cat_col].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
+        if alias_col:
+            mask = mask | df[alias_col].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
+            
         matched_df = df[mask]
         if not matched_df.empty:
-            filtered_options = sorted(list(set(matched_df['Example Items'].astype(str).tolist())))
+            filtered_options = sorted(list(set(matched_df[item_col].astype(str).tolist())))
         else:
             filtered_options = []
 
-    if not df.empty:
-        if filtered_options:
-            selected_item = st.selectbox("เลือกสินค้าที่ต้องการ:", options=["- กรุณาเลือกสินค้า -"] + filtered_options)
-        else:
-            st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}'")
-            selected_item = "- กรุณาเลือกสินค้า -"
+    if filtered_options:
+        selected_item = st.selectbox("เลือกสินค้าที่ต้องการ:", options=["- กรุณาเลือกสินค้า -"] + filtered_options)
+    else:
+        st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}'")
+        selected_item = "- กรุณาเลือกสินค้า -"
 else:
     st.info("💡 ถ่ายรูปหรืออัปโหลดรูปภาพเพื่อให้ระบบวิเคราะห์ประเภทสินค้าอัตโนมัติ")
     col_cam1, col_cam2 = st.columns(2)
@@ -132,11 +145,11 @@ else:
         detected_tag = st.text_input("🤖 AI ตรวจจับประเภทสินค้า (แก้ไขได้):", default_guess)
         
         matched_item = "- กรุณาเลือกสินค้า -"
-        if not df.empty:
-            mask = df['Example Items'].astype(str).str.contains(detected_tag.strip(), case=False, na=False)
+        if item_col and not df.empty:
+            mask = df[item_col].astype(str).str.contains(detected_tag.strip(), case=False, na=False)
             matched_df = df[mask]
             if not matched_df.empty:
-                matched_item = str(matched_df['Example Items'].iloc[0])
+                matched_item = str(matched_df[item_col].iloc[0])
         
         selected_item = matched_item if matched_item != "- กรุณาเลือกสินค้า -" else detected_tag
         if matched_item != "- กรุณาเลือกสินค้า -":
@@ -145,22 +158,26 @@ else:
             st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับ '{detected_tag}' ในระบบ จะใช้การวิเคราะห์แบบทั่วไป")
 
 # ==========================================
-# 3. วิเคราะห์เงื่อนไขจากฐานข้อมูลและกฎ AI
+# 3. วิเคราะห์เงื่อนไข
 # ==========================================
 if target_country != "- กรุณาเลือกประเทศ -" and selected_item != "- กรุณาเลือกสินค้า -":
     st.markdown("---")
     st.markdown("### 📊 ผลการตรวจสอบเงื่อนไข")
     
     working_df = pd.DataFrame()
-    if not df.empty:
-        item_df = df[df['Example Items'].astype(str) == selected_item]
+    if item_col and not df.empty:
+        item_df = df[df[item_col].astype(str) == selected_item]
         if len(item_df) > 0:
-            country_specific = item_df[item_df['Country'].astype(str).str.upper() == target_country.upper()]
-            working_df = country_specific.copy() if len(country_specific) > 0 else item_df.head(1).copy()
+            if country_col:
+                country_specific = item_df[item_df[country_col].astype(str).str.upper() == target_country.upper()]
+                working_df = country_specific.copy() if len(country_specific) > 0 else item_df.head(1).copy()
+            else:
+                working_df = item_df.head(1).copy()
             
     if len(working_df) == 0:
+        col_name = item_col if item_col else 'Item'
         working_df = pd.DataFrame([{
-            'Example Items': selected_item, 'Country': target_country,
+            col_name: selected_item, 'Country': target_country,
             'UPS': 'Acceptable', 'FedEx': 'Acceptable', 'DHL': 'Acceptable',
             'Aramex': 'Acceptable', 'EMS World / Epacket 2kg': 'Acceptable',
             'Condition': 'ตรวจสอบตามกฎข้อบังคับสากล'
@@ -171,7 +188,8 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     item_lower = selected_item.lower()
     country_upper = target_country.upper()
     
-    is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'มิลเลอร์', 'เลียนแบบ', 'เกรด a'])
+    # 📌 กฎพิเศษมาตรฐาน
+    is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'มิลเลอร์', 'เลียนแบบ'])
     is_second_hand = any(kw in item_lower for kw in ['มือสอง', 'มือ 2', 'secondhand', 'used'])
     is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง'])
     is_japan_secondhand = (country_upper == 'JAPAN' and is_clothing and is_second_hand)

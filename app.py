@@ -40,4 +40,27 @@ with col2:
     item_options = ["- เลือกสินค้าจากรายการ -"] + sorted(db_items)
     
     selected_item_dropdown = st.selectbox("📦 เลือกสินค้าจากฐานข้อมูล", item_options)
-    custom_item = st.text_input("✍️ หรือพิมพ์ชื่อสินค้าที่ต้องการตรวจสอบ", placeholder="เช่น เสื้อผ้า, พัดลม, แบต
+    custom_item = st.text_input("✍️ หรือพิมพ์ชื่อสินค้าที่ต้องการตรวจสอบ", placeholder="เช่น เสื้อผ้า, พัดลม, แบต, กระเป๋า")
+    
+    selected_item = custom_item if custom_item.strip() != "" else (selected_item_dropdown if selected_item_dropdown != "- เลือกสินค้าจากรายการ -" else "")
+
+# ส่วนถ่ายรูป / อัปโหลดรูปภาพสินค้า
+st.markdown("---")
+st.subheader("📸 ตรวจสอบสินค้าผ่านรูปภาพ / กล้อง")
+uploaded_file = st.file_uploader("อัปโหลดรูปภาพสินค้า", type=["jpg", "jpeg", "png"])
+camera_image = st.camera_input("หรือถ่ายภาพสินค้าด้วยกล้อง")
+
+# ส่วนแสดงผลการวิเคราะห์
+st.markdown("---")
+st.subheader("📌 สรุปผลการจัดส่ง:")
+if target_country != "- กรุณาเลือกประเทศ -" and selected_item:
+    result = df[df['Keyword'].astype(str).str.contains(selected_item, case=False, na=False)]
+    if not result.empty:
+        st.success(f"✅ พบข้อมูลเงื่อนไขสำหรับ: {selected_item}")
+        for idx, row in result.iterrows():
+            st.warning(f"⚠️ **ระดับข้อจำกัด:** {row.get('Restriction_Level', 'N/A')} | **หมวดหมู่:** {row.get('Category', 'N/A')}")
+            st.info(f"📝 **หมายเหตุ:** {row.get('Note', 'ไม่มีข้อมูลเพิ่มเติม')}")
+    else:
+        st.success(f"✅ สามารถส่ง {selected_item} ไปยัง {target_country} ได้ภายใต้เงื่อนไขมาตรฐาน")
+else:
+    st.info("💡 กรุณาเลือกประเทศปลายทางและระบุชื่อสินค้าเพื่อเริ่มตรวจสอบเงื่อนไข")

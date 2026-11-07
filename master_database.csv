@@ -1,200 +1,200 @@
 1	Country	Product Category	Example Items	Condition	UPS	FedEx	Aramex	EMS World / Epacket 2kg	DHL
-2	Australia			Express Service	-	-	-	-	Acceptable
-3	Australia	FOOD	กุนเชียง หมู/ปลา/ไก่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-4	Australia	FOOD	สินค้าที่มีส่วนผสมสัตว์เนื้อแดง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-5	Australia	FOOD	สินค้าที่มีส่วนผสมของ นม ไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-6	Australia	FOOD	อาหารแห้ง / อาหารทะเลแห้ง	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // อัพเดตการส่งออกผลิตภัณฑ์จากสัตว์น้ำทุกประเภท (กุ้ง หอย ปู ปลา) สำหรับทุกเอเจนท์ - แนะนำส่งรวมกับสินค้าประเภทอื่นๆ โดยให้ปริมาณไม่เกิน 30-40% ของสินค้าทั้งหมด - หากส่งเดี่ยวอาจจะมีการเรียกตรวจสอบโดยศุลกากรได้ แนะนำแจ้งความเสี่ยงในการติดเปิดตรวจและ อาจไม่ได้รับอนุญาตให้ส่งออก เพื่อขอใบอนุญาตส่งออกกับกรมประมง ต้องนำส่งคืนเพื่อขอเอกสารใบอนุญาต ผลิตภัณฑ์สัตว์น้ำรวมถึง ผลิตภัณฑ์ทั้งที่แปรรูปแล้วหรือยังคงลักษณะเดิม เช่น อาหารทะเลแห้ง ปลาร้า ปลาส้ม ปลาเค็ม หอยดอง กุ้งดอง กุ้งแห้ง อาจจะต้องแจ้งรับความเสี่ยง ในการโดนสุ่มเปิดตรวจโดยศุลกากรและทำตามขั้นตอนค่ะ	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-7	Australia	FOOD	น้ำพริก / น้ำพริกปลาร้า	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-8	Australia	FOOD	น้ำปลาร้า	อัพเดตการส่งออกผลิตภัณฑ์จากสัตว์น้ำทุกประเภท (กุ้ง หอย ปู ปลา) สำหรับทุกเอเจนท์ - แนะนำส่งรวมกับสินค้าประเภทอื่นๆ โดยให้ปริมาณไม่เกิน 30-40% ของสินค้าทั้งหมด - หากส่งเดี่ยวอาจจะมีการเรียกตรวจสอบโดยศุลกากรได้ แนะนำแจ้งความเสี่ยงในการติดเปิดตรวจและ อาจไม่ได้รับอนุญาตให้ส่งออก เพื่อขอใบอนุญาตส่งออกกับกรมประมง ต้องนำส่งคืนเพื่อขอเอกสารใบอนุญาต ผลิตภัณฑ์สัตว์น้ำรวมถึง ผลิตภัณฑ์ทั้งที่แปรรูปแล้วหรือยังคงลักษณะเดิม เช่น อาหารทะเลแห้ง ปลาร้า ปลาส้ม ปลาเค็ม หอยดอง กุ้งดอง กุ้งแห้ง อาจจะต้องแจ้งรับความเสี่ยง ในการโดนสุ่มเปิดตรวจโดยศุลกากรและทำตามขั้นตอนค่ะ	Acceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-9	Australia	FOOD	ผลไม้อบแห้ง	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-10	Australia	FOOD	ผลไม้ดอง	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Unacceptable	Acceptable
-11	Australia	FOOD	ขนม	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-12	Australia	FOOD	บะหมี่ ก๋วยเตี๋ยว อื่น ๆ	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-13	Australia	FOOD	กะปิ	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-14	Australia	FOOD	พริกป่น พริกอบแห้ง พริกทอด	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-15	Australia	FOOD	ซอสและเครื่องปรุงรส	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-16	Australia	FOOD	น้ำผึ้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-17	Australia	FOOD	ถั่วอบ // คั่ว	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-18	Australia	FOOD	บะหมี่กึ่งสำเร็จรูป ที่ไม่ใช่รสหมู ไก่ ไข่ ชีส / ไม่มีภาพที่แสดงถึงเนื้อสัตว์หน้าซอง	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-19	Australia	FOOD	อาหารสำเร็จรูปที่มีรูปหมู ไก่อยู่หน้าซอง	ส่วนผสมต้องไม่มีหมู ไก่	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-20	Australia	FOOD	อาหารที่มีส่วนผสมของกะทิ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-21	Australia	FOOD	มะตูมแห้ง/ เปลือกไม้แห้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-22	Australia	FOOD	ขนมเปี๊ยะไม่มีไข่	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-23	Australia	FOOD	กัญชา กัญชง กระท่อม ใบ/น้ำ		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-24	Australia	FOOD	สมุนไพรอบแห้ง เช่น ใบมะกรูด ใบกระเพรา		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-25	Australia				-	-	-	-	Acceptable
-26	Australia	Supplement	อาหารเสริมที่สกัดจากสัตว์เนื้อแดง นม ไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-27	Australia	Supplement	อาหารเสริมที่สกัดจากพืชและผลไม้	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-28	Australia	Supplement	อาหารเสริมจำพวกเสริมสมรรถภาพ		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-29	Australia	Supplement	อาหารเสริมจำพวกโปรตีนจากสัตว์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-30	Australia	Supplement	อาหารเสริมจำพวกโปรตีนจากถั่ว	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-31	Australia	Supplement	อาหารเสริมแบรนด์ ROYAL JELLY PLUS		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-32	Australia	Supplement	อาหารเสริมคอลลาเจน	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-33	Australia	Supplement	อาหารเสริมลดน้ำหนัก ต้องไม่มีส่วนผสมของ กระบองเพชร,ถั่งเช่า,รากปลาไหลเผือก,สารสกัดต้องห้าม	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-34	Australia	Supplement	อาหารเสริมแบบเม็ด	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-35	Australia	Supplement	อาหารเสริมแบบผง	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-36	Australia				-	-	-	-	Acceptable
-37	Australia	Chemical	สินค้าอันตราย ประเภท 1-9		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-38	Australia	Chemical	สบู่ / สบู่ ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-39	Australia	Chemical	ยาสีฟัน	จำกัด 20 หลอด	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-40	Australia	Chemical	น้ำยาย้อมผม	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Unacceptable	Unacceptable
-41	Australia	Chemical	น้ำยาทำความสะอาด		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-42	Australia	Chemical	น้ำยาล้างเล็บ	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
-43	Australia	Chemical	น้ำยาทาเล็บ	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
-44	Australia	Chemical	กาว / กาวติดขนตา	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
-45	Australia	Chemical	น้ำยาทำความสะอาดแบบผง	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Unacceptable	Acceptable	Unacceptable	Unacceptable	Unacceptable
-46	Australia				-	-	-	-	Acceptable
-47	Australia	Medicine	ยารักษาโรค / ยาสามัญประจำบ้าน	ต้องมีใบรับรองและใบสั่งจ่ายยาจากแพทย์ (ชื่อผู้รับกับชื่อยาต้องตรงกัน) เอกสารต้องเป็นภาษาอังกฤษ และออกจาก รพ. เท่านั้น ทั้งนี้อยู่ที่พิจรณาจากศุลกากรในการอนุญาตนำเข้า	Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-48	Australia	Medicine	พลาสเตอร์ / แผ่นแปะบรรเทาปวด	ผ่อนผันให้ส่งออก 20 ชิ้นต่อ Shipment เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-49	Australia	Medicine	ยาดม / ยาหม่อง / ลูกประคบ	ผ่อนผันให้ส่งออก 50 ชิ้นต่อ Shipment เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-50	Australia	Medicine	อาหารเสริมที่มีสรรพคุณรักษาโรค	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
-51	Australia	Medicine	วิตามิน		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-52	Australia	Medicine	อภัยภูเบศร	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
-53	Australia	Medicine	ฟ้าทะลายโจร	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
-54	Australia				-	-	-	-	Acceptable
-55	Australia	Cosmetic	เซรั่ม / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-56	Australia	Cosmetic	ครีมทาผิว / ครีมทาหน้า / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-57	Australia	Cosmetic	แชมพู/ครีมนวด / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-58	Australia	Cosmetic	ลิปสติก		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-59	Australia				-	-	-	-	Acceptable
-60	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	กาแฟแบบคั่วแล้ว		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-61	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	กาแฟแบบ 3in1		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-62	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	ใบชาอบแห้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-63	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	ชาสำเร็จรูป		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-64	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	กะทิ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-65	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	เครื่องดืมที่มีส่วนผสมของ นม,ครีมเทียม		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-66	Australia				-	-	-	-	Acceptable
-67	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าละเมิดลิขสิทธิ์		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-68	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าลิขสิทธิ์	สินค้าที่มีมูลค่าไม่สูงสามารถส่งออกปกติ , สินค้ามูลค่าสูงศุลกากรอาจร้องขอหลักฐานการชำระเงิน หรือใบเสร็จ	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-69	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าแบรนด์เนม (Luxury Brand)	ขอใบเสร็จการซื้อสินค้าที่ออกโดยเจ้าของแบรนด์ , Certificate	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-70	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้ามือ 2		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-71	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	กระเป๋าหนังวัวฟอก,หนังเทียม		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-72	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	กระเป๋าหนังสัตว์ควบคุม หนังจระเข้	ขออนุญาตก่อนส่งออก คอบคุมโดย Cites	Controlled	Controlled	Controlled	Acceptable	Unacceptable
-73	Australia				-	-	-	-	Acceptable
-74	Australia	AutoPart	โช๊คอัดแก๊ส		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-75	Australia	AutoPart	โช๊คไม่อัดแก๊ส	ไม่มีน้ำมันภายในสินค้า // อะไหล่ใช้แล้วต้องไม่มีคราบน้ำมัน	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-76	Australia	AutoPart	อะไหล่รถ	ไม่มีน้ำมันภายในสินค้า // อะไหล่ใช้แล้วต้องไม่มีคราบน้ำมัน	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-77	Australia	AutoPart	ล้อแม็กซ์ / ท่อไอเสีย		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-78	Australia	AutoPart	ฝากระโปรงรถ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-79	Australia				-	-	-	-	Acceptable
-80	Australia	Electronics and Technology Products	โทรศัพท์ battery		Acceptable	Acceptable	Unacceptable	Unacceptable	Acceptable
-81	Australia	Electronics and Technology Products	โน้ตบุค battery		Acceptable	Acceptable	Unacceptable	Unacceptable	Acceptable
-82	Australia	Electronics and Technology Products	แท็บเล็ต battery		Acceptable	Acceptable	Unacceptable	Unacceptable	Acceptable
-83	Australia	Electronics and Technology Products	อะไหล่คอมพิวเตอร์	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า และ Intal ติดลขสิทธิ์ที่จีนผู้รับจำเป็นต้องมีใบอนุญาติ	Acceptable	Controlled	Controlled	Acceptable	Acceptable
-84	Australia	Electronics and Technology Products	ทีวี		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-85	Australia	Electronics and Technology Products	พัดลม ไม่มีแบต		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-86	Australia	Electronics and Technology Products	พัดลม มีแบต		Acceptable	Acceptable	Unacceptable	Unacceptable	Unacceptable
-87	Australia	Electronics and Technology Products	อะไหล่คอมพิวเตอร์		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-88	Australia	Electronics and Technology Products	กล้องวงจรปิด	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า	Controlled	Controlled	Controlled	Controlled	Acceptable
-89	Australia	Electronics and Technology Products	โดรน	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า	Controlled	Controlled	Controlled	Controlled	Acceptable
-90	Australia	Electronics and Technology Products	อุปกรณ์ดาวเทียม	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า	Controlled	Controlled	Controlled	Controlled	Acceptable
-91	Australia	Electronics and Technology Products	เครื่องปริ้น		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-92	Australia				-	-	-	-	Acceptable
-93	Australia	Medical equipment	คอนแทคเลนส์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-94	Australia	Medical equipment	รีเทนเนอร์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-95	Australia				-	-	-	-	Acceptable
-96	Australia	ของเหลว / Lotion	เซรั่ม		acceptable	acceptable	acceptable	acceptable	Unacceptable
-97	Australia	ของเหลว / Lotion	น้ำมันหอมระเหย	สูงสุด 1 KG. หากมากกว่าขอ MSDS // ปริมาณต่อขวด ไม่ควรเกิน 100-200 ml.	Acceptable	Acceptable	Acceptable	Unacceptable	Unacceptable
-98	Australia	ของเหลว / Lotion	Agarwood Oil	สินค้าควบคุม ติดใบอนุญาต Cites แนบก่อนส่งออกไม่ต้องเดินพิธีการ	Unacceptable	Unacceptable	Controlled	Unacceptable	Unacceptable
-99	Australia	ของเหลว / Lotion	Neo Hair	กรณีส่งออกในนามบุคคล แนะนำจัดส่งที่ไม่เกิน 2 KG // เกิน 2 kg. แนะนำปลายทางเป็นบริษัทและสามารถดำเนินการเคลียร์สินค้าได้ (ใบอนุญาตนำเข้า)	Acceptable	Acceptable	Acceptable	Unacceptable	Unacceptable
-100	Australia				-	-	-	-	Acceptable
-101	Australia	พระ เครื่องราง	พระพุทธรูป รูปปั้น	แนบใบอนุญาตจากกรมศิลปากร	Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-102	Australia	พระ เครื่องราง	รูปวาด รูปเหมือน ที่เกี่ยวกับศาสนา เหรียญพระ	แนบใบอนุญาตจากกรมศิลปากร	Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-103	Australia	พระ เครื่องราง	เครื่องรางของขลัง	แนบใบอนุญาตจากกรมศิลปากร	Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-104	Australia				-	-	-	-	Acceptable
-105	Australia	Mask	หน้ากากอนามัย		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-106	Australia		หน้ากาก N-94		Unacceptable	Acceptable	Unacceptable	Acceptable	Acceptable
-107	Australia		หน้ากากผ้า		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-108	Australia				-	-	-	-	Acceptable
-109	Australia	Antigen test kit		ส่งออกได้สูงสุด 20 ชิ้น // หากโดยตรวจสอบสินค้าจะถูกทำลายเท่านั้น	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-110	Australia				-	-	-	-	Acceptable
-111	Australia	Monetary Items	สมุดเช็ค		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-112	Australia	Monetary Items	เช็คที่สั่งจ่ายต่อบุคคล		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-113	Australia	Monetary Items	ธนบัตร		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-114	Australia	Monetary Items	ธนบัตรปลอม		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-115	Australia	Monetary Items	ล้อตเตอร์รี่		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-116	Australia	Monetary Items	เหรียญหรือชิป ที่ใช้เล่นผนัน		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-117	Australia	Monetary Items	Debit or Credit Card	สามารถส่งออกได้ แต่จำเป็นต้องแจ้งอายัดบัตร ก่อนส่งออกทุกกรณี	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-118	Australia				-	-	-	-	Acceptable
-119	Australia	Document	Passports		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-120	Australia	Document	โฉนด		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-121	Australia	Document	หนังสือพิมพ์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-122	Australia	Document	ตั๋วเครื่องบิน		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-123	Australia	Document	แสตมป์		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-124	Australia				-	-	-	-	Acceptable
-125	Australia	ผลิตภัณฑ์แปรรูป	ไม้แกะสลัก		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-126	Austria			Express Service	-	-	-	-	Acceptable
-127	Austria	FOOD	กุนเชียง หมู/ปลา/ไก่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-128	Austria	FOOD	สินค้าที่มีส่วนผสมสัตว์เนื้อแดง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-129	Austria	FOOD	สินค้าที่มีส่วนผสมของ นม ไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-130	Austria	FOOD	อาหารแห้ง / อาหารทะเลแห้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-131	Austria	FOOD	น้ำพริก / น้ำพริกปลาร้า		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-132	Austria	FOOD	น้ำปลาร้า		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-133	Austria	FOOD	ผลไม้อบแห้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-134	Austria	FOOD	ผลไม้ดอง		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-135	Austria	FOOD	ขนม		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-136	Austria	FOOD	บะหมี่ ก๋วยเตี๋ยว อื่น ๆ		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-137	Austria	FOOD	กะปิ		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-138	Austria	FOOD	พริกป่น พริกอบแห้ง พริกทอด		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-139	Austria	FOOD	ซอสและเครื่องปรุงรส		Acceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-140	Austria	FOOD	น้ำผึ้ง		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-141	Austria	FOOD	ถั่วอบ // คั่ว		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-142	Austria	FOOD	บะหมี่กึ่งสำเร็จรูป ที่ไม่ใช่รสหมู ไก่ ไข่ ชีส / ไม่มีภาพที่แสดงถึงเนื้อสัตว์หน้าซอง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-143	Austria	FOOD	ขนมเปี๊ยะไม่มีไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
-144	Austria	FOOD	กัญชา กัญชง กระท่อม ใบ/น้ำ		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-145	Austria	FOOD	สมุนไพรอบแห้ง เช่น ใบมะกรูด ใบกระเพรา		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-146	Austria				-	-	-	-	Acceptable
-147	Austria	Supplement	อาหารเสริมที่สกัดจากสัตว์เนื้อแดง นม ไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-148	Austria	Supplement	อาหารเสริมที่สกัดจากพืชและผลไม้	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-149	Austria	Supplement	อาหารเสริมจำพวกเสริมสมรรถภาพ		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-150	Austria	Supplement	อาหารเสริมจำพวกโปรตีนจากสัตว์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-151	Austria	Supplement	อาหารเสริมจำพวกโปรตีนจากถั่ว		Acceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-152	Austria	Supplement	อาหารเสริมแบรนด์ ROYAL JELLY PLUS		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-153	Austria	Supplement	อาหารเสริมคอลลาเจน	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Acceptable	Unacceptable	Acceptable	Unacceptable
-154	Austria	Supplement	อาหารเสริมลดน้ำหนัก ต้องไม่มีส่วนผสมของ กระบองเพชร,ถั่งเช่า,รากปลาไหลเผือก,สารสกัดต้องห้าม	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Acceptable	Unacceptable	Acceptable	Unacceptable
-155	Austria	Supplement	อาหารเสริมแบบเม็ด	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Acceptable	Unacceptable	Acceptable	Unacceptable
-156	Austria	Supplement	อาหารเสริมแบบผง	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Acceptable	Unacceptable	Acceptable	Unacceptable
-157	Austria				-	-	-	-	Acceptable
-158	Austria	Chemical	สินค้าอันตราย ประเภท 1-9		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-159	Austria	Chemical	สบู่ / สบู่ ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-160	Austria	Chemical	ยาสีฟัน	จำกัด 20 หลอด	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-161	Austria	Chemical	น้ำยาย้อมผม	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Unacceptable	Unacceptable
-162	Austria	Chemical	น้ำยาทำความสะอาด		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-163	Austria	Chemical	น้ำยาล้างเล็บ	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
-164	Austria	Chemical	น้ำยาทาเล็บ	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
-165	Austria	Chemical	กาว / กาวติดขนตา	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
-166	Austria	Chemical	น้ำยาทำความสะอาดแบบผง	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี // ปลายทางดำเนินการ TSCA	Unacceptable	Acceptable	Unacceptable	Unacceptable	Unacceptable
-167	Austria				-	-	-	-	Acceptable
-168	Austria	Medicine	ยารักษาโรค / ยาสามัญประจำบ้าน	ต้องมีใบรับรองและใบสั่งจ่ายยาจากแพทย์ (ชื่อผู้รับกับชื่อยาต้องตรงกัน) เอกสารต้องเป็นภาษาอังกฤษ และออกจาก รพ. เท่านั้น ทั้งนี้อยู่ที่พิจรณาจากศุลกากรในการอนุญาตนำเข้า	Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
-169	Austria	Medicine	พลาสเตอร์ / แผ่นแปะบรรเทาปวด		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-170	Austria	Medicine	ยาดม / ยาหม่อง / ลูกประคบ	ผ่อนผันให้ส่งออก 50-60 ชิ้นต่อ Shipment เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-171	Austria	Medicine	อาหารเสริมที่มีสรรพคุณรักษาโรค	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
-172	Austria	Medicine	วิตามิน		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-173	Austria	Medicine	อภัยภูเบศร	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
-174	Austria	Medicine	ฟ้าทะลายโจร	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
-175	Austria				-	-	-	-	Acceptable
-176	Austria	Cosmetic	เซรั่ม / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-177	Austria	Cosmetic	ครีมทาผิว / ครีมทาหน้า / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-178	Austria	Cosmetic	แชมพู/ครีมนวด / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-179	Austria	Cosmetic	ลิปสติก		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-180	Austria				-	-	-	-	Acceptable
-181	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	กาแฟแบบคั่วแล้ว		Unacceptable	Acceptable	Acceptable	Acceptable	Acceptable
-182	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	กาแฟแบบ 3in1		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-183	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	ใบชาอบแห้ง		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-184	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	ชาสำเร็จรูป		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-185	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	กะทิ		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-186	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	เครื่องดืมที่มีส่วนผสมของ นม,ครีมเทียม		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-187	Austria				-	-	-	-	Acceptable
-188	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าละเมิดลิขสิทธิ์		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
-189	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าลิขสิทธิ์	สินค้าที่มีมูลค่าไม่สูงสามารถส่งออกปกติ , สินค้ามูลค่าสูงศุลกากรอาจร้องขอหลักฐานการชำระเงิน หรือใบเสร็จ	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-190	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าแบรนด์เนม (Luxury Brand)	ขอใบเสร็จการซื้อสินค้าที่ออกโดยเจ้าของแบรนด์ , Certificate	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-191	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้ามือ 2		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-192	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	กระเป๋าหนังวัวฟอก,หนังเทียม		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
-193	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	กระเป๋าหนังสัตว์ควบคุม หนังจระเข้	ขออนุญาตก่อนส่งออก คอบคุมโดย Cites	Controlled	Controlled	Controlled	Acceptable	Unacceptable
-194	Austria				-	-	-	-	Acceptable
-195	Austria	AutoPart	โช๊คอัดแก๊ส		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
-196	Austria	AutoPart	โช๊คไม่อัดแก๊ส		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-197	Austria	AutoPart	อะไหล่รถ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-198	Austria	AutoPart	ล้อแม็กซ์ / ท่อไอเสีย		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-199	Austria	AutoPart	ฝากระโปรงรถ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
-200	Austria				-	-	-	-	Acceptable
+2	Australia	FOOD	กุนเชียง หมู/ปลา/ไก่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+3	Australia	FOOD	สินค้าที่มีส่วนผสมสัตว์เนื้อแดง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+4	Australia	FOOD	สินค้าที่มีส่วนผสมของ นม ไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+5	Australia	FOOD	อาหารแห้ง / อาหารทะเลแห้ง	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // อัพเดตการส่งออกผลิตภัณฑ์จากสัตว์น้ำทุกประเภท (กุ้ง หอย ปู ปลา) สำหรับทุกเอเจนท์ - แนะนำส่งรวมกับสินค้าประเภทอื่นๆ โดยให้ปริมาณไม่เกิน 30-40% ของสินค้าทั้งหมด - หากส่งเดี่ยวอาจจะมีการเรียกตรวจสอบโดยศุลกากรได้ แนะนำแจ้งความเสี่ยงในการติดเปิดตรวจและ อาจไม่ได้รับอนุญาตให้ส่งออก เพื่อขอใบอนุญาตส่งออกกับกรมประมง ต้องนำส่งคืนเพื่อขอเอกสารใบอนุญาต ผลิตภัณฑ์สัตว์น้ำรวมถึง ผลิตภัณฑ์ทั้งที่แปรรูปแล้วหรือยังคงลักษณะเดิม เช่น อาหารทะเลแห้ง ปลาร้า ปลาส้ม ปลาเค็ม หอยดอง กุ้งดอง กุ้งแห้ง อาจจะต้องแจ้งรับความเสี่ยง ในการโดนสุ่มเปิดตรวจโดยศุลกากรและทำตามขั้นตอนค่ะ	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+6	Australia	FOOD	น้ำพริก / น้ำพริกปลาร้า	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+7	Australia	FOOD	น้ำปลาร้า	อัพเดตการส่งออกผลิตภัณฑ์จากสัตว์น้ำทุกประเภท (กุ้ง หอย ปู ปลา) สำหรับทุกเอเจนท์ - แนะนำส่งรวมกับสินค้าประเภทอื่นๆ โดยให้ปริมาณไม่เกิน 30-40% ของสินค้าทั้งหมด - หากส่งเดี่ยวอาจจะมีการเรียกตรวจสอบโดยศุลกากรได้ แนะนำแจ้งความเสี่ยงในการติดเปิดตรวจและ อาจไม่ได้รับอนุญาตให้ส่งออก เพื่อขอใบอนุญาตส่งออกกับกรมประมง ต้องนำส่งคืนเพื่อขอเอกสารใบอนุญาต ผลิตภัณฑ์สัตว์น้ำรวมถึง ผลิตภัณฑ์ทั้งที่แปรรูปแล้วหรือยังคงลักษณะเดิม เช่น อาหารทะเลแห้ง ปลาร้า ปลาส้ม ปลาเค็ม หอยดอง กุ้งดอง กุ้งแห้ง อาจจะต้องแจ้งรับความเสี่ยง ในการโดนสุ่มเปิดตรวจโดยศุลกากรและทำตามขั้นตอนค่ะ	Acceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+8	Australia	FOOD	ผลไม้อบแห้ง	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+9	Australia	FOOD	ผลไม้ดอง	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Unacceptable	Acceptable
+10	Australia	FOOD	ขนม	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+11	Australia	FOOD	บะหมี่ ก๋วยเตี๋ยว อื่น ๆ	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+12	Australia	FOOD	กะปิ	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+13	Australia	FOOD	พริกป่น พริกอบแห้ง พริกทอด	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+14	Australia	FOOD	ซอสและเครื่องปรุงรส	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+15	Australia	FOOD	น้ำผึ้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+16	Australia	FOOD	ถั่วอบ // คั่ว	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+17	Australia	FOOD	บะหมี่กึ่งสำเร็จรูป ที่ไม่ใช่รสหมู ไก่ ไข่ ชีส / ไม่มีภาพที่แสดงถึงเนื้อสัตว์หน้าซอง	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+18	Australia	FOOD	อาหารสำเร็จรูปที่มีรูปหมู ไก่อยู่หน้าซอง	ส่วนผสมต้องไม่มีหมู ไก่	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+19	Australia	FOOD	อาหารที่มีส่วนผสมของกะทิ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+20	Australia	FOOD	มะตูมแห้ง/ เปลือกไม้แห้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+21	Australia	FOOD	ขนมเปี๊ยะไม่มีไข่	มีฉลาก หรือ สินค้าอยู่ในแพ็คเก็จที่ดี ซีลปิดสนิด สามารถติดฉลากชี้แจงส่วนผสม การจัดส่งสินค้าประเภทอาหารอยู่ในการควบคุมและเป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+22	Australia	FOOD	กัญชา กัญชง กระท่อม ใบ/น้ำ		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+23	Australia	FOOD	สมุนไพรอบแห้ง เช่น ใบมะกรูด ใบกระเพรา		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+24	Australia	Supplement	อาหารเสริมที่สกัดจากสัตว์เนื้อแดง นม ไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+25	Australia	Supplement	อาหารเสริมที่สกัดจากพืชและผลไม้	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+26	Australia	Supplement	อาหารเสริมจำพวกเสริมสมรรถภาพ		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+27	Australia	Supplement	อาหารเสริมจำพวกโปรตีนจากสัตว์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+28	Australia	Supplement	อาหารเสริมจำพวกโปรตีนจากถั่ว	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+29	Australia	Supplement	อาหารเสริมแบรนด์ ROYAL JELLY PLUS		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+30	Australia	Supplement	อาหารเสริมคอลลาเจน	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+31	Australia	Supplement	อาหารเสริมลดน้ำหนัก ต้องไม่มีส่วนผสมของ กระบองเพชร,ถั่งเช่า,รากปลาไหลเผือก,สารสกัดต้องห้าม	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+32	Australia	Supplement	อาหารเสริมแบบเม็ด	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+33	Australia	Supplement	อาหารเสริมแบบผง	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร // Colly Cherry is not allow in the AU PROHIBITED ITEM.	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+34	Australia	Chemical	สินค้าอันตราย ประเภท 1-9		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+35	Australia	Chemical	สบู่ / สบู่ ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+36	Australia	Chemical	ยาสีฟัน	จำกัด 20 หลอด	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+37	Australia	Chemical	น้ำยาย้อมผม	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Unacceptable	Unacceptable
+38	Australia	Chemical	น้ำยาทำความสะอาด		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+39	Australia	Chemical	น้ำยาล้างเล็บ	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
+40	Australia	Chemical	น้ำยาทาเล็บ	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
+41	Australia	Chemical	กาว / กาวติดขนตา	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
+42	Australia	Chemical	น้ำยาทำความสะอาดแบบผง	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Unacceptable	Acceptable	Unacceptable	Unacceptable	Unacceptable
+43	Australia	Medicine	ยารักษาโรค / ยาสามัญประจำบ้าน	ต้องมีใบรับรองและใบสั่งจ่ายยาจากแพทย์ (ชื่อผู้รับกับชื่อยาต้องตรงกัน) เอกสารต้องเป็นภาษาอังกฤษ และออกจาก รพ. เท่านั้น ทั้งนี้อยู่ที่พิจรณาจากศุลกากรในการอนุญาตนำเข้า	Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+44	Australia	Medicine	พลาสเตอร์ / แผ่นแปะบรรเทาปวด	ผ่อนผันให้ส่งออก 20 ชิ้นต่อ Shipment เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+45	Australia	Medicine	ยาดม / ยาหม่อง / ลูกประคบ	ผ่อนผันให้ส่งออก 50 ชิ้นต่อ Shipment เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+46	Australia	Medicine	อาหารเสริมที่มีสรรพคุณรักษาโรค	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
+47	Australia	Medicine	วิตามิน		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+48	Australia	Medicine	อภัยภูเบศร	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
+49	Australia	Medicine	ฟ้าทะลายโจร	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
+50	Australia	Cosmetic	เซรั่ม / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+51	Australia	Cosmetic	ครีมทาผิว / ครีมทาหน้า / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+52	Australia	Cosmetic	แชมพู/ครีมนวด / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+53	Australia	Cosmetic	ลิปสติก		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+54	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	กาแฟแบบคั่วแล้ว		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+55	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	กาแฟแบบ 3in1		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+56	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	ใบชาอบแห้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+57	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	ชาสำเร็จรูป		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+58	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	กะทิ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+59	Australia	Beverage (แบบน้ำ/แบบชงดื่ม)	เครื่องดืมที่มีส่วนผสมของ นม,ครีมเทียม		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+60	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าละเมิดลิขสิทธิ์		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+61	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าลิขสิทธิ์	สินค้าที่มีมูลค่าไม่สูงสามารถส่งออกปกติ , สินค้ามูลค่าสูงศุลกากรอาจร้องขอหลักฐานการชำระเงิน หรือใบเสร็จ	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+62	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าแบรนด์เนม (Luxury Brand)	ขอใบเสร็จการซื้อสินค้าที่ออกโดยเจ้าของแบรนด์ , Certificate	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+63	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้ามือ 2		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+64	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	กระเป๋าหนังวัวฟอก,หนังเทียม		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+65	Australia	กระเป๋า / เสื้อผ้า / เครื่องประดับ	กระเป๋าหนังสัตว์ควบคุม หนังจระเข้	ขออนุญาตก่อนส่งออก คอบคุมโดย Cites	Controlled	Controlled	Controlled	Acceptable	Unacceptable
+66	Australia	AutoPart	โช๊คอัดแก๊ส		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+67	Australia	AutoPart	โช๊คไม่อัดแก๊ส	ไม่มีน้ำมันภายในสินค้า // อะไหล่ใช้แล้วต้องไม่มีคราบน้ำมัน	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+68	Australia	AutoPart	อะไหล่รถ	ไม่มีน้ำมันภายในสินค้า // อะไหล่ใช้แล้วต้องไม่มีคราบน้ำมัน	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+69	Australia	AutoPart	ล้อแม็กซ์ / ท่อไอเสีย		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+70	Australia	AutoPart	ฝากระโปรงรถ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+71	Australia	Electronics and Technology Products	โทรศัพท์ battery		Acceptable	Acceptable	Unacceptable	Unacceptable	Acceptable
+72	Australia	Electronics and Technology Products	โน้ตบุค battery		Acceptable	Acceptable	Unacceptable	Unacceptable	Acceptable
+73	Australia	Electronics and Technology Products	แท็บเล็ต battery		Acceptable	Acceptable	Unacceptable	Unacceptable	Acceptable
+74	Australia	Electronics and Technology Products	อะไหล่คอมพิวเตอร์	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า และ Intal ติดลขสิทธิ์ที่จีนผู้รับจำเป็นต้องมีใบอนุญาติ	Acceptable	Controlled	Controlled	Acceptable	Acceptable
+75	Australia	Electronics and Technology Products	ทีวี		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+76	Australia	Electronics and Technology Products	พัดลม ไม่มีแบต		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+77	Australia	Electronics and Technology Products	พัดลม มีแบต		Acceptable	Acceptable	Unacceptable	Unacceptable	Unacceptable
+78	Australia	Electronics and Technology Products	อะไหล่คอมพิวเตอร์		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+79	Australia	Electronics and Technology Products	กล้องวงจรปิด	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า	Controlled	Controlled	Controlled	Controlled	Acceptable
+80	Australia	Electronics and Technology Products	โดรน	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า	Controlled	Controlled	Controlled	Controlled	Acceptable
+81	Australia	Electronics and Technology Products	อุปกรณ์ดาวเทียม	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า	Controlled	Controlled	Controlled	Controlled	Acceptable
+82	Australia	Electronics and Technology Products	เครื่องปริ้น		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+83	Australia	Medical equipment	คอนแทคเลนส์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+84	Australia	Medical equipment	รีเทนเนอร์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+85	Australia	ของเหลว / Lotion	เซรั่ม		acceptable	acceptable	acceptable	acceptable	Unacceptable
+86	Australia	ของเหลว / Lotion	น้ำมันหอมระเหย	สูงสุด 1 KG. หากมากกว่าขอ MSDS // ปริมาณต่อขวด ไม่ควรเกิน 100-200 ml.	Acceptable	Acceptable	Acceptable	Unacceptable	Unacceptable
+87	Australia	ของเหลว / Lotion	Agarwood Oil	สินค้าควบคุม ติดใบอนุญาต Cites แนบก่อนส่งออกไม่ต้องเดินพิธีการ	Unacceptable	Unacceptable	Controlled	Unacceptable	Unacceptable
+88	Australia	ของเหลว / Lotion	Neo Hair	กรณีส่งออกในนามบุคคล แนะนำจัดส่งที่ไม่เกิน 2 KG // เกิน 2 kg. แนะนำปลายทางเป็นบริษัทและสามารถดำเนินการเคลียร์สินค้าได้ (ใบอนุญาตนำเข้า)	Acceptable	Acceptable	Acceptable	Unacceptable	Unacceptable
+89	Australia	พระ เครื่องราง	พระพุทธรูป รูปปั้น	แนบใบอนุญาตจากกรมศิลปากร	Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+90	Australia	พระ เครื่องราง	รูปวาด รูปเหมือน ที่เกี่ยวกับศาสนา เหรียญพระ	แนบใบอนุญาตจากกรมศิลปากร	Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+91	Australia	พระ เครื่องราง	เครื่องรางของขลัง	แนบใบอนุญาตจากกรมศิลปากร	Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+92	Australia	Mask	หน้ากากอนามัย		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+93	Australia		หน้ากาก N-94		Unacceptable	Acceptable	Unacceptable	Acceptable	Acceptable
+94	Australia		หน้ากากผ้า		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+95	Australia	Monetary Items	สมุดเช็ค		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+96	Australia	Monetary Items	เช็คที่สั่งจ่ายต่อบุคคล		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+97	Australia	Monetary Items	ธนบัตร		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+98	Australia	Monetary Items	ธนบัตรปลอม		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+99	Australia	Monetary Items	ล้อตเตอร์รี่		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+100	Australia	Monetary Items	เหรียญหรือชิป ที่ใช้เล่นผนัน		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+101	Australia	Monetary Items	Debit or Credit Card	สามารถส่งออกได้ แต่จำเป็นต้องแจ้งอายัดบัตร ก่อนส่งออกทุกกรณี	Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+102	Australia	Document	Passports		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+103	Australia	Document	โฉนด		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+104	Australia	Document	หนังสือพิมพ์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+105	Australia	Document	ตั๋วเครื่องบิน		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+106	Australia	Document	แสตมป์		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+107	Australia	ผลิตภัณฑ์แปรรูป	ไม้แกะสลัก		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+108	Austria	FOOD	กุนเชียง หมู/ปลา/ไก่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+109	Austria	FOOD	สินค้าที่มีส่วนผสมสัตว์เนื้อแดง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+110	Austria	FOOD	สินค้าที่มีส่วนผสมของ นม ไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+111	Austria	FOOD	อาหารแห้ง / อาหารทะเลแห้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+112	Austria	FOOD	น้ำพริก / น้ำพริกปลาร้า		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+113	Austria	FOOD	น้ำปลาร้า		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+114	Austria	FOOD	ผลไม้อบแห้ง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+115	Austria	FOOD	ผลไม้ดอง		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+116	Austria	FOOD	ขนม		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+117	Austria	FOOD	บะหมี่ ก๋วยเตี๋ยว อื่น ๆ		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+118	Austria	FOOD	กะปิ		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+119	Austria	FOOD	พริกป่น พริกอบแห้ง พริกทอด		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+120	Austria	FOOD	ซอสและเครื่องปรุงรส		Acceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+121	Austria	FOOD	น้ำผึ้ง		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+122	Austria	FOOD	ถั่วอบ // คั่ว		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+123	Austria	FOOD	บะหมี่กึ่งสำเร็จรูป ที่ไม่ใช่รสหมู ไก่ ไข่ ชีส / ไม่มีภาพที่แสดงถึงเนื้อสัตว์หน้าซอง		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+124	Austria	FOOD	ขนมเปี๊ยะไม่มีไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+125	Austria	FOOD	กัญชา กัญชง กระท่อม ใบ/น้ำ		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+126	Austria	FOOD	สมุนไพรอบแห้ง เช่น ใบมะกรูด ใบกระเพรา		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+127	Austria	Supplement	อาหารเสริมที่สกัดจากสัตว์เนื้อแดง นม ไข่		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+128	Austria	Supplement	อาหารเสริมที่สกัดจากพืชและผลไม้	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+129	Austria	Supplement	อาหารเสริมจำพวกเสริมสมรรถภาพ		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+130	Austria	Supplement	อาหารเสริมจำพวกโปรตีนจากสัตว์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+131	Austria	Supplement	อาหารเสริมจำพวกโปรตีนจากถั่ว		Acceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+132	Austria	Supplement	อาหารเสริมแบรนด์ ROYAL JELLY PLUS		Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+133	Austria	Supplement	อาหารเสริมคอลลาเจน	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Acceptable	Unacceptable	Acceptable	Unacceptable
+134	Austria	Supplement	อาหารเสริมลดน้ำหนัก ต้องไม่มีส่วนผสมของ กระบองเพชร,ถั่งเช่า,รากปลาไหลเผือก,สารสกัดต้องห้าม	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Acceptable	Unacceptable	Acceptable	Unacceptable
+135	Austria	Supplement	อาหารเสริมแบบเม็ด	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Acceptable	Unacceptable	Acceptable	Unacceptable
+136	Austria	Supplement	อาหารเสริมแบบผง	มีแบรนด์ มี อย มีฉลากถ้าเป็นแบบเม็ดในจำนวนมาก ไปได้เฉพาะ UPS หรือเป็นแบบผงฉีกซองชงดื่ม ไปได้ทั้ง UPS/FedEx ** FedEx แบบเม็ดไม่เกิน 3-5 ชิ้น ไปได้ **สำคัญแจ้งความเสี่ยงในการขนส่งสำหรับอาหารเสริมทุกครั้ง โดยพิจารณาจากศุลกากร	Acceptable	Acceptable	Unacceptable	Acceptable	Unacceptable
+137	Austria	Chemical	สินค้าอันตราย ประเภท 1-9		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+138	Austria	Chemical	สบู่ / สบู่ ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+139	Austria	Chemical	ยาสีฟัน	จำกัด 20 หลอด	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+140	Austria	Chemical	น้ำยาย้อมผม	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Unacceptable	Unacceptable
+141	Austria	Chemical	น้ำยาทำความสะอาด		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+142	Austria	Chemical	น้ำยาล้างเล็บ	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
+143	Austria	Chemical	น้ำยาทาเล็บ	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
+144	Austria	Chemical	กาว / กาวติดขนตา	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี	Controlled	Controlled	Controlled	Controlled	Unacceptable
+145	Austria	Chemical	น้ำยาทำความสะอาดแบบผง	ต้องส่ง MSDS ให้เอเจ้นท์ Approve ทุกกรณี // ปลายทางดำเนินการ TSCA	Unacceptable	Acceptable	Unacceptable	Unacceptable	Unacceptable
+146	Austria	Medicine	ยารักษาโรค / ยาสามัญประจำบ้าน	ต้องมีใบรับรองและใบสั่งจ่ายยาจากแพทย์ (ชื่อผู้รับกับชื่อยาต้องตรงกัน) เอกสารต้องเป็นภาษาอังกฤษ และออกจาก รพ. เท่านั้น ทั้งนี้อยู่ที่พิจรณาจากศุลกากรในการอนุญาตนำเข้า	Unacceptable	Unacceptable	Unacceptable	Acceptable	Unacceptable
+147	Austria	Medicine	พลาสเตอร์ / แผ่นแปะบรรเทาปวด		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+148	Austria	Medicine	ยาดม / ยาหม่อง / ลูกประคบ	ผ่อนผันให้ส่งออก 50-60 ชิ้นต่อ Shipment เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+149	Austria	Medicine	อาหารเสริมที่มีสรรพคุณรักษาโรค	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
+150	Austria	Medicine	วิตามิน		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+151	Austria	Medicine	อภัยภูเบศร	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
+152	Austria	Medicine	ฟ้าทะลายโจร	เป็นไปตามศุลกากรและหน่วยงานที่เกี่ยวข้องพิจารณาการนำเข้า หากมีข้อสงสัยหรือต้องการเอกสารเพิ่มเติม ผู้ส่งจำหรือผู้รับจำเป็นต้องแสดงเอกสารเพื่อการตรวจปล่อยสินค้า // มีความเสี่ยงต่อการส่งกลับหรือทำลายสินค้า	Controlled	Controlled	Controlled	Acceptable	Unacceptable
+153	Austria	Cosmetic	เซรั่ม / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+154	Austria	Cosmetic	ครีมทาผิว / ครีมทาหน้า / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+155	Austria	Cosmetic	แชมพู/ครีมนวด / ผึ้ง มีแบรนด์ เลขจดแจ้ง ดีแคล์ดี ๆ นะจ่ะ ห้ามมีคำว่าผึ้ง		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+156	Austria	Cosmetic	ลิปสติก		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+157	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	กาแฟแบบคั่วแล้ว		Unacceptable	Acceptable	Acceptable	Acceptable	Acceptable
+158	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	กาแฟแบบ 3in1		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+159	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	ใบชาอบแห้ง		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+160	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	ชาสำเร็จรูป		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+161	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	กะทิ		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+162	Austria	Beverage (แบบน้ำ/แบบชงดื่ม)	เครื่องดืมที่มีส่วนผสมของ นม,ครีมเทียม		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+163	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าละเมิดลิขสิทธิ์		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+164	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าลิขสิทธิ์	สินค้าที่มีมูลค่าไม่สูงสามารถส่งออกปกติ , สินค้ามูลค่าสูงศุลกากรอาจร้องขอหลักฐานการชำระเงิน หรือใบเสร็จ	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+165	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้าแบรนด์เนม (Luxury Brand)	ขอใบเสร็จการซื้อสินค้าที่ออกโดยเจ้าของแบรนด์ , Certificate	Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+166	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	สินค้ามือ 2		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+167	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	กระเป๋าหนังวัวฟอก,หนังเทียม		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+168	Austria	กระเป๋า / เสื้อผ้า / เครื่องประดับ	กระเป๋าหนังสัตว์ควบคุม หนังจระเข้	ขออนุญาตก่อนส่งออก คอบคุมโดย Cites	Controlled	Controlled	Controlled	Acceptable	Unacceptable
+169	Austria	AutoPart	โช๊คอัดแก๊ส		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+170	Austria	AutoPart	โช๊คไม่อัดแก๊ส		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+171	Austria	AutoPart	อะไหล่รถ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+172	Austria	AutoPart	ล้อแม็กซ์ / ท่อไอเสีย		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+173	Austria	AutoPart	ฝากระโปรงรถ		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+174	Austria	Electronics and Technology Products	โทรศัพท์ battery		Acceptable	Acceptable	Unacceptable	Unacceptable	Acceptable
+175	Austria	Electronics and Technology Products	โน้ตบุค battery		Acceptable	Acceptable	Unacceptable	Unacceptable	Acceptable
+176	Austria	Electronics and Technology Products	แท็บเล็ต battery		Acceptable	Acceptable	Unacceptable	Unacceptable	Acceptable
+177	Austria	Electronics and Technology Products	อะไหล่คอมพิวเตอร์		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+178	Austria	Electronics and Technology Products	ทีวี		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+179	Austria	Electronics and Technology Products	พัดลม ไม่มีแบต		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+180	Austria	Electronics and Technology Products	พัดลม มีแบต		Acceptable	Acceptable	Unacceptable	Unacceptable	Unacceptable
+181	Austria	Electronics and Technology Products	อะไหล่คอมพิวเตอร์		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+182	Austria	Electronics and Technology Products	กล้องวงจรปิด	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า	Controlled	Controlled	Controlled	Controlled	Acceptable
+183	Austria	Electronics and Technology Products	โดรน	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า	Controlled	Controlled	Controlled	Controlled	Acceptable
+184	Austria	Electronics and Technology Products	อุปกรณ์ดาวเทียม	สินค้าอาจถูกตรวจสอบโดยกรมศุลกากร เพื่อร้องขอเอกสารและเหตุผลในการนำเข้า	Controlled	Controlled	Controlled	Controlled	Acceptable
+185	Austria	Electronics and Technology Products	เครื่องปริ้น		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+186	Austria	Medical equipment	คอนแทคเลนส์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+187	Austria	Medical equipment	รีเทนเนอร์		Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+188	Austria	ของเหลว / Lotion	เซรั่ม		Acceptable	Acceptable	Acceptable	Unacceptable	Unacceptable
+189	Austria	ของเหลว / Lotion	น้ำมันหอมระเหย	สูงสุด 1 KG. หากมากกว่าขอ MSDS // ปริมาณต่อขวด ไม่ควรเกิน 100-200 ml.	Acceptable	Acceptable	Acceptable	Unacceptable	Unacceptable
+190	Austria	ของเหลว / Lotion	Agarwood Oil	สินค้าควบคุม ติดใบอนุญาต Cites แนบก่อนส่งออกไม่ต้องเดินพิธีการ	Unacceptable	Unacceptable	Controlled	Unacceptable	Unacceptable
+191	Austria	ของเหลว / Lotion	Neo Hair	กรณีส่งออกในนามบุคคล แนะนำจัดส่งที่ไม่เกิน 2 KG // เกิน 2 kg. แนะนำปลายทางเป็นบริษัทและสามารถดำเนินการเคลียร์สินค้าได้ (ใบอนุญาตนำเข้า)	Acceptable	Acceptable	Acceptable	Unacceptable	Unacceptable
+192	Austria	พระ เครื่องราง	พระพุทธรูป รูปปั้น	แนบใบอนุญาตจากกรมศิลปากร	Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+193	Austria	พระ เครื่องราง	รูปวาด รูปเหมือน ที่เกี่ยวกับศาสนา เหรียญพระ	แนบใบอนุญาตจากกรมศิลปากร	Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+194	Austria	พระ เครื่องราง	เครื่องรางของขลัง	แนบใบอนุญาตจากกรมศิลปากร	Unacceptable	Unacceptable	Unacceptable	Acceptable	Acceptable
+195	Austria	Mask	หน้ากากอนามัย		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Acceptable
+196	Austria		หน้ากาก N-94		Unacceptable	Acceptable	Unacceptable	Acceptable	Acceptable
+197	Austria		หน้ากากผ้า		Acceptable	Acceptable	Acceptable	Acceptable	Acceptable
+198	Austria	Monetary Items	สมุดเช็ค		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable
+199	Austria	Monetary Items	เช็คที่สั่งจ่ายต่อบุคคล		Acceptable	Acceptable	Acceptable	Acceptable	Unacceptable
+200	Austria	Monetary Items	ธนบัตร		Unacceptable	Unacceptable	Unacceptable	Unacceptable	Unacceptable

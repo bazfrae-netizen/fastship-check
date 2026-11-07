@@ -95,16 +95,34 @@ if check_mode == "🔍 ค้นหาจากรายชื่อสินค
     st.markdown("##### 📦 ค้นหาและเลือกรายการสินค้า")
     search_keyword = st.text_input("🔍 พิมพ์ค้นหาชื่อสินค้า (เช่น ยา, อาหาร, เสื้อผ้า):", placeholder="พิมพ์คำค้นหาที่นี่...")
     
-    # กรองรายการสินค้าแบบ Real-time ตามคำที่พิมพ์
+    # ระบบค้นหาแบบยืดหยุ่น: กรองจากทั้ง Example Items และ Product Category
+    matched_df = pd.DataFrame()
     if search_keyword.strip() != "":
-        filtered_options = [item for item in items_list if search_keyword.lower() in item.lower()]
+        if not df.empty:
+            mask = False
+            for col in ['Example Items', 'Product Category']:
+                if col in df.columns:
+                    mask = mask | df[col].astype(str).str.contains(search_keyword.strip(), case=False, na=False)
+            matched_df = df[mask] if isinstance(mask, pd.Series) else pd.DataFrame()
+            
+            # ดึงรายการสินค้าที่เจอจากผลการค้นหา
+            found_items = []
+            for col in ['Example Items', 'Product Category']:
+                if col in matched_df.columns:
+                    for val in matched_df[col].dropna().astype(str):
+                        v = val.strip()
+                        if v and v not in ['-', 'nan', '0', 'None']:
+                            found_items.append(v)
+            filtered_options = sorted(list(set(found_items)))
+        else:
+            filtered_options = [item for item in items_list if search_keyword.lower() in item.lower()]
     else:
         filtered_options = items_list
 
     if filtered_options:
         selected_item = st.selectbox("เลือกสินค้าจากผลการค้นหา:", options=["- กรุณาเลือกสินค้า -"] + filtered_options, key="clean_item_selectbox")
     else:
-        st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}'")
+        st.warning(f"⚠️ ไม่พบสินค้าที่ตรงกับคำว่า '{search_keyword}' ในระบบ ลองเปลี่ยนคำค้นหาดูครับ")
         selected_item = "- กรุณาเลือกสินค้า -"
 else:
     st.info("💡 **ระบบกล้องและ AI วิเคราะห์:** ถ่ายรูปสินค้าหรืออัปโหลดรูปภาพ ระบบจะตรวจจับประเภทสินค้าให้ พร้อมตรวจสอบเงื่อนไขการส่งออกทันทีครับ")

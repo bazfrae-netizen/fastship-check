@@ -23,7 +23,7 @@ extra_countries = [
     "Canada", "UK", "France", "Germany", "Italy", "Spain", "Netherlands"
 ]
 
-db_countries = [str(x) for x in df['Country'].unique() if str(x) not in ['-', 'nan', '0', '']]
+db_countries = [str(x) for x in df['Category'].unique() if str(x) not in ['-', 'nan', '0', ' ']]
 all_countries = sorted(list(set(extra_countries + db_countries)))
 countries = ["- กรุณาเลือกประเทศ -"] + all_countries
 

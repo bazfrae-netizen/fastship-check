@@ -86,7 +86,6 @@ selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาและเลือกรายชื่อสินค้า":
     selected_item = st.selectbox(f"📋 เลือกรายการสินค้า ({len(items_list)} รายการ):", options=["- กรุณาเลือกสินค้า -"] + items_list)
-
 else:
     st.info("💡 ถ่ายรูปหรืออัปโหลดภาพสินค้าเพื่อให้ระบบ AI วิเคราะห์")
     c_img1, c_img2 = st.columns(2)
@@ -119,49 +118,33 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
         working_df = pd.DataFrame([{
             'Example Items': selected_item, 'Country': target_country,
             'UPS': 'Acceptable', 'FedEx': 'Acceptable', 'DHL': 'Acceptable',
-            'Aramex': 'Acceptable', 'EMS World / Epacket 2kg': 'Acceptable',
+            'Aramex': 'Acceptable', 'EMS World / Epacket 2kg': 'Acceptable', 'All In': 'Acceptable',
             'Condition': 'ตรวจสอบตามระเบียบมาตรฐานสากล'
         }])
         
-    working_df['All In'] = 'Acceptable'
-    
     item_lower = selected_item.lower()
     country_upper = target_country.upper()
     
-    # 📌 กฎพิเศษและข้อห้ามเฉพาะเอเย่นต์
-    is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'เลียนแบบ', 'ลิขสิทธิ์'])
+    # 📌 กฎพิเศษและข้อห้ามเฉพาะเอเย่นต์ (ดักจับเพื่อแสดงข้อความเตือนเท่านั้น ส่วนการแบนจริงๆ ดึงจาก CSV)
+    is_fake_brand = any(kw in item_lower for kw in ['ก๊อป', 'ปลอม', 'mirror', 'เกรดเอ', 'เลียนแบบ', 'ลิขสิทธิ์', 'แบรนด์เนม'])
     is_second_hand = any(kw in item_lower for kw in ['มือสอง', 'มือ 2', 'secondhand', 'used'])
-    is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง', 'แบรนด์เนม'])
+    is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง'])
     
     is_japan_secondhand = (country_upper == 'JAPAN' and (is_second_hand or 'มือสอง' in item_lower))
     is_oil_liquid = any(kw in item_lower for kw in ['น้ำมัน', 'ของเหลว', 'เจล', 'สเปรย์', 'oil', 'liquid', 'น้ำหอม'])
     is_battery = any(kw in item_lower for kw in ['แบต', 'ถ่าน', 'พัดลม', 'power bank', 'พาวเวอร์แบงค์'])
     
-    is_dhl_prohibited = any(kw in item_lower for kw in [
-        'อาหารสด', 'ซีอิ๊ว', 'น้ำพริก', 'อาหารทะเล', 'เพชร', 'ทอง', 'เงิน', 'สารเคมี', 
-        'ยา', 'เสพติด', 'เงินสด', 'อาวุธ', 'น้ำหอม', 'เครื่องสำอาง', 'สกินแคร์', 'อาหารเสริม', 'วิตามิน', 'แบต', 'พาวเวอร์แบงค์', 'กัญชา', 'กระท่อม'
-    ])
+    is_illegal = any(kw in item_lower for kw in ['กัญชา', 'กัญชง', 'กระท่อม', 'ฝิ่น', 'ยาเสพติด', 'อาวุธ', 'ปืน', 'กระสุน', 'ระเบิด', 'เงินสด', 'ธนบัตร'])
+    is_dhl_prohibited = any(kw in item_lower for kw in ['อาหาร', 'ของกิน', 'กะปิ', 'น้ำพริก', 'เพชร', 'ทอง', 'เงิน', 'สารเคมี', 'เครื่องสำอาง', 'สกินแคร์', 'อาหารเสริม', 'วิตามิน'])
 
-    # อัปเดตสถานะในตารางตามกฎเหล็ก
-    for col in ["UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg"]:
-        if col in working_df.columns:
-            if is_fake_brand or is_japan_secondhand:
-                working_df[col] = 'Unacceptable'
-            elif is_oil_liquid and col in ["UPS", "FedEx"]:
-                working_df[col] = 'Check MSDS'
-            elif is_battery and col == 'UPS':
-                working_df['UPS'] = 'Acceptable'
-            if col == 'DHL' and (is_dhl_prohibited or is_battery):
-                working_df['DHL'] = 'Unacceptable'
-
-    # กรองเฉพาะ Agent ที่เลือก
     display_df = working_df.copy()
+    
+    # กรองเฉพาะ Agent ที่เลือกให้แสดงผล
     if selected_agent != "ทั้งหมด" and selected_agent in display_df.columns:
-        if selected_agent != 'All In':
-            display_df = display_df[~display_df[selected_agent].astype(str).str.upper().isin(['-', 'X', 'NAN', ''])]
+        display_df = display_df[['Country', 'Product Category', 'Example Items', 'Condition', selected_agent]]
 
     if not display_df.empty:
-        # อ่านสถานะจากตารางจริงๆ ว่า Agent ที่เลือกนั้นผ่านหรือไม่
+        # อ่านสถานะจากตารางจริงๆ (อิงตามไฟล์ CSV เป็นหลัก)
         final_status = "Acceptable"
         if selected_agent != "ทั้งหมด":
             val = str(display_df.iloc[0][selected_agent]).strip().upper()
@@ -170,8 +153,8 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
             elif val == "CHECK MSDS":
                 final_status = "Check MSDS"
         else:
-            # ถ้าเลือก "ทั้งหมด" ให้เช็คว่ามีขนส่งไหนไปได้บ้าง (ยกเว้น All In)
-            agent_cols = ["UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg"]
+            # ถ้าเลือก "ทั้งหมด" ให้เช็คว่ามีขนส่งไหนไปได้บ้างไหม (รวม All In ด้วย)
+            agent_cols = ["UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg", "All In"]
             can_ship = False
             for c in agent_cols:
                 if c in display_df.columns and str(display_df.iloc[0][c]).strip().upper() == "ACCEPTABLE":
@@ -180,7 +163,7 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
             if not can_ship:
                 final_status = "Unacceptable"
 
-        # แสดงผลลัพธ์แยกตามสถานะที่อ่านได้จากตาราง
+        # แสดงผลลัพธ์
         if final_status == "Unacceptable":
             st.error(f"❌ **ไม่อนุญาตให้จัดส่ง** {selected_item} ไปยัง {target_country} ผ่านเอเย่นต์ที่คุณเลือก")
         elif final_status == "Check MSDS":
@@ -189,22 +172,25 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
             st.success(f"✅ **สามารถตรวจสอบและจัดส่ง** {selected_item} ไปยัง {target_country} ได้")
 
         # แจ้งเตือนข้อกำหนดพิเศษตามที่คุณต่อรีเควส
+        if is_illegal:
+            st.error("🚨 **สินค้าผิดกฎหมาย/ควบคุมพิเศษ:** ไม่อนุญาตให้ส่งผ่านขนส่งระหว่างประเทศทุกช่องทาง (รวมถึง All In)")
+        elif is_fake_brand and selected_agent != "All In":
+            st.warning("⚠️ สินค้าละเมิดลิขสิทธิ์ / สินค้าแบรนด์เนม ไม่อนุญาตให้จัดส่งผ่านขนส่งปกติ แนะนำให้ส่งผ่านช่องทาง All In เท่านั้น")
+            
         if is_japan_secondhand:
             st.error("❌ **ประเทศญี่ปุ่น:** สินค้ามือสองห้ามส่งด้วย!")
-        elif is_fake_brand:
-            st.error("❌ สินค้าละเมิดลิขสิทธิ์ / สินค้าแบรนด์เนม ไม่อนุญาตให้จัดส่งผ่านขนส่งปกติ (แนะนำช่องทาง All In เท่านั้น)")
             
         if is_battery:
             if selected_agent == "UPS" or selected_agent == "ทั้งหมด":
-                st.warning("⚡ **ข้อกำหนด UPS:** ups แบต 2 ชิ้นกับถ่าน 1 ชิ้นพกได้")
+                st.warning("⚡ **ข้อกำหนด UPS:** UPS แบต 2 ชิ้นกับถ่าน 1 ชิ้นพกได้")
             if selected_agent == "DHL" or selected_agent == "ทั้งหมด":
                 st.error("🚨 **ข้อกำหนด DHL:** ห้ามส่งแบตเตอรี่หรือพาวเวอร์แบงค์เด็ดขาด!")
                 
         if is_oil_liquid:
             st.info("🛢️ **ข้อกำหนดของเหลว:** ต้องแนบเอกสาร MSDS ให้ทางเอเย่นต์ตรวจสอบก่อนจัดส่ง")
             
-        if is_dhl_prohibited and (selected_agent == "DHL" or selected_agent == "ทั้งหมด"):
-            st.error("🚨 **ประกาศ DHL ห้ามส่ง:** สินค้าประเภทอาหารสด เครื่องสำอาง ยา สารเสพติด (กัญชา/กระท่อม) และของเหลว ไม่อนุญาตผ่าน DHL")
+        if (is_dhl_prohibited or is_oil_liquid) and (selected_agent == "DHL" or selected_agent == "ทั้งหมด"):
+            st.error("🚨 **ประกาศ DHL ห้ามส่ง:** สินค้าประเภทอาหาร (สด/แห้ง) เครื่องสำอาง อาหารเสริม ยา และของเหลว ไม่อนุญาตผ่าน DHL ตามประกาศ")
             
         st.markdown("---")
         st.dataframe(display_df, use_container_width=True)

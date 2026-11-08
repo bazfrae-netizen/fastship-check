@@ -137,14 +137,11 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     is_illegal = any(kw in item_lower for kw in ['กัญชา', 'กัญชง', 'กระท่อม', 'ฝิ่น', 'ยาเสพติด', 'อาวุธ', 'ปืน', 'กระสุน', 'ระเบิด', 'เงินสด', 'ธนบัตร'])
     is_dhl_prohibited = any(kw in item_lower for kw in ['อาหาร', 'ของกิน', 'กะปิ', 'น้ำพริก', 'เพชร', 'ทอง', 'เงิน', 'สารเคมี', 'เครื่องสำอาง', 'สกินแคร์', 'อาหารเสริม', 'วิตามิน'])
 
+    # แสดงผลทุกคอลัมน์เหมือนเดิม ไม่มีการตัดคอลัมน์ขนส่งอื่นทิ้ง
     display_df = working_df.copy()
     
-    # กรองเฉพาะ Agent ที่เลือกให้แสดงผล
-    if selected_agent != "ทั้งหมด" and selected_agent in display_df.columns:
-        display_df = display_df[['Country', 'Product Category', 'Example Items', 'Condition', selected_agent]]
-
     if not display_df.empty:
-        # อ่านสถานะจากตารางจริงๆ (อิงตามไฟล์ CSV เป็นหลัก)
+        # อ่านสถานะจากตารางเพื่อนำไปแสดงผลที่แถบสี (อิงตาม Agent ที่เลือก)
         final_status = "Acceptable"
         if selected_agent != "ทั้งหมด":
             val = str(display_df.iloc[0][selected_agent]).strip().upper()
@@ -153,7 +150,7 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
             elif val == "CHECK MSDS":
                 final_status = "Check MSDS"
         else:
-            # ถ้าเลือก "ทั้งหมด" ให้เช็คว่ามีขนส่งไหนไปได้บ้างไหม (รวม All In ด้วย)
+            # ถ้าเลือก "ทั้งหมด" ให้เช็คว่ามีขนส่งไหนไปได้บ้างไหม
             agent_cols = ["UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg", "All In"]
             can_ship = False
             for c in agent_cols:
@@ -163,7 +160,7 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
             if not can_ship:
                 final_status = "Unacceptable"
 
-        # แสดงผลลัพธ์
+        # แสดงผลลัพธ์ที่แถบแจ้งเตือนด้านบน
         if final_status == "Unacceptable":
             st.error(f"❌ **ไม่อนุญาตให้จัดส่ง** {selected_item} ไปยัง {target_country} ผ่านเอเย่นต์ที่คุณเลือก")
         elif final_status == "Check MSDS":
@@ -171,7 +168,7 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
         else:
             st.success(f"✅ **สามารถตรวจสอบและจัดส่ง** {selected_item} ไปยัง {target_country} ได้")
 
-        # แจ้งเตือนข้อกำหนดพิเศษตามที่คุณต่อรีเควส
+        # แจ้งเตือนข้อกำหนดพิเศษ
         if is_illegal:
             st.error("🚨 **สินค้าผิดกฎหมาย/ควบคุมพิเศษ:** ไม่อนุญาตให้ส่งผ่านขนส่งระหว่างประเทศทุกช่องทาง (รวมถึง All In)")
         elif is_fake_brand and selected_agent != "All In":
@@ -193,6 +190,7 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
             st.error("🚨 **ประกาศ DHL ห้ามส่ง:** สินค้าประเภทอาหาร (สด/แห้ง) เครื่องสำอาง อาหารเสริม ยา และของเหลว ไม่อนุญาตผ่าน DHL ตามประกาศ")
             
         st.markdown("---")
+        # แสดงตารางแบบเต็มครบทุกขนส่ง
         st.dataframe(display_df, use_container_width=True)
     else:
         st.error(f"❌ ไม่อนุญาตให้ส่ง '{selected_item}' ผ่านเอเย่นต์ '{selected_agent}' เนื่องจากติดเงื่อนไขข้อห้ามแบบเด็ดขาด")

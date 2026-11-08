@@ -113,7 +113,7 @@ else:
                 import google.generativeai as genai
                 if "GEMINI_API_KEY" in st.secrets:
                     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-                    model = genai.GenerativeModel('gemini-2.5-flash')
+                    model = genai.GenerativeModel('gemini-3.8-flash')
                     with st.spinner("🤖 AI กำลังใช้สายตาประมวลผล..."):
                         # สั่ง AI ให้ตอบคำที่ตรงกับฐานข้อมูลของเรา
                         prompt = "วิเคราะห์ภาพนี้ว่าคืออะไร และจัดหมวดหมู่ให้ตรงกับคำเหล่านี้เท่านั้น: 'บะหมี่กึ่งสำเร็จรูป', 'เครื่องสำอาง', 'เสื้อผ้ามือ 2 (สินค้ามือ 2)', 'แบตเตอรี่', 'ของเหลว', 'อาหารเสริม', 'ขนม'. ตอบมาแค่ 1 คำเท่านั้น"

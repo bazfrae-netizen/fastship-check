@@ -24,7 +24,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("📦 FastShip Check")
-st.subheader("ระบบตรวจสอบเงื่อนไขการส่งออกระหว่างประเทศ (ฐานข้อมูล 4,000+ รายการ + DHL)")
+st.subheader("รายการข้อมูลส่งออก")
 st.markdown("---")
 
 @st.cache_data
@@ -32,7 +32,6 @@ def load_data():
     file_path = "master_database.csv"
     if os.path.exists(file_path):
         try:
-            # ใช้ engine='python' และ on_bad_lines='skip' เพื่อให้อ่านไฟล์ขนาดใหญ่ได้เสถียรที่สุด
             df = pd.read_csv(file_path, on_bad_lines='skip', encoding='utf-8', engine='python')
             if not df.empty and 'Example Items' in df.columns:
                 return df.fillna("-")
@@ -64,7 +63,6 @@ extra_countries = [
 db_countries = df['Country'].dropna().unique().tolist() if not df.empty and 'Country' in df.columns else []
 countries = ["- กรุณาเลือกประเทศ -"] + sorted(list(set(extra_countries + [str(x) for x in db_countries if str(x) not in ['-', 'nan', 'All']])))
 
-# ดึงรายการสินค้าทั้งหมดจากคอลัมน์ Example Items ใน CSV แบบจัดเต็ม
 items_list = []
 if not df.empty and 'Example Items' in df.columns:
     raw_items = df['Example Items'].dropna().astype(str).tolist()
@@ -87,17 +85,8 @@ check_mode = st.radio("🛠️ เลือกวิธีการตรวจ�
 selected_item = "- กรุณาเลือกสินค้า -"
 
 if check_mode == "🔍 ค้นหาและเลือกรายชื่อสินค้า (จัดเต็ม)":
-    st.markdown("##### 📦 ค้นหาหรือเลื่อนเลือกรายการสินค้าจากฐานข้อมูลจริง")
-    search_keyword = st.text_input("🔍 กรองชื่อสินค้า (พิมพ์เพื่อค้นหา หรือเว้นว่างเพื่อดูทั้งหมด):", placeholder="พิมพ์คำค้นหา...")
-    
-    filtered_items = items_list
-    if search_keyword.strip() != "":
-        kw = search_keyword.strip().lower()
-        matched = [item for item in items_list if kw in item.lower()]
-        if matched:
-            filtered_items = matched
-
-    selected_item = st.selectbox(f"📋 เลือกรายการสินค้าทั้งหมด ({len(filtered_items)} รายการ):", options=["- กรุณาเลือกสินค้า -"] + filtered_items)
+    # ลบกล่อง Search ซ้ำซ้อนออก ใช้ Selectbox ตัวเดียวจบ (พิมพ์ค้นหาในกล่องได้เลย)
+    selected_item = st.selectbox(f"📋 เลือกรายการสินค้าทั้งหมด ({len(items_list)} รายการ):", options=["- กรุณาเลือกสินค้า -"] + items_list)
 
 else:
     st.info("💡 ถ่ายรูปหรืออัปโหลดภาพสินค้าเพื่อให้ระบบ AI วิเคราะห์")

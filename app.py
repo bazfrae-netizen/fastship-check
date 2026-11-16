@@ -56,7 +56,7 @@ extra_countries = [
     "Israel", "Italy", "Japan", "Kuwait", "Macao", "Malaysia", "Malta", "Mexico", 
     "Netherlands", "New Zealand", "Norway", "Oman", "Pakistan", "Philippines", 
     "Poland", "Puerto Rico", "Qatar", "Saudi Arabia", "Singapore", "South Africa", 
-    "South Korea", "Spain", "Sweden", "Switzerland", "Taiwan", "Turkey", "United Kingdom", "USA",
+    "South Korea", "Spain", "Sweden", "Switzerland", "Taiwan", "Turkey", "United Kingdom", "USA", 
     "United Arab Emirates", "Vietnam"
 ]
 
@@ -106,9 +106,10 @@ else:
 
     if active_img:
         img = Image.open(active_img)
+        img.thumbnail((500, 500))
         st.image(img, caption="ภาพสินค้าของคุณ", width=250)
         
-      if st.button("✨ ให้ AI วิเคราะห์ภาพนี้"):
+        if st.button("✨ ให้ AI วิเคราะห์ภาพนี้"):
             try:
                 import google.generativeai as genai
                 if "GEMINI_API_KEY" in st.secrets:
@@ -135,9 +136,12 @@ else:
             
             # ดักจับคำที่ AI น่าจะตอบมาเพื่อโยงเข้าชื่อสินค้าจริงๆ ในระบบ
             search_terms = [kw]
-            if any(x in kw for x in ["อาหาร", "บะหมี่", "มาม่า", "food", "ขนม", "กุนเชียง", "น้ำพริก"]): search_terms.extend(["บะหมี่", "อาหาร", "ขนม", "กุนเชียง"])
-            if any(x in kw for x in ["เสื้อ", "ผ้า", "แบรนด์", "มือสอง"]): search_terms.extend(["เสื้อผ้า", "สินค้ามือ 2", "สินค้าแบรนด์เนม"])
-            if any(x in kw for x in ["ครีม", "สบู่", "โลชั่น"]): search_terms.extend(["เซรั่ม", "ครีมทาผิว", "สบู่"])
+            if any(x in kw for x in ["อาหาร", "บะหมี่", "มาม่า", "food", "ขนม", "กุนเชียง", "น้ำพริก"]):
+                search_terms.extend(["บะหมี่", "อาหาร", "ขนม", "กุนเชียง"])
+            if any(x in kw for x in ["เสื้อ", "ผ้า", "แบรนด์", "มือสอง"]):
+                search_terms.extend(["เสื้อผ้า", "สินค้ามือ 2", "สินค้าแบรนด์เนม"])
+            if any(x in kw for x in ["ครีม", "สบู่", "โลชั่น"]):
+                search_terms.extend(["เซรั่ม", "ครีมทาผิว", "สบู่"])
             
             matched_items = [item for item in items_list if any(term in item.lower() for term in search_terms)]
             
@@ -156,8 +160,10 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     
     # แปลงชื่อเสื้อผ้าที่แอบเติมไว้กลับไปเป็นชื่อดั้งเดิมเพื่อค้นหาในตาราง
     search_db_item = selected_item
-    if selected_item == "เสื้อผ้ามือ 2 (สินค้ามือ 2)": search_db_item = "สินค้ามือ 2"
-    if selected_item == "เสื้อผ้าแบรนด์เนม / เสื้อผ้าทั่วไป": search_db_item = "สินค้าแบรนด์เนม (Luxury Brand)"
+    if selected_item == "เสื้อผ้ามือ 2 (สินค้ามือ 2)":
+        search_db_item = "สินค้ามือ 2"
+    if selected_item == "เสื้อผ้าแบรนด์เนม / เสื้อผ้าทั่วไป":
+        search_db_item = "สินค้าแบรนด์เนม (Luxury Brand)"
 
     working_df = pd.DataFrame()
     if not df.empty and 'Example Items' in df.columns:

@@ -66,7 +66,6 @@ countries = ["- กรุณาเลือกประเทศ -"] + sorted(li
 items_list = []
 if not df.empty and 'Example Items' in df.columns:
     raw_items = df['Example Items'].dropna().astype(str).tolist()
-    # ดึงคำที่ซ้ำซ้อนออก และเพิ่มคำว่า "เสื้อผ้า" เข้าไปให้เลือกได้โดยตรง!
     items_list = sorted(list(set([x.strip() for x in raw_items if x.strip() and x.strip() not in ['-', 'nan', '0', 'None', 'Example Items']])))
     if "สินค้ามือ 2" in items_list:
         items_list.append("เสื้อผ้ามือ 2 (สินค้ามือ 2)")
@@ -116,12 +115,13 @@ else:
                     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
                     with st.spinner("🤖 AI กำลังใช้สายตาประมวลผล..."):
                         prompt = "วิเคราะห์ภาพนี้ว่าคืออะไร และจัดหมวดหมู่ให้ตรงกับคำเหล่านี้เท่านั้น: 'บะหมี่กึ่งสำเร็จรูป', 'เครื่องสำอาง', 'เสื้อผ้ามือ 2 (สินค้ามือ 2)', 'แบตเตอรี่', 'ของเหลว', 'อาหารเสริม', 'ขนม'. ตอบมาแค่ 1 คำเท่านั้น"
-                        try:
-                            model = genai.GenerativeModel('gemini-3.8-flash')
-                            response = model.generate_content([prompt, img])
-                        except Exception:
-                            model = genai.GenerativeModel('gemini-3.8-flash-lite')
-                            response = model.generate_content([prompt, img])
+                        available_models = [
+                            m.name for m in genai.list_models()
+                            if 'generateContent' in m.supported_generation_methods and 'flash' in m.name
+                        ]
+                        model_name = available_models[0] if available_models else 'gemini-3.8-flash'
+                        model = genai.GenerativeModel(model_name)
+                        response = model.generate_content([prompt, img])
                         st.session_state.ai_predicted = response.text.strip()
                 else:
                     st.error("⚠️ ไม่พบ GEMINI_API_KEY ใน Streamlit Secrets")
@@ -134,7 +134,6 @@ else:
             st.success(f"🤖 AI วิเคราะห์หมวดหมู่สินค้าคือ: **{st.session_state.ai_predicted}**")
             kw = st.session_state.ai_predicted.lower()
             
-            # ดักจับคำที่ AI น่าจะตอบมาเพื่อโยงเข้าชื่อสินค้าจริงๆ ในระบบ
             search_terms = [kw]
             if any(x in kw for x in ["อาหาร", "บะหมี่", "มาม่า", "food", "ขนม", "กุนเชียง", "น้ำพริก"]):
                 search_terms.extend(["บะหมี่", "อาหาร", "ขนม", "กุนเชียง"])
@@ -158,7 +157,6 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     st.markdown("---")
     st.markdown("### 📊 ผลการตรวจสอบข้อกำหนดการจัดส่ง")
     
-    # แปลงชื่อเสื้อผ้าที่แอบเติมไว้กลับไปเป็นชื่อดั้งเดิมเพื่อค้นหาในตาราง
     search_db_item = selected_item
     if selected_item == "เสื้อผ้ามือ 2 (สินค้ามือ 2)":
         search_db_item = "สินค้ามือ 2"
@@ -187,7 +185,6 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
     is_second_hand = any(kw in item_lower for kw in ['มือสอง', 'มือ 2', 'secondhand', 'used'])
     is_clothing = any(kw in item_lower for kw in ['เสื้อ', 'ผ้า', 'ชุด', 'กางเกง'])
     
-    # 📌 กฎญี่ปุ่น เสื้อผ้ามือสอง
     is_japan_secondhand = (country_upper == 'JAPAN' and (is_second_hand or 'มือสอง' in item_lower or 'มือ 2' in item_lower))
     
     is_oil_liquid = any(kw in item_lower for kw in ['น้ำมัน', 'ของเหลว', 'เจล', 'สเปรย์', 'oil', 'liquid', 'น้ำหอม'])
@@ -197,7 +194,6 @@ if target_country != "- กรุณาเลือกประเทศ -" and 
 
     display_df = working_df.copy()
     
-    # ถ้าส่งไปญี่ปุ่นและเป็นของมือสอง ให้ขึ้น Unacceptable ทันที
     if is_japan_secondhand:
         for col in ["UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg"]:
             if col in display_df.columns:

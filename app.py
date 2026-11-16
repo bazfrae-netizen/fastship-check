@@ -113,22 +113,20 @@ else:
                 import google.generativeai as genai
                 if "GEMINI_API_KEY" in st.secrets:
                     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-                    with st.spinner("🤖 AI กำลังใช้สายตาประมวลผล..."):
+                    with st.spinner("🤖 AI กำลังประมวลผลอย่างรวดเร็ว..."):
                         prompt = "วิเคราะห์ภาพนี้ว่าคืออะไร และจัดหมวดหมู่ให้ตรงกับคำเหล่านี้เท่านั้น: 'บะหมี่กึ่งสำเร็จรูป', 'เครื่องสำอาง', 'เสื้อผ้ามือ 2 (สินค้ามือ 2)', 'แบตเตอรี่', 'ของเหลว', 'อาหารเสริม', 'ขนม'. ตอบมาแค่ 1 คำเท่านั้น"
-                        available_models = [
-                            m.name for m in genai.list_models()
-                            if 'generateContent' in m.supported_generation_methods and 'flash' in m.name
-                        ]
-                        model_name = available_models[0] if available_models else 'gemini-3.8-flash'
-                        model = genai.GenerativeModel(model_name)
+                        model = genai.GenerativeModel('gemini-3.8-flash')
                         response = model.generate_content([prompt, img])
                         st.session_state.ai_predicted = response.text.strip()
                 else:
                     st.error("⚠️ ไม่พบ GEMINI_API_KEY ใน Streamlit Secrets")
             except ImportError:
-                st.error("⚠️ ขาดไลบรารี AI! กรุณาเปลี่ยนชื่อไฟล์ equirements.txt เป็น requirements.txt ใน GitHub ก่อน")
+                st.error("⚠️ ขาดไลบรารี AI! กรุณาตรวจสอบไฟล์ requirements.txt ใน GitHub")
             except Exception as e:
-                st.error(f"❌ เกิดข้อผิดพลาด: {e}")
+                if "429" in str(e) or "quota" in str(e).lower():
+                    st.error("⏳ โควตาฟรีของ API Key นี้ครบ 20 ครั้ง/วันแล้ว กรุณาสร้าง API Key ใหม่ในโปรเจกต์ใหม่ที่ Google AI Studio แล้วนำมาวางใน Streamlit Secrets ครับ")
+                else:
+                    st.error(f"❌ เกิดข้อผิดพลาด: {e}")
 
         if st.session_state.ai_predicted:
             st.success(f"🤖 AI วิเคราะห์หมวดหมู่สินค้าคือ: **{st.session_state.ai_predicted}**")

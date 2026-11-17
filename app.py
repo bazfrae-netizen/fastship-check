@@ -1,270 +1,271 @@
-"""FastShip Check v3 — image recognition assists humans; CSV is not legal clearance."""
-import base64
+"""FastShip Check — Gemini free-tier assisted review (not shipping authorization)."""
 import hashlib
 import io
 import json
 import os
+import re
 import time
 from difflib import SequenceMatcher
-from pathlib import Path
 
 import pandas as pd
 import streamlit as st
 from PIL import Image, ImageOps, UnidentifiedImageError
 
-st.set_page_config(page_title="FastShip Check", page_icon="📦", layout="wide")
-st.markdown('''<style>h1,h2,h3{color:#ff6600!important}.stButton button[kind="primary"]{background:#ff6600;border-color:#ff6600;color:white}.stButton button[kind="primary"]:hover{background:#e65c00;border-color:#e65c00;color:white}</style>''', unsafe_allow_html=True)
+st.set_page_config(page_title="FastShip Check | Free", page_icon="📦", layout="wide")
+st.markdown('''<style>h1,h2,h3{color:#ff6600!important}div.stButton>button:first-child{background:#ff6600;color:white;border:0;border-radius:8px}.stAlert{border-radius:8px}</style>''', unsafe_allow_html=True)
 st.title("📦 FastShip Check")
-st.caption("ระบบช่วยระบุสินค้าและตรวจสอบเงื่อนไขการส่งออก • ต้องให้เจ้าหน้าที่ตรวจสอบก่อนส่งจริง")
+st.caption("ตรวจสอบเงื่อนไขการส่งออก • Gemini Free Tier • ต้องให้พนักงานยืนยันผลก่อนจัดส่ง")
 
+DB_PATH = "master_database.csv"
 AGENTS = ["UPS", "FedEx", "DHL", "Aramex", "EMS World / Epacket 2kg", "All In"]
-COUNTRIES = ["Australia", "Austria", "Bangladesh", "Belgium", "Canada", "Chile", "China", "Croatia", "Czech Republic", "Denmark", "Egypt", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Ireland", "Israel", "Italy", "Japan", "Kuwait", "Macao", "Malaysia", "Malta", "Mexico", "Netherlands", "New Zealand", "Norway", "Oman", "Pakistan", "Philippines", "Poland", "Puerto Rico", "Qatar", "Saudi Arabia", "Singapore", "South Africa", "South Korea", "Spain", "Sweden", "Switzerland", "Taiwan", "Turkey", "United Kingdom", "USA", "United Arab Emirates", "Vietnam"]
-ALIASES = {"เสื้อผ้ามือ 2 (สินค้ามือ 2)": "สินค้ามือ 2", "เสื้อผ้าแบรนด์เนม / เสื้อผ้าทั่วไป": "สินค้าแบรนด์เนม (Luxury Brand)"}
-PLACEHOLDER = "- กรุณาเลือกสินค้า -"
-COUNTRY_PLACEHOLDER = "- กรุณาเลือกประเทศ -"
-# คำเตือนเหล่านี้เป็นเพียงสัญญาณให้ตรวจสอบเพิ่ม ไม่ใช่ข้อกฎหมายหรือข้อห้ามอัตโนมัติ
-REVIEW_WORDS = ["แบต", "ถ่าน", "power bank", "พาวเวอร์แบงค์", "ของเหลว", "น้ำหอม", "สเปรย์", "สารเคมี", "อาหาร", "ยา", "วิตามิน", "อาหารเสริม", "เครื่องสำอาง", "กัญชา", "กระท่อม", "อาวุธ", "ปืน", "เงินสด", "ธนบัตร", "แบรนด์เนม", "มือสอง", "มือ 2", "ลิขสิทธิ์", "ปลอม", "ก๊อป", "เจล", "น้ำมัน"]
+UNKNOWN = "ต้องตรวจสอบเพิ่มเติม"
 
 
-def clean(v):
-    return str(v).strip().casefold()
+def norm(v):
+    return re.sub(r"\s+", " ", str(v).strip()).casefold()
 
 
 @st.cache_data(show_spinner=False)
-def read_database(path, mtime):
-    last_error = ""
-    for options in ({"encoding": "utf-8-sig"}, {"encoding": "utf-8-sig", "sep": None, "engine": "python"}, {"encoding": "cp874"}):
+def load_data(path, modified):
+    errors = []
+    for kwargs in ({"encoding": "utf-8-sig"}, {"encoding": "utf-8"}, {"encoding": "cp874"}):
         try:
-            frame = pd.read_csv(path, dtype=str, keep_default_na=False, **options)
-            frame.columns = frame.columns.astype(str).str.strip()
+            frame = pd.read_csv(path, dtype=str, keep_default_na=False, **kwargs)
+            frame.columns = frame.columns.str.strip()
             if not {"Example Items", "Country"}.issubset(frame.columns):
-                last_error = "CSV ต้องมีคอลัมน์ Example Items และ Country"
-                continue
-            if frame.empty:
-                last_error = "CSV ไม่มีข้อมูล"
-                continue
-            return frame, ""
-        except Exception as exc:
-            last_error = f"{type(exc).__name__}: {exc}"
-    return pd.DataFrame(), last_error
+                return pd.DataFrame(), "CSV ต้องมีคอลัมน์ Example Items และ Country"
+            if not any(c in frame.columns for c in AGENTS):
+                return pd.DataFrame(), "CSV ไม่พบคอลัมน์บริษัทขนส่งที่รองรับ"
+            return frame.fillna(""), ""
+        except Exception as e:
+            errors.append(str(e))
+    return pd.DataFrame(), "ไม่สามารถอ่าน CSV ได้: " + errors[-1]
 
 
-@st.cache_resource(show_spinner=False)
-def openai_client(api_key):
-    from openai import OpenAI
-    return OpenAI(api_key=api_key, timeout=18.0, max_retries=0)
+if not os.path.isfile(DB_PATH):
+    st.error("ไม่พบ master_database.csv กรุณาวางไฟล์ในโฟลเดอร์เดียวกับ app.py")
+    st.stop()
+
+df, db_error = load_data(DB_PATH, os.path.getmtime(DB_PATH))
+if db_error or df.empty:
+    st.error(db_error or "ฐานข้อมูลว่าง")
+    st.stop()
+
+item_names = sorted({str(x).strip() for x in df["Example Items"] if norm(x) not in {"", "-", "none", "nan", "0"}})
+country_names = sorted({str(x).strip() for x in df["Country"] if norm(x) not in {"", "-", "all", "*", "ทุกประเทศ"}})
+if not item_names:
+    st.error("ฐานข้อมูลไม่มีชื่อสินค้า")
+    st.stop()
 
 
-def prepare_image(raw):
-    if len(raw) > 12 * 1024 * 1024:
-        raise ValueError("ไฟล์ภาพใหญ่เกิน 12 MB")
-    with Image.open(io.BytesIO(raw)) as source:
-        source.verify()
-    with Image.open(io.BytesIO(raw)) as source:
-        image = ImageOps.exif_transpose(source).convert("RGB")
-        image.thumbnail((512, 512))
-        out = io.BytesIO()
-        image.save(out, format="JPEG", quality=72, optimize=True)
-        return out.getvalue()
+def get_secret(name, default=""):
+    try:
+        return st.secrets.get(name, os.environ.get(name, default))
+    except Exception:
+        return os.environ.get(name, default)
 
 
-def analyze_image(jpeg, api_key, model):
-    prompt = ("You inspect a parcel photo. Identify only the most visible physical product. "
-              "Return JSON with exactly these keys: product_th (Thai product name, short), "
-              "category_th (Thai category), keywords_th (list of at most 4 Thai synonyms), "
-              "uncertain (boolean). If unclear or multiple products, uncertain=true. "
-              "Do not guess ingredients, battery contents, whether a brand is counterfeit, "
-              "or whether shipping is legal. Do not decide shipping eligibility.")
-    encoded = base64.b64encode(jpeg).decode("ascii")
-    start = time.perf_counter()
-    response = openai_client(api_key).responses.create(
-        model=model,
-        input=[{"role": "user", "content": [
-            {"type": "input_text", "text": prompt},
-            {"type": "input_image", "image_url": f"data:image/jpeg;base64,{encoded}", "detail": "low"}
-        ]}],
-        text={"format": {"type": "json_object"}},
-        max_output_tokens=180,
+def image_bytes(upload):
+    image = Image.open(upload)
+    image = ImageOps.exif_transpose(image).convert("RGB")
+    image.thumbnail((640, 640))
+    output = io.BytesIO()
+    image.save(output, "JPEG", quality=70, optimize=True)
+    return output.getvalue(), image
+
+
+def parse_ai(text):
+    text = text.strip()
+    try:
+        obj = json.loads(text)
+    except json.JSONDecodeError:
+        match = re.search(r"\{.*\}", text, flags=re.S)
+        if not match:
+            raise ValueError("AI ไม่ได้ตอบกลับเป็น JSON")
+        obj = json.loads(match.group())
+    if not isinstance(obj, dict):
+        raise ValueError("รูปแบบผล AI ไม่ถูกต้อง")
+    name = str(obj.get("item_name", "")).strip()[:100]
+    category = str(obj.get("category", "")).strip()[:80]
+    uncertain = obj.get("uncertain", True)
+    if not isinstance(uncertain, bool):
+        uncertain = True
+    if not name:
+        raise ValueError("AI ไม่สามารถระบุชื่อสินค้า")
+    return {"item_name": name, "category": category, "uncertain": uncertain}
+
+
+def analyze_photo(jpeg):
+    from google import genai
+    from google.genai import types
+    key = get_secret("GEMINI_API_KEY")
+    if not key:
+        raise RuntimeError("ยังไม่ได้ตั้งค่า GEMINI_API_KEY ใน Streamlit Secrets")
+    model = get_secret("GEMINI_MODEL", "gemini-2.5-flash-lite")
+    client = genai.Client(api_key=key, http_options=types.HttpOptions(timeout=20000))
+    prompt = (
+        "ดูภาพสินค้าและตอบ JSON object เท่านั้น โดยมี key item_name (ชื่อสินค้าไทยสั้นๆ), "
+        "category (หมวดหมู่สั้นๆ), uncertain (boolean). "
+        "ถ้าไม่แน่ใจให้ uncertain=true ห้ามเดายี่ห้อ ส่วนผสม สภาพมือสอง แบตเตอรี่ หรือความถูกต้องตามกฎหมายจากภาพ "
+        "ห้ามตัดสินว่าส่งออกได้หรือไม่ได้ ตัวอย่าง: "
+        '{"item_name":"ขวดโลชั่น","category":"เครื่องสำอาง","uncertain":true}'
     )
-    elapsed = round(time.perf_counter() - start, 2)
-    result = json.loads(response.output_text)
-    if not isinstance(result, dict) or not isinstance(result.get("product_th"), str):
-        raise ValueError("AI ส่งผลลัพธ์ไม่ตรงรูปแบบ")
-    result["product_th"] = result["product_th"].strip()[:100]
-    result["category_th"] = str(result.get("category_th", "")).strip()[:100]
-    result["keywords_th"] = [str(x).strip()[:60] for x in result.get("keywords_th", [])[:4]] if isinstance(result.get("keywords_th"), list) else []
-    result["uncertain"] = result.get("uncertain") is not False
-    return result, elapsed
+    result = client.models.generate_content(
+        model=model,
+        contents=[prompt, types.Part.from_bytes(data=jpeg, mime_type="image/jpeg")],
+        config=types.GenerateContentConfig(temperature=0, max_output_tokens=150, response_mime_type="application/json"),
+    )
+    return parse_ai(result.text or "")
 
 
-def suggest_items(result, items):
-    product = clean(result.get("product_th", ""))
-    terms = [clean(x) for x in [result.get("category_th", "")] + result.get("keywords_th", [])]
-    terms = [t for t in terms if len(t) >= 3]
+def suggestions(label, names, limit=12):
+    query = norm(label)
+    if not query:
+        return []
     scored = []
-    for item in items:
-        name = clean(item)
-        score = 0
-        if product and name == product:
-            score = 100
-        elif product and (product in name or name in product) and len(name) >= 3:
-            score = 85
-        elif product:
-            score = 50 * SequenceMatcher(None, product, name).ratio()
-        if any(t in name for t in terms):
-            score += 15
-        if score >= 32:
-            scored.append((score, item))
-    return [name for _, name in sorted(scored, key=lambda pair: (-pair[0], pair[1]))[:30]]
+    for name in names:
+        key = norm(name)
+        score = SequenceMatcher(None, query, key).ratio()
+        if query in key or key in query:
+            score += 0.6
+        if score >= 0.40:
+            scored.append((score, name))
+    scored.sort(key=lambda x: (-x[0], x[1]))
+    return [name for _, name in scored[:limit]]
 
 
-def status_of(value):
-    raw = clean(value).upper()
-    if raw == "ACCEPTABLE":
-        return "Acceptable"
-    if raw == "UNACCEPTABLE":
-        return "Unacceptable"
-    if raw == "CHECK MSDS":
-        return "Check MSDS"
-    return "Unknown"
+def interpret_status(value):
+    v = norm(value)
+    if v in {"acceptable", "accept", "allowed", "yes", "อนุญาต", "ส่งได้"}:
+        return "ACCEPTABLE"
+    if v in {"unacceptable", "prohibited", "not allowed", "no", "ห้ามส่ง", "ส่งไม่ได้"}:
+        return "UNACCEPTABLE"
+    if "msds" in v or "document" in v or "เอกสาร" in v:
+        return "DOCUMENT"
+    return "UNKNOWN"
 
 
-def combine_status(values):
-    # หากมีข้อห้ามในแถวใดให้ยึดข้อห้ามไว้ก่อน และต้องไม่ใช้แถวแรกเพียงแถวเดียว
-    statuses = [status_of(x) for x in values]
-    if not statuses or "Unknown" in statuses:
-        return "Unknown"
-    if "Unacceptable" in statuses:
-        return "Unacceptable"
-    if "Check MSDS" in statuses:
-        return "Check MSDS"
-    return "Acceptable" if all(s == "Acceptable" for s in statuses) else "Unknown"
+def review(frame, item, country, agent):
+    exact = frame[frame["Example Items"].map(norm) == norm(item)]
+    if exact.empty:
+        return "UNKNOWN", pd.DataFrame(), "ไม่พบรายการสินค้านี้ในฐานข้อมูล"
+    relevant = exact[exact["Country"].map(norm) == norm(country)]
+    if relevant.empty:
+        relevant = exact[exact["Country"].map(norm).isin({"all", "*", "ทุกประเทศ"})]
+    if relevant.empty:
+        return "UNKNOWN", pd.DataFrame(), "ไม่พบเงื่อนไขสำหรับประเทศที่เลือก (ไม่ใช้ข้อมูลประเทศอื่นแทน)"
+    if agent not in relevant.columns:
+        return "UNKNOWN", relevant, "ไม่มีคอลัมน์เอเย่นต์นี้ในฐานข้อมูล"
+    states = [interpret_status(v) for v in relevant[agent]]
+    if "UNACCEPTABLE" in states:
+        return "UNACCEPTABLE", relevant, "มีแถวที่ระบุห้ามส่ง"
+    if "UNKNOWN" in states:
+        return "UNKNOWN", relevant, "มีข้อมูลว่างหรือสถานะที่ระบบยังไม่รู้จัก"
+    if "DOCUMENT" in states:
+        return "DOCUMENT", relevant, "มีเงื่อนไขต้องตรวจเอกสาร"
+    if states and all(s == "ACCEPTABLE" for s in states):
+        return "ACCEPTABLE", relevant, "ข้อมูลทุกแถวที่เกี่ยวข้องระบุ Acceptable"
+    return "UNKNOWN", relevant, "ยังไม่สามารถสรุปผลได้"
 
 
-def image_result_cache():
-    if "ai_cache" not in st.session_state:
-        st.session_state.ai_cache = {}  # per session only; no shared customer images
-    return st.session_state.ai_cache
+left, right = st.columns(2)
+with left:
+    country = st.selectbox("🌍 ประเทศปลายทาง", ["- เลือกประเทศ -"] + country_names)
+with right:
+    agent = st.selectbox("🚚 เอเย่นต์ (Agent)", ["- เลือกเอเย่นต์ -"] + AGENTS)
 
-
-file_path = Path(__file__).with_name("master_database.csv")
-if not file_path.exists():
-    st.error("ไม่พบ master_database.csv กรุณาวางไว้โฟลเดอร์เดียวกับ app.py")
-    st.stop()
-df, db_error = read_database(str(file_path), file_path.stat().st_mtime_ns)
-if df.empty:
-    st.error(f"โหลดฐานข้อมูลไม่สำเร็จ: {db_error}")
-    st.stop()
-
-items = sorted({str(x).strip() for x in df["Example Items"] if clean(x) not in ("", "-", "nan", "0", "none")})
-items = sorted(set(items + [alias for alias, actual in ALIASES.items() if actual in items]))
-db_countries = {str(x).strip() for x in df["Country"] if clean(x) not in ("", "-", "all", "nan")}
-countries = [COUNTRY_PLACEHOLDER] + sorted(set(COUNTRIES) | db_countries)
-
-col1, col2 = st.columns(2)
-with col1:
-    country = st.selectbox("🌍 ประเทศปลายทาง", countries)
-with col2:
-    agent = st.selectbox("🚚 เอเย่นต์ (Agent)", ["ทั้งหมด"] + AGENTS)
-mode = st.radio("🛠️ วิธีตรวจสอบสินค้า", ["🔍 ค้นหาและเลือกรายชื่อสินค้า", "📸 ถ่ายภาพ/อัปโหลด (AI วิเคราะห์ทันที)"], horizontal=True)
-selected_item = PLACEHOLDER
-
+mode = st.radio("🛠️ วิธีตรวจสอบสินค้า", ["🔍 ค้นหาสินค้า", "📸 ถ่ายภาพ/อัปโหลดภาพ (AI ฟรี)"], horizontal=True)
+selected = None
 if mode.startswith("🔍"):
-    selected_item = st.selectbox(f"📋 รายการสินค้า ({len(items)} รายการ)", [PLACEHOLDER] + items)
+    selected = st.selectbox("📋 เลือกรายการสินค้า", ["- เลือกสินค้า -"] + item_names)
+    if selected.startswith("- เลือก"):
+        selected = None
 else:
-    st.info("ถ่ายภาพหรืออัปโหลดภาพใหม่ ระบบจะวิเคราะห์อัตโนมัติหนึ่งครั้งต่อภาพ และไม่เสียค่า API ซ้ำเมื่อเปลี่ยนประเทศ/เอเย่นต์")
     c1, c2 = st.columns(2)
     with c1:
-        camera = st.camera_input("📸 ถ่ายภาพสินค้า", key="photo_camera")
+        camera = st.camera_input("ถ่ายภาพสินค้า", key="camera")
     with c2:
-        upload = st.file_uploader("📁 อัปโหลดรูปสินค้า", type=["jpg", "jpeg", "png"], key="photo_upload")
-    # ผู้ใช้สามารถเลือกแหล่งภาพได้ชัดเจนเมื่อมีทั้งสองช่อง
-    if camera is not None and upload is not None:
-        source = st.radio("เลือกภาพที่ต้องการวิเคราะห์", ["กล้อง", "ไฟล์อัปโหลด"], horizontal=True)
-        active = camera if source == "กล้อง" else upload
-    else:
-        active = camera if camera is not None else upload
-
+        upload = st.file_uploader("หรืออัปโหลดภาพ", type=["jpg", "jpeg", "png"], key="upload")
+    # ให้ไฟล์อัปโหลดมีลำดับความสำคัญเมื่อเลือกพร้อมกล้อง
+    active = upload if upload is not None else camera
     if active is not None:
-        raw = active.getvalue()
-        fingerprint = hashlib.sha256(raw).hexdigest()
-        st.image(raw, caption="ภาพสินค้าที่เลือก", width=260)
-        if st.session_state.get("current_image") != fingerprint:
-            st.session_state.current_image = fingerprint
-            st.session_state["confirmed_item"] = PLACEHOLDER
-            st.session_state["full_item"] = PLACEHOLDER
-        cache = image_result_cache()
-        if fingerprint not in cache:
-            api_key = st.secrets.get("OPENAI_API_KEY", "")
-            model = st.secrets.get("OPENAI_MODEL", "gpt-4.1-mini")
-            if not api_key:
-                cache[fingerprint] = {"error": "ไม่พบ OPENAI_API_KEY ใน Streamlit Secrets"}
-            else:
-                try:
-                    with st.spinner("🤖 AI กำลังวิเคราะห์ภาพ..."):
-                        jpeg = prepare_image(raw)
-                        prediction, seconds = analyze_image(jpeg, api_key, model)
-                    cache[fingerprint] = {"result": prediction, "seconds": seconds}
-                except (UnidentifiedImageError, ValueError, json.JSONDecodeError) as exc:
-                    cache[fingerprint] = {"error": f"ข้อมูลภาพ/ผลวิเคราะห์ไม่ถูกต้อง: {exc}"}
-                except Exception as exc:
-                    cache[fingerprint] = {"error": f"เรียก AI ไม่สำเร็จ ({type(exc).__name__}): {exc}"}
-        outcome = cache[fingerprint]
-        if "error" in outcome:
-            st.error(outcome["error"])
-            if st.button("🔁 ลองวิเคราะห์ภาพนี้อีกครั้ง"):
-                cache.pop(fingerprint, None)
-                st.rerun()
-        else:
-            prediction = outcome["result"]
-            st.success(f"🤖 AI ระบุ: {prediction['product_th']} • หมวดหมู่: {prediction['category_th']}")
-            st.metric("เวลาที่ OpenAI API ตอบกลับ", f"{outcome['seconds']:.2f} วินาที")
-            if prediction["uncertain"]:
-                st.warning("AI ไม่มั่นใจ หรือภาพมีสินค้าหลายชิ้น กรุณาตรวจสอบสินค้าจริงและฉลาก")
-            candidates = suggest_items(prediction, items)
-            if st.session_state.get("confirmed_item") not in [PLACEHOLDER] + candidates:
-                st.session_state["confirmed_item"] = PLACEHOLDER
-            choice = st.selectbox("📋 ยืนยันรายการสินค้าจากฐานข้อมูล", [PLACEHOLDER] + candidates, key="confirmed_item")
-            with st.expander("ไม่พบชื่อสินค้าที่ตรง? เลือกจากรายการทั้งหมด"):
-                fallback = st.selectbox("สินค้าทั้งหมด", [PLACEHOLDER] + items, key="full_item")
-            selected_item = fallback if fallback != PLACEHOLDER else choice
-            if selected_item == PLACEHOLDER:
-                st.caption("โปรดยืนยันสินค้าจริงก่อนตรวจสอบเงื่อนไขการจัดส่ง")
-    else:
-        st.caption("รอภาพใหม่จากกล้องหรือไฟล์อัปโหลด")
-
-if country != COUNTRY_PLACEHOLDER and selected_item != PLACEHOLDER:
-    st.divider()
-    st.subheader("📊 ผลการตรวจสอบข้อกำหนดการจัดส่ง")
-    item_name = ALIASES.get(selected_item, selected_item)
-    product_rows = df[df["Example Items"].map(clean) == clean(item_name)]
-    # รองรับ Country=All เฉพาะกรณีฐานข้อมูลระบุชัด และแยกจากข้อมูลประเทศอื่น
-    exact_rows = product_rows[product_rows["Country"].map(clean) == clean(country)]
-    generic_rows = product_rows[product_rows["Country"].map(clean).isin(["all", "ทุกประเทศ"])]
-    rows = pd.concat([exact_rows, generic_rows], ignore_index=True).drop_duplicates()
-    warnings = [word for word in REVIEW_WORDS if clean(word) in clean(selected_item)]
-    if warnings:
-        st.warning("⚠️ อาจมีข้อกำหนดพิเศษ: " + ", ".join(warnings) + " — ต้องตรวจสอบชนิดสินค้า เอกสาร และประกาศล่าสุด")
-    if rows.empty:
-        st.error("⛔ ยังยืนยันการจัดส่งไม่ได้: ไม่พบข้อมูลสินค้านี้สำหรับประเทศปลายทาง")
-        st.info("กรุณาตรวจสอบฐานข้อมูลต้นทางหรือสอบถามผู้รับผิดชอบก่อนส่ง")
-    else:
-        if not exact_rows.empty and not generic_rows.empty:
-            st.caption("ใช้ข้อมูลประเทศปลายทางร่วมกับแถว Country=All ที่ระบุไว้ในฐานข้อมูล")
-        carriers = AGENTS if agent == "ทั้งหมด" else [agent]
-        for carrier in carriers:
-            state = combine_status(rows[carrier].tolist()) if carrier in rows.columns else "Unknown"
-            if state == "Unacceptable":
-                st.error(f"❌ {carrier}: Unacceptable — ฐานข้อมูลระบุว่าไม่ผ่านเงื่อนไข")
-            elif state == "Check MSDS":
-                st.warning(f"📄 {carrier}: Check MSDS — ต้องตรวจเอกสารและขออนุมัติก่อนส่ง")
-            elif state == "Acceptable":
-                if warnings:
-                    st.warning(f"⚠️ {carrier}: ฐานข้อมูลระบุ Acceptable แต่มีประเด็นต้องตรวจสอบเพิ่มเติม")
+        try:
+            jpeg, preview = image_bytes(active)
+            st.image(preview, caption="ภาพที่เลือก", width=260)
+            digest = hashlib.sha256(jpeg).hexdigest()
+            if st.session_state.get("photo_hash") != digest:
+                st.session_state.photo_hash = digest
+                st.session_state.photo_result = None
+                st.session_state.photo_error = None
+                st.session_state.photo_seconds = None
+                if get_secret("GEMINI_API_KEY"):
+                    with st.spinner("🤖 กำลังวิเคราะห์ภาพใหม่โดยอัตโนมัติ..."):
+                        start = time.perf_counter()
+                        try:
+                            st.session_state.photo_result = analyze_photo(jpeg)
+                        except Exception as exc:
+                            msg = str(exc)
+                            if "429" in msg or "RESOURCE_EXHAUSTED" in msg.upper():
+                                msg = "โควตา Gemini ฟรีอาจเต็มหรือเรียกถี่เกินไป กรุณารอแล้วลองใหม่ หรือใช้ค้นหาสินค้าแทน"
+                            st.session_state.photo_error = msg
+                        st.session_state.photo_seconds = time.perf_counter() - start
                 else:
-                    st.success(f"🟢 {carrier}: ฐานข้อมูลระบุ Acceptable (ยังต้องตรวจสอบเงื่อนไขล่าสุด)")
-            else:
-                st.warning(f"❓ {carrier}: ข้อมูลไม่ครบ/ไม่รู้จักสถานะ — ห้ามสรุปว่าส่งได้")
-        with st.expander("ดูข้อมูลเงื่อนไขจาก CSV", expanded=True):
-            st.dataframe(rows, use_container_width=True, hide_index=True)
-    st.info("ผล AI ใช้ระบุสินค้าเท่านั้น ไม่ใช่คำอนุญาตให้จัดส่ง เจ้าหน้าที่ต้องตรวจสินค้าจริงและเงื่อนไขบริษัทขนส่งล่าสุดก่อนดำเนินการ")
+                    st.session_state.photo_error = "ไม่พบ GEMINI_API_KEY ใน Streamlit Secrets"
+            if st.session_state.get("photo_error"):
+                st.error("วิเคราะห์ภาพไม่สำเร็จ: " + st.session_state.photo_error)
+                if st.button("🔄 ลองวิเคราะห์ภาพนี้อีกครั้ง"):
+                    st.session_state.photo_hash = None
+                    st.rerun()
+            result = st.session_state.get("photo_result")
+            if result:
+                st.success(f"AI เห็น: {result['item_name']} • หมวดหมู่: {result['category'] or 'ไม่ระบุ'}")
+                if result["uncertain"]:
+                    st.warning("AI ไม่มั่นใจในรายละเอียด กรุณาตรวจสินค้าจริงและฉลาก")
+                if st.session_state.get("photo_seconds") is not None:
+                    st.caption(f"⏱️ เวลาเรียก AI: {st.session_state.photo_seconds:.2f} วินาที")
+                recommended = suggestions(result["item_name"], item_names)
+                if result["category"]:
+                    recommended += [x for x in suggestions(result["category"], item_names) if x not in recommended]
+                recommended = recommended[:15]
+                options = ["- เลือกสินค้า -"] + recommended + [x for x in item_names if x not in recommended]
+                selected = st.selectbox("📋 พนักงานยืนยันชื่อสินค้าจากฐานข้อมูล", options, key="ai_confirm_item")
+                if selected.startswith("- เลือก"):
+                    selected = None
+        except (UnidentifiedImageError, OSError, ValueError) as exc:
+            st.error(f"อ่านภาพไม่สำเร็จ: {exc}")
+    else:
+        st.info("ถ่ายภาพแล้วระบบจะวิเคราะห์อัตโนมัติ 1 ครั้งต่อภาพใหม่ ภายในโควตา Gemini ฟรี")
+
+if selected and country != "- เลือกประเทศ -" and agent != "- เลือกเอเย่นต์ -":
+    st.divider()
+    st.subheader("📊 ผลการตรวจสอบเงื่อนไขการจัดส่ง")
+    status, matches, reason = review(df, selected, country, agent)
+    if status == "UNACCEPTABLE":
+        st.error("⛔ ฐานข้อมูลระบุว่าไม่อนุญาตให้ส่งผ่านเอเย่นต์นี้")
+    elif status == "DOCUMENT":
+        st.warning("📄 ต้องตรวจเอกสาร/เงื่อนไขเพิ่มเติมก่อนตัดสินใจ")
+    elif status == "ACCEPTABLE":
+        st.info("ℹ️ ฐานข้อมูลระบุ Acceptable แต่ยังต้องตรวจสภาพจริง ประกาศล่าสุด และให้เจ้าหน้าที่อนุมัติ")
+    else:
+        st.warning("⚠️ ต้องตรวจสอบเพิ่มเติม — ห้ามสรุปว่าส่งได้จากข้อมูลที่มี")
+    st.caption(reason)
+    # คำเตือนเพื่อให้พนักงานตรวจสอบ ไม่ใช่กฎห้ามส่งที่สร้างขึ้นเอง
+    flags = []
+    s = norm(selected)
+    for keywords, label in [
+        (["แบต", "ถ่าน", "power bank", "พาวเวอร์แบงค์"], "แบตเตอรี่/วัตถุอันตราย"),
+        (["ของเหลว", "น้ำหอม", "สเปรย์", "เจล", "liquid"], "ของเหลว/อาจต้องใช้ MSDS"),
+        (["อาหาร", "ขนม", "วิตามิน", "อาหารเสริม"], "อาหาร/อาหารเสริม"),
+        (["มือสอง", "มือ 2", "used", "secondhand"], "สินค้ามือสอง"),
+        (["แบรนด์เนม", "ปลอม", "เลียนแบบ", "ก๊อป"], "สินค้ามีแบรนด์/ตรวจสิทธิ์และความแท้"),
+    ]:
+        if any(k in s for k in keywords):
+            flags.append(label)
+    if flags:
+        st.warning("🔎 ประเด็นที่ควรตรวจเพิ่มเติม: " + ", ".join(flags))
+    st.caption("ผลจากระบบเป็นเครื่องมือช่วยตรวจ ไม่ใช่คำอนุญาตส่งออกขั้นสุดท้าย")
+    if not matches.empty:
+        st.dataframe(matches, use_container_width=True, hide_index=True)
+    st.checkbox("ฉันตรวจสอบสินค้าจริงและยืนยันเงื่อนไขกับข้อมูลบริษัทล่าสุดแล้ว", key="manual_verified")
+else:
+    st.caption("เลือกประเทศ เอเย่นต์ และยืนยันชื่อสินค้าเพื่อดูผลตรวจสอบ")

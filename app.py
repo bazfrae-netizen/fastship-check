@@ -156,21 +156,68 @@ def is_food_item(frame_rows, item_name):
     return False
 
 
+def check_dhl_prohibited(frame_rows, item_name):
+    text_to_check = norm(item_name)
+    if not frame_rows.empty and "Product Category" in frame_rows.columns:
+        text_to_check += " " + " ".join(frame_rows["Product Category"].map(norm).tolist())
+
+    dhl_rules = [
+        (["อาหารสด", "อาหารที่มีน้ำ", "น้ำซุป", "ของเหลว", "เครื่องดื่ม", "ซอส", "น้ำจิ้ม", "น้ำพริก", "กะปิ", "แกง"], "อาหารสด และอาหารที่มีน้ำเป็นส่วนประกอบ"),
+        (["เพชร", "พลอย", "ทอง", "ทองแท่ง", "เครื่องเงิน", "อัญมณี", "จิวเวลรี่", "ของมีค่า"], "เพชร พลอยมีค่า ทองแท่ง เครื่องเงิน และของมีค่า"),
+        (["สารเคมี", "เคมี", "น้ำยา", "ทินเนอร์", "แอลกอฮอล์", "กรด", "ด่าง"], "สารเคมีทุกชนิด"),
+        (["ละเมิดลิขสิทธิ์", "ปลอม", "เลียนแบบ", "ก๊อป", "mirror", "เกรดเอ", "แบรนด์เนม"], "สินค้าละเมิดลิขสิทธิ์ ของปลอม หรือสินค้าเลียนแบบ"),
+        (["ผลิตภัณฑ์จากสัตว์", "สัตว์ที่มีชีวิต", "สัตว์", "เนื้อสัตว์", "หนังสัตว์", "งาช้าง", "รังนก", "น้ำผึ้ง"], "ผลิตภัณฑ์จากสัตว์และสัตว์ที่มีชีวิต"),
+        (["แบต", "แบตเตอรี่", "ลิเธียม", "ถ่าน", "power bank", "พาวเวอร์แบงค์", "สารมีพิษ", "วัตถุอันตราย"], "แบตเตอรี่ลิเธียม พาวเวอร์แบงค์ และสารมีพิษ"),
+        (["ดวงตราไปรษณียากร", "แสตมป์", "stamp"], "ดวงตราไปรษณียากร (แสตมป์)"),
+        (["ยา", "สิ่งเสพติด", "ยาเสพติด", "กัญชา", "กัญชง", "กระท่อม", "ฝิ่น"], "ยาที่ผิดกฎหมาย และสิ่งเสพติดทุกชนิด"),
+        (["เงินสด", "ธนบัตร", "เช็ค", "เหรียญกษาปณ์"], "เงินสดและสิ่งเทียบเท่า ทั้งธนบัตรและเช็ค"),
+        (["อาวุธ", "ปืน", "กระสุน", "ระเบิด", "มีด", "ดาบ"], "อาวุธทุกชนิด รวมทั้งปืนและกระสุนปืน"),
+        (["ชิ้นส่วนมนุษย์", "กระดูก", "เถ้ากระดูก", "อัฐิ", "เส้นผม"], "ชิ้นส่วนมนุษย์ รวมถึงกระดูก"),
+        (["สเปรย์", "น้ำหอม", "โคโลญจน์", "perfume", "spray"], "สเปรย์ น้ำหอม โคโลญจน์"),
+        (["เครื่องสำอาง", "สกินแคร์", "ความงาม", "ครีม", "เซรั่ม", "โลชั่น", "ลิปสติก", "แป้งพัฟ", "สบู่"], "เครื่องสำอาง สกินแคร์ และผลิตภัณฑ์เพื่อความงาม"),
+        (["อาหารเสริม", "วิตามิน", "คอลลาเจน", "โปรตีน", "สมุนไพร"], "อาหารเสริม วิตามิน และผลิตภัณฑ์เสริมอาหาร"),
+    ]
+    for keywords, rule_desc in dhl_rules:
+        if any(k in text_to_check for k in keywords):
+            return True, rule_desc
+    return False, ""
+
+
 def review(frame, item, country, agent):
     exact = frame[frame["Example Items"].map(norm) == norm(item)]
     if exact.empty:
+        if agent == "DHL":
+            is_prohibited, rule_desc = check_dhl_prohibited(pd.DataFrame(), item)
+            if is_prohibited:
+                return "UNACCEPTABLE", pd.DataFrame(), f"ประกาศ DHL ห้ามส่ง: {rule_desc}"
+            return "ACCEPTABLE", pd.DataFrame(), "ไม่อยู่ในรายการห้ามส่งของ DHL — สามารถจัดส่งได้"
         return "UNKNOWN", pd.DataFrame(), "ไม่พบรายการสินค้านี้ในฐานข้อมูล"
+
     relevant = exact[exact["Country"].map(norm) == norm(country)]
     if relevant.empty:
         relevant = exact[exact["Country"].map(norm).isin({"all", "*", "ทุกประเทศ"})]
+
+    # กฎเฉพาะของ DHL ตามใบประกาศ
+    if agent == "DHL":
+        is_prohibited, rule_desc = check_dhl_prohibited(relevant if not relevant.empty else exact, item)
+        if is_prohibited:
+            return "UNACCEPTABLE", relevant if not relevant.empty else exact.head(1), f"ประกาศ DHL ห้ามส่ง: {rule_desc}"
+        if not relevant.empty and "DHL" in relevant.columns:
+            states = [interpret_status(v) for v in relevant["DHL"]]
+            if "UNACCEPTABLE" in states:
+                return "UNACCEPTABLE", relevant, "ฐานข้อมูลระบุว่า DHL ไม่อนุญาตให้ส่งสินค้านี้ไปยังประเทศปลายทาง"
+        return "ACCEPTABLE", relevant if not relevant.empty else exact.head(1), "ไม่อยู่ในรายการห้ามส่งของ DHL — สามารถจัดส่งได้"
+
     if relevant.empty:
         if agent == "All In" and is_food_item(exact, item):
             return "ACCEPTABLE", exact.head(1), "ช่องทาง All In รองรับการจัดส่งสินค้าประเภทอาหาร/ของกินทั้งหมด"
         return "UNKNOWN", pd.DataFrame(), "ไม่พบเงื่อนไขสำหรับประเทศที่เลือก (ไม่ใช้ข้อมูลประเทศอื่นแทน)"
+
     if agent not in relevant.columns:
         if agent == "All In" and is_food_item(relevant, item):
             return "ACCEPTABLE", relevant, "ช่องทาง All In รองรับการจัดส่งสินค้าประเภทอาหาร/ของกินทั้งหมด"
         return "UNKNOWN", relevant, "ไม่มีคอลัมน์เอเย่นต์นี้ในฐานข้อมูล"
+
     states = [interpret_status(v) for v in relevant[agent]]
     if "UNACCEPTABLE" in states:
         return "UNACCEPTABLE", relevant, "มีแถวที่ระบุห้ามส่ง"
@@ -255,7 +302,7 @@ if selected and country != "- เลือกประเทศ -" and agent != 
     st.subheader("📊 ผลการตรวจสอบเงื่อนไขการจัดส่ง")
     status, matches, reason = review(df, selected, country, agent)
     if status == "UNACCEPTABLE":
-        st.error("⛔ ฐานข้อมูลระบุว่าไม่อนุญาตให้ส่งผ่านเอเย่นต์นี้")
+        st.error("⛔ ไม่อนุญาตให้ส่งผ่านเอเย่นต์นี้")
     elif status == "DOCUMENT":
         st.warning("📄 ต้องตรวจเอกสาร/เงื่อนไขเพิ่มเติมก่อนตัดสินใจ")
     elif status == "ACCEPTABLE":

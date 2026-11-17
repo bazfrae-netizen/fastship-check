@@ -101,7 +101,7 @@ def analyze_photo(jpeg):
     key = get_secret("GEMINI_API_KEY")
     if not key:
         raise RuntimeError("ยังไม่ได้ตั้งค่า GEMINI_API_KEY ใน Streamlit Secrets")
-    model = get_secret("GEMINI_MODEL", "gemini-2.5-flash-lite")
+   model = get_secret("GEMINI_MODEL", "gemini-3.5-flash-lite")
     client = genai.Client(api_key=key, http_options=types.HttpOptions(timeout=20000))
     prompt = (
         "ดูภาพสินค้าและตอบ JSON object เท่านั้น โดยมี key item_name (ชื่อสินค้าไทยสั้นๆ), "

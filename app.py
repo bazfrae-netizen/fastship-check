@@ -145,6 +145,17 @@ def interpret_status(value):
     return "UNKNOWN"
 
 
+def is_food_item(frame_rows, item_name):
+    food_keywords = ["food", "อาหาร", "บะหมี่", "มาม่า", "ขนม", "ของกิน", "เครื่องดื่ม", "น้ำพริก", "กะปิ", "กุนเชียง", "อาหารเสริม", "วิตามิน"]
+    if any(k in norm(item_name) for k in food_keywords):
+        return True
+    if not frame_rows.empty and "Product Category" in frame_rows.columns:
+        cats = " ".join(frame_rows["Product Category"].map(norm).tolist())
+        if any(k in cats for k in food_keywords):
+            return True
+    return False
+
+
 def review(frame, item, country, agent):
     exact = frame[frame["Example Items"].map(norm) == norm(item)]
     if exact.empty:
@@ -153,8 +164,12 @@ def review(frame, item, country, agent):
     if relevant.empty:
         relevant = exact[exact["Country"].map(norm).isin({"all", "*", "ทุกประเทศ"})]
     if relevant.empty:
+        if agent == "All In" and is_food_item(exact, item):
+            return "ACCEPTABLE", exact.head(1), "ช่องทาง All In รองรับการจัดส่งสินค้าประเภทอาหาร/ของกินทั้งหมด"
         return "UNKNOWN", pd.DataFrame(), "ไม่พบเงื่อนไขสำหรับประเทศที่เลือก (ไม่ใช้ข้อมูลประเทศอื่นแทน)"
     if agent not in relevant.columns:
+        if agent == "All In" and is_food_item(relevant, item):
+            return "ACCEPTABLE", relevant, "ช่องทาง All In รองรับการจัดส่งสินค้าประเภทอาหาร/ของกินทั้งหมด"
         return "UNKNOWN", relevant, "ไม่มีคอลัมน์เอเย่นต์นี้ในฐานข้อมูล"
     states = [interpret_status(v) for v in relevant[agent]]
     if "UNACCEPTABLE" in states:
@@ -186,7 +201,6 @@ else:
         camera = st.camera_input("ถ่ายภาพสินค้า", key="camera")
     with c2:
         upload = st.file_uploader("หรืออัปโหลดภาพ", type=["jpg", "jpeg", "png"], key="upload")
-    # ให้ไฟล์อัปโหลดมีลำดับความสำคัญเมื่อเลือกพร้อมกล้อง
     active = upload if upload is not None else camera
     if active is not None:
         try:
@@ -245,11 +259,10 @@ if selected and country != "- เลือกประเทศ -" and agent != 
     elif status == "DOCUMENT":
         st.warning("📄 ต้องตรวจเอกสาร/เงื่อนไขเพิ่มเติมก่อนตัดสินใจ")
     elif status == "ACCEPTABLE":
-        st.info("ℹ️ ฐานข้อมูลระบุ Acceptable แต่ยังต้องตรวจสภาพจริง ประกาศล่าสุด และให้เจ้าหน้าที่อนุมัติ")
+        st.success("✅ สามารถจัดส่งได้ (Acceptable) — กรุณาตรวจสภาพจริงและยืนยันก่อนจัดส่ง")
     else:
         st.warning("⚠️ ต้องตรวจสอบเพิ่มเติม — ห้ามสรุปว่าส่งได้จากข้อมูลที่มี")
     st.caption(reason)
-    # คำเตือนเพื่อให้พนักงานตรวจสอบ ไม่ใช่กฎห้ามส่งที่สร้างขึ้นเอง
     flags = []
     s = norm(selected)
     for keywords, label in [
